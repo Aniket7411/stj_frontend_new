@@ -1,0 +1,10 @@
+ /* The card should be in the correct state when it is flipped */
+ .flip-card {
+    transform-style: preserve-3d; /* Allow 3D transformations */
+    animation: flipInY 1s ease-out forwards; /* Trigger the flip animation */
+  }
+  
+  .flip-card .flip-content {
+    backface-visibility: hidden; /* Hide the backface when it's flipped */
+  }
+  

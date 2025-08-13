@@ -1,0 +1,81 @@
+
+/* card1 styling */
+.card1 {
+    height: 400px;
+    width: 250px;
+    background-image: url("https://res.cloudinary.com/viplav2411/image/upload/v1732617361/image3_mrcntc.png");
+    background-size: cover; /* Ensure the image covers the card1 */
+    background-position: center; /* Center the image */
+    position: relative;
+    overflow: hidden; /* Ensure no elements overflow out of the card1 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: transform 0.5s ease, background-image 0.5s ease; /* Smooth zoom and background transition */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add a shadow for better visibility */
+}
+
+/* Hover effect to hide background image */
+.card1:hover {
+    background-image: none; /* Remove the background image */
+    transform: scale(1.05); /* Slight zoom-in on hover */
+    background-color: #f5f5f5;
+}
+
+/* Heading styles */
+.card1-title {
+    color: white; /* Ensure the text color is visible */
+    position: absolute;
+    top: 5%; /* Initially top-left */
+    left: 8%;
+    height: 52px;
+    width: 52px;
+    border-radius: 50%;
+    width: 50px;
+    transform: translate(-10%, -10%);
+    transition: all 0.5s ease; /* Smooth transition */
+    z-index: 2; /* Ensure the heading is always above the card1 */
+    text-align: center; /* Center text inside the title */
+    line-height: 50px; /* Vertically center text in the circle */
+    font-weight: bold; /* Make text bold for better visibility */
+}
+
+/* Hover effect for heading */
+.card1:hover .card1-title {
+    top: 25%; /* Move to the center */
+    left: 50%;
+    transform: translate(-50%, -50%) scale(2); /* Center and zoom in */
+    background-color: #f5f5f5; /* Light background for better visibility */
+}
+
+/* Bottom Section Styling */
+.bottom-section {
+    position: absolute;
+    bottom: -100px; /* Initially hidden below the card1 */
+    left: 0;
+    width: 100%;
+    padding: 10px;
+    color: white; /* Keep text color white */
+    text-align: center;
+    transition: bottom 0.8s ease, opacity 0.5s ease; /* Smooth transition upwards */
+    z-index: 2;
+    opacity: 0; /* Initially hidden */
+}
+
+/* Hover effect for bottom-section */
+.card1:hover .bottom-section {
+    bottom: 30px; /* Slide up to make visible */
+    opacity: 1; /* Fade in */
+}
+
+/* Name Styling */
+.name {
+    font-size: 1.5rem;
+    margin: 0;
+}
+
+/* Works At Description Styling */
+.works-at {
+    font-size: 1rem;
+    margin: 0;
+}

@@ -1,0 +1,82 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .containerx {
+    display: flex;
+    width: 100vw;
+    /* height: 100vh; */
+    overflow: hidden;
+    background-color: #C5363C;
+
+    /* padding: 100px; */
+  }
+  
+  .left-section,
+  .right-section {
+    display: flex;
+    flex-direction: column;
+    /* justify-content: center; */
+    /* align-items: center; */
+    padding: 20px;
+    color: white;
+    transition: width 0.5s ease, transform 0.5s ease; /* Smooth transition */
+    overflow: hidden;
+    position: relative;
+  }
+
+  /* .left-section, .right-section {
+    overflow: hidden;
+    position: relative;
+  } */
+  
+  .left-section {
+    background-color: #ffffff;
+    color: #000;
+  }
+  
+  .right-section {
+    background-color: #C5363C;
+    color: #fff;
+  }
+  
+  h1 {
+    font-size: 2rem;
+    font-weight: bold;
+  }
+  
+  h2 {
+    font-size: 1.5rem;
+  }
+  
+  button {
+    padding: 6px 10px;
+    border: none;
+    background-color: transparent;
+    font-weight: bold;
+    cursor: pointer;
+    width: 100px;
+    height: 30px;
+    border-radius: 50px;
+    font-size: 12px;
+    font-weight: 500;
+  }
+  
+  .left-button, .right-button {
+    /* position: absolute;
+    bottom: 200px; */
+    margin-top: 40px; /* Adjust this for placement in the right section */
+
+  }
+
+  .left-button{
+    border: 1px solid #000;
+    color: #000;
+  }
+
+  .right-button{
+    border: 1px solid #fff;
+    color: #fff;
+  }
