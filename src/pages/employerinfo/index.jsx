@@ -116,11 +116,13 @@ const EmployerInfo = () => {
               </div>
             </div>
             <div className="text-right">
-              <Link to="/employerprofile">
-                <p className="text-blue-500 text-sm font-medium cursor-pointer underline">
-                  View Profile
-                </p>
-              </Link>
+            <Link
+  to="/employerprofile"
+  className="inline-block px-5 py-2 rounded-lg bg-gradient-to-r from-blue-500 to-indigo-600 text-white font-semibold shadow-md hover:shadow-lg hover:scale-105 transition-all duration-300"
+>
+  Go to Dashboard
+</Link>
+
             </div>
           </div>
 

@@ -726,6 +726,12 @@ function FindJobs() {
                   <option value={0} >0 Yr</option>
                   <option value={1} >1 Yrs</option>
                   <option value={2} >2 Yrs</option>
+
+                  <option value={3} >3 Yrs</option>
+                  <option value={4} >4 Yrs</option>
+                  <option value={5} >5 Yrs</option>
+
+
                   {/* <option value="4">3-4 Yrs</option>
                 <option value="5">4+ Yrs</option> */}
                 </select>
@@ -905,7 +911,7 @@ function FindJobs() {
                       className="border border-gray-300 p-2 rounded-md cursor-pointer" style={{
                         fontSize: '12px'
                       }}>
-                      <option disabled selected >select</option>
+                      <option disabled selected >Select</option>
                       <option value='time:-1'>Newest to Oldest</option>
                       <option value='time:1'>Oldest to Newest</option>
                       <option value='price:-1'>Price High to Low</option>
@@ -1001,7 +1007,7 @@ function FindJobs() {
 
                       <p className="mt-4">
                         <span className="bg-[#fff] text-md font-semibold px-2 py-1 rounded-md">
-                          Posted on {job?.postedOn.slice(0, 10)}
+                          Posted on {new Date(job?.postedOn).toLocaleDateString("en-GB")}
                         </span>
                       </p>
                     </div>

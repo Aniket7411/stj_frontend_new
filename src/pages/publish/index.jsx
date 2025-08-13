@@ -50,7 +50,7 @@ const Publish = () => {
   }
 
 
-  console.log("jobPostingDetails", jobPostingDetails)
+  console.log("jobRequirementsjobRequirements", jobRequirements)
 
 
 
@@ -227,7 +227,7 @@ const Publish = () => {
               </p>
             </div>
             <span className="bg-[#F0F0F0] font-semibold mb-4 rounded-md px-3 py-1">
-              £ {jobDetails.salary.amount} / {jobDetails.salary.frequency === "Monthly" ? "Month" : "Week"}
+              £ {jobDetails.salary.amount} / {jobDetails.salary.frequency === "Monthly" ? "Month" : "Hour"}
             </span>
             <div className="flex text-[#505050] mt-3 flex-wrap gap-3">
               <p className="bg-[#EBF6FF] rounded-md px-3 py-2 text-sm">

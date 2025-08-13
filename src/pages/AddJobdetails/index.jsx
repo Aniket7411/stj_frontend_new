@@ -542,72 +542,33 @@ const AddJobDetailsStep2 = () => {
 
 
 
+<FormField label="Application Deadline" required>
+  <input
+    type="date"
+    className="border border-gray-300 rounded-lg p-2 focus:ring-2 focus:ring-blue-500 outline-none"
+    min={new Date().toISOString().split("T")[0]} // No past dates
+    value={(() => {
+      const [y, m, d] = jobDetails.applicationDeadline.split("-");
+      return `${y.padStart(4, "0")}-${m.padStart(2, "0")}-${d.padStart(2, "0")}`;
+    })()}
+    onChange={(e) => {
+      const [year, month, day] = e.target.value.split("-");
+      setJobDetails((prev) => ({
+        ...prev,
+        applicationDeadline: `${Number(year)}-${Number(month)}-${Number(day)}`,
+      }));
+    }}
+  />
+  {jobDetails.applicationDeadline && (
+    <span className="ml-3 text-sm text-gray-600">
+      {(() => {
+        const [y, m, d] = jobDetails.applicationDeadline.split("-");
+        return `${d.padStart(2, "0")}/${m.padStart(2, "0")}/${y}`;
+      })()}
+    </span>
+  )}
+</FormField>
 
-
-                <FormField label="Application Deadline" required>
-                  <div className="flex gap-2">
-                    <input
-                      type="number"
-                      name="applicationDeadlineDay"
-                      max={31} // Maximum value set to 31
-                      min={1}  // Minimum value set to 1
-                      placeholder="Day"
-                      className="w-1/3 border border-gray-300 rounded-lg p-3"
-                      value={jobDetails.applicationDeadline.split("-")[2]} // Extract day
-                      onChange={(e) =>
-                        setJobDetails((prevDetails) => {
-                          const [year, month, day] = prevDetails.applicationDeadline.split("-");
-                          // Ensure day stays between 1 and 31
-                          const newDay = Math.min(Math.max(e.target.value, 1), 31);
-                          return {
-                            ...prevDetails,
-                            applicationDeadline: `${year}-${month}-${newDay}`,
-                          };
-                        })
-                      }
-                    />
-
-                    <input
-                      type="number"
-                      required
-                      min={1}   // Ensures the month is at least 1 (January)
-                      max={12}  // Ensures the month is at most 12 (December)
-                      name="applicationDeadlineMonth"
-                      placeholder="Month"
-                      className="w-1/3 border border-gray-300 rounded-lg p-3"
-                      value={jobDetails.applicationDeadline.split("-")[1]} // Extract month
-                      onChange={(e) =>
-                        setJobDetails((prevDetails) => {
-                          const [year, month, day] = prevDetails.applicationDeadline.split("-");
-                          const newMonth = Math.min(Math.max(e.target.value, 1), 12); // Ensure the month stays between 1 and 12
-                          return {
-                            ...prevDetails,
-                            applicationDeadline: `${year}-${newMonth}-${day}`,
-                          };
-                        })
-                      }
-                    />
-
-                    <input
-                      type="number"
-                      name="applicationDeadlineYear"
-                      required
-                      placeholder="Year"
-                      className="w-1/3 border border-gray-300 rounded-lg p-3"
-                      value={jobDetails.applicationDeadline.split("-")[0]} // Extract year
-                      onChange={(e) =>
-                        setJobDetails((prevDetails) => {
-                          const [year, month, day] =
-                            prevDetails.applicationDeadline.split("-");
-                          return {
-                            ...prevDetails,
-                            applicationDeadline: `${e.target.value}-${month}-${day}`,
-                          };
-                        })
-                      }
-                    />
-                  </div>
-                </FormField>
 
 
 

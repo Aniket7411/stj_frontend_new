@@ -209,74 +209,75 @@ const UploadDocuments = () => {
                                         </div>
                                     </label>
 
-                                  {previews[key] && (
-  <div className="relative group">
-    {/* Document Thumbnail Container */}
-    <div
-      className="w-28 h-28 flex items-center justify-center bg-gray-50 rounded-lg overflow-hidden border-2 border-gray-200 cursor-pointer transition-all duration-200 hover:border-indigo-400 hover:shadow-md"
-      onClick={() => openDocumentViewer(previews[key], key)}
-    >
-      {/* File Icon or Image Preview */}
-      {previews[key] === 'file' ? (
-        <div className="flex flex-col items-center p-3 space-y-2">
-          <FiFile className="w-9 h-9 text-indigo-500" />
-          <span className="text-xs font-medium text-gray-600 truncate max-w-[80px]">
-            {label.split(' ')[0]}
-          </span>
-        </div>
-      ) : (
-        <img
-          src={previews[key]}
-          alt={`${label} preview`}
-          className="object-cover w-full h-full transition-all duration-300 group-hover:scale-[1.03]"
-        />
-      )}
-    </div>
+                                    {previews[key] && (
+                                        <div className="relative group">
+                                            {/* Document Thumbnail Container */}
+                                            <div
+                                                className="w-28 h-28 flex items-center justify-center bg-gray-50 rounded-lg overflow-hidden border-2 border-gray-200 cursor-pointer transition-all duration-200 hover:border-indigo-400 hover:shadow-md"
+                                                onClick={() => openDocumentViewer(previews[key], key)}
+                                            >
+                                                {/* File Icon or Image Preview */}
+                                                {previews[key] === 'file' ? (
+                                                    <div className="flex flex-col items-center p-3 space-y-2">
+                                                        <FiFile className="w-9 h-9 text-indigo-500" />
+                                                        <span className="text-xs font-medium text-gray-600 truncate max-w-[80px]">
+                                                            {label.split(' ')[0]}
+                                                        </span>
+                                                    </div>
+                                                ) : (
+                                                    <img
+                                                        src={previews[key]}
+                                                        alt={`${label} preview`}
+                                                        className="object-cover w-full h-full transition-all duration-300 group-hover:scale-[1.03]"
+                                                    />
+                                                )}
+                                            </div>
 
-    {/* Remove Button (X) */}
-    <button
-      type="button"
-      onClick={(e) => {
-        e.stopPropagation();
-        removeImage(key);
-      }}
-      className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full p-1.5 transition-all duration-200 hover:bg-red-600 shadow-lg hover:scale-110"
-      aria-label={`Remove ${label}`}
-    >
-      <FiX size={14} className="stroke-[3]" />
-    </button>
+                                            {/* Remove Button (X) */}
+                                            <button
+                                                type="button"
+                                                onClick={(e) => {
+                                                    e.stopPropagation();
+                                                    removeImage(key);
+                                                }}
+                                                className="absolute -top-1.5 -right-2.5 bg-red-500 text-white rounded-full  hover:bg-red-600"
+                                                aria-label={`Remove ${label}`}
+                                            >
+                                                <FiX size={12} />
+                                            </button>
 
-    {/* View Overlay */}
-    <div className="absolute inset-0 flex items-center justify-center p-2.5 rounded-lg">
-      <div className="relative w-full h-full">
-        {/* Semi-transparent overlay */}
-        <div 
-          className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-300 rounded-[6px]"
-          aria-hidden="true"
-        />
-        
-        {/* Eye icon */}
-        <button
-          type="button"
-          onClick={() => openDocumentViewer(previews[key], key)}
-          className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-          aria-label={`View ${label}`}
-        >
-          <div className="bg-white/95 p-2.5 rounded-full shadow-md transition-transform duration-300 hover:scale-110 hover:shadow-lg">
-            <FiEye className="text-indigo-600" size={20} />
-          </div>
-        </button>
-      </div>
-    </div>
 
-    {/* Document Type Label */}
-    <div className="absolute -bottom-3 left-1/2 transform -translate-x-1/2 bg-white px-3 py-1 rounded-full border border-gray-200 shadow-sm">
-      <span className="text-xs font-semibold text-gray-700 capitalize tracking-wide">
-        {key.replace(/([A-Z])/g, ' $1').trim().split(' ')[0]}
-      </span>
-    </div>
-  </div>
-)}
+                                            {/* View Overlay */}
+                                            <div className="absolute inset-0 flex items-center justify-center p-2.5 rounded-lg">
+                                                <div className="relative w-full h-full">
+                                                    {/* Semi-transparent overlay */}
+                                                    <div
+                                                        className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-300 rounded-[6px]"
+                                                        aria-hidden="true"
+                                                    />
+
+                                                    {/* Eye icon */}
+                                                    <button
+                                                        type="button"
+                                                        onClick={() => openDocumentViewer(previews[key], key)}
+                                                        className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                                                        aria-label={`View ${label}`}
+                                                    >
+                                                        <div className="bg-white/95 p-2.5 rounded-full shadow-md transition-transform duration-300 hover:scale-110 hover:shadow-lg">
+                                                            <FiEye className="text-indigo-600" size={20} />
+                                                        </div>
+                                                    </button>
+                                                </div>
+                                            </div>
+
+                                            {/* Document Type Label */}
+                                            <div className="absolute -bottom-3 left-1/2 transform -translate-x-1/2 bg-white px-3 py-1 rounded-full border border-gray-200 shadow-sm">
+                                                <span className="text-xs font-semibold text-gray-700 capitalize tracking-wide">
+                                                    {key.replace(/([A-Z])/g, ' $1').trim().split(' ')[0]}
+                                                </span>
+                                            </div>
+                                        </div>
+                                    )}
                                 </div>
                             </div>
                         ))}
