@@ -50,7 +50,7 @@ const Publish = () => {
   }
 
 
-  console.log("jobRequirementsjobRequirements", jobRequirements)
+  console.log("jobRequirementsjobRequifjrements", jobRequirements)
 
 
 
