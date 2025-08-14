@@ -39,6 +39,7 @@ const AddJobDetails34 = () => {
 
   const navigate = useNavigate();
 
+    console.log("jobRequirements",jobRequirements);
 
   const handleSubmit = (e) => {
     e.preventDefault();

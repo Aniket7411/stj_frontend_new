@@ -541,14 +541,13 @@ const AddJobDetailsStep2 = () => {
                 </LoadScript> */}
 
 
-
 <FormField label="Application Deadline" required>
   <input
     type="date"
     className="border border-gray-300 rounded-lg p-2 focus:ring-2 focus:ring-blue-500 outline-none"
     min={new Date().toISOString().split("T")[0]} // No past dates
     value={(() => {
-      const [y, m, d] = jobDetails.applicationDeadline.split("-");
+      const [y, m, d] = (jobDetails.applicationDeadline || "0000-00-00").split("-");
       return `${y.padStart(4, "0")}-${m.padStart(2, "0")}-${d.padStart(2, "0")}`;
     })()}
     onChange={(e) => {
@@ -562,12 +561,13 @@ const AddJobDetailsStep2 = () => {
   {jobDetails.applicationDeadline && (
     <span className="ml-3 text-sm text-gray-600">
       {(() => {
-        const [y, m, d] = jobDetails.applicationDeadline.split("-");
+        const [y, m, d] = (jobDetails.applicationDeadline || "0000-00-00").split("-");
         return `${d.padStart(2, "0")}/${m.padStart(2, "0")}/${y}`;
       })()}
     </span>
   )}
 </FormField>
+
 
 
 

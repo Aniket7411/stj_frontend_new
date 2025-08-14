@@ -46,7 +46,6 @@ const JobProvider = ({ children }) => {
 
   const [jobRequirements, setJobRequirements] = useState({
     jobSkills: [],
-      minimumEducation: "",
       minimumExp: "0",
       maximumExp: "0",
     minimumQualification: "",

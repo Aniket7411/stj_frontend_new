@@ -19,7 +19,7 @@ import Backbutton from "../../components/common/backbutton";
 
 
 
-const viewer = JSON.parse(localStorage.getItem("USER_INFO")); // Parse the JSON string into an object
+const viewer = JSON.parse(localStorage.getItem("USER_INFO") || "{}");
 
 console.log("viewer", viewer)
 
@@ -33,7 +33,7 @@ const JobDescriptionDetails = () => {
   const [isLoading, setIsLoading] = useState(false)
 
   const userType = localStorage.getItem("USER_INFO");
-  const role = JSON.parse(userType).role;
+  const role = JSON.parse(userType || "{}").role || "";
 
 
   console.log("rolerolerolerole", role)
@@ -52,6 +52,7 @@ const JobDescriptionDetails = () => {
         setApplyStatus(response?.applyStatus);
       }
     } catch (error) {
+   
       console.error("Error fetching job details:", error.message);
       setIsLoading(false)
     }
@@ -210,7 +211,7 @@ const JobDescriptionDetails = () => {
                         <div>
                           <p className="text-sm text-gray-500">Minimum Qualification</p>
                           <p className="font-medium">
-                            {jobDetails?.jobRequirements?.qualification || "Bachelor's degree"}
+                            {jobDetails?.jobRequirements?.minimumEducation || ""}
                           </p>
                         </div>
                       </div>

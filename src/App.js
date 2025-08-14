@@ -102,6 +102,14 @@ function App() {
         </Layout>
       ),
     },
+       {
+      path: "/jobdescription/:id",
+      element: (
+        <Layout>
+          <JobDescriptionDetails />
+        </Layout>
+      ),
+    },
     {
       path: "/completed_jobs",
       element: (

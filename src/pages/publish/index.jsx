@@ -50,7 +50,7 @@ const Publish = () => {
   }
 
 
-  console.log("jobRequirementsjobRequifjrements", jobRequirements)
+  console.log("jobPostingDetailsjobPostingDetails", jobPostingDetails)
 
 
 
@@ -72,12 +72,12 @@ const Publish = () => {
 
       if (type === 'normal') {
         toast.success("Job details submitted successfully!");
-        setPostingJob({
-          jobDetails: jobDetails,
-          jobRequirements: jobRequirements,
-          companyDetails: companyDetails,
-          workSchedule: workSchedule,
-        });
+        // setPostingJob({
+        //   jobDetails: jobDetails,
+        //   jobRequirements: jobRequirements,
+        //   companyDetails: companyDetails,
+        //   workSchedule: workSchedule,
+        // });
         navigate("/findjobs");
         // Adjust the route as needed
       }
