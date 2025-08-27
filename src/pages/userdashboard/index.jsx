@@ -444,27 +444,27 @@ const Userdashborad = () => {
             <div className="p-4 rounded-lg shadow-lg bg-white border border-gray-200 flex-grow sm:flex-grow-0 sm:w-[30%] min-h-[145px]">
 
 
-                <div className="flex justify-between items-center mb-2">
-                  <p className="text-[#C5363C] font-medium">Lost Bids</p>
-                  <Infoicon information="Number of jobs you have applied for whose status is rejected" />
-                  <img src="/assets/auction.png" alt="auction" />
-                </div>
+              <div className="flex justify-between items-center mb-2">
+                <p className="text-[#C5363C] font-medium">Lost Bids</p>
+                <Infoicon information="Number of jobs you have applied for whose status is rejected" />
+                <img src="/assets/auction.png" alt="auction" />
+              </div>
 
               <h1 className="font-bold text-2xl text-gray-800">{dashboardData?.bids?.lostBids}</h1>
             </div>
 
             {/* Winning Bids */}
             <div className="p-4 rounded-lg shadow-lg bg-white border border-gray-200 flex-grow sm:flex-grow-0 sm:w-[30%] min-h-[145px]">
-             
-                           <Link to="/approvedjobs/active" className="block">
 
-              <div className="flex justify-between items-center mb-2">
-                <p className="text-[#C86315] font-medium">Winning Bids</p>
-                <Infoicon information="Number of jobs you have applied for whose status is accepted" />
-                <img src="/assets/wincup.png" alt="mail" />
-              </div>
+              <Link to="/approvedjobs/active" className="block">
 
-                            </Link>
+                <div className="flex justify-between items-center mb-2">
+                  <p className="text-[#C86315] font-medium">Winning Bids</p>
+                  <Infoicon information="Number of jobs you have applied for whose status is accepted" />
+                  <img src="/assets/wincup.png" alt="mail" />
+                </div>
+
+              </Link>
 
               <h1 className="font-bold text-2xl text-gray-800">{dashboardData?.bids?.winnigBids}</h1>
             </div>
@@ -487,14 +487,15 @@ const Userdashborad = () => {
                     </p>
                     <p className="text-sm">
                       <span className="font-semibold">Start Date:</span>{" "}
-                      {new Date(item.startDate).toLocaleDateString()}
+                      {new Date(item.startDate).toLocaleDateString("en-GB")}
                     </p>
                     <p className="text-sm">
                       <span className="font-semibold">End Date:</span>{" "}
                       {item.currentlyWorking
                         ? "Currently Working"
-                        : new Date(item.endDate).toLocaleDateString()}
+                        : new Date(item.endDate).toLocaleDateString("en-GB")}
                     </p>
+
                     <p className="text-sm">
                       <span className="font-semibold">Status:</span>{" "}
                       {item.currentlyWorking ? "Working" : "Worked"}
