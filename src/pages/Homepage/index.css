@@ -1,0 +1,201 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.containerx {
+  display: flex;
+  width: 100vw;
+  /* height: 100vh; */
+  overflow: hidden;
+  background-color: #d32f2f;
+
+  /* padding: 100px; */
+}
+
+@media screen and (max-width: 576px) {
+  .containerx {
+    display: flex;
+    flex-direction: column;
+    width: 100vw;
+    /* height: 100vh; */
+    overflow: hidden;
+    background-color: #d32f2f;
+
+    /* padding: 100px; */
+  }
+}
+
+.left-section,
+.right-section {
+  display: flex;
+  flex-direction: column;
+  /* justify-content: center; */
+  /* align-items: center; */
+  padding: 20px;
+  color: white;
+  transition: width 0.5s ease, transform 0.5s ease; /* Smooth transition */
+  overflow: hidden;
+  position: relative;
+}
+
+/* .left-section, .right-section {
+  overflow: hidden;
+  position: relative;
+} */
+
+.left-section {
+  background-color: #ffffff;
+  color: #000;
+}
+
+.right-section {
+  background-color: #d32f2f;
+  color: #fff;
+  transition: transform 1.5s ease-in-out, opacity 1.5s ease-in-out;
+  opacity: 1;
+}
+
+h1 {
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+h2 {
+  font-size: 1.5rem;
+}
+
+button {
+  padding: 6px 10px;
+  border: none;
+  background-color: transparent;
+  font-weight: bold;
+  cursor: pointer;
+  width: 100px;
+  height: 30px;
+  border-radius: 50px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.left-button,
+.right-button {
+  /* position: absolute;
+  bottom: 200px; */
+  margin-top: 40px; /* Adjust this for placement in the right section */
+}
+
+.left-button {
+  border: 1px solid #000;
+  color: #000;
+}
+
+.right-button {
+  border: 1px solid #fff;
+  color: #fff;
+}
+
+.right-section-to {
+  transform: scale(1.4) translateX(50px);
+}
+
+.hidden-right-section {
+  transform: translateX(100%);
+  opacity: 0;
+}
+
+@keyframes flipIn {
+  from {
+    transform: rotateX(90deg);
+    opacity: 0;
+  }
+  to {
+    transform: rotateX(0deg);
+    opacity: 1;
+  }
+}
+
+.flip-animation {
+  animation: flipIn 0.5s ease-out;
+}
+
+@keyframes flipIn {
+  from {
+    transform: rotateY(90deg);
+    opacity: 0;
+  }
+  to {
+    transform: rotateY(0deg);
+    opacity: 1;
+  }
+}
+
+.flip-animation2 {
+  animation: flipIn 0.5s ease-out;
+}
+
+/* Flip in animation */
+@keyframes flipInY {
+  0% {
+    transform: rotateY(90deg);
+    opacity: 0;
+  }
+  100% {
+    transform: rotateY(0deg);
+    opacity: 1;
+  }
+}
+
+/* Flip animation */
+@keyframes flipInY {
+  0% {
+    transform: rotateY(90deg);
+    opacity: 0;
+  }
+  100% {
+    transform: rotateY(0deg);
+    opacity: 1;
+  }
+}
+
+/* The card should be in the correct state when it is flipped */
+.flip-card {
+  transform-style: preserve-3d; /* Allow 3D transformations */
+  animation: flipInY 1s ease-out forwards; /* Trigger the flip animation */
+}
+
+.flip-card .flip-content {
+  backface-visibility: hidden; /* Hide the backface when it's flipped */
+}
+
+/* Initial video container state */
+.video-container {
+  display: inline-block;
+  width: 80vw; /* Initial size (small) */
+  height: 300px; /* Initial size (small) */
+  overflow: hidden; /* Ensure nothing spills over */
+  cursor: pointer; /* Indicate the video is clickable */
+  transition: all 0.3s ease; /* Smooth transition for expansion */
+}
+
+/* Fullscreen state for video container */
+.video-container.zoomed {
+  width: 100vw; /* Full width of the viewport */
+  height: 50vh; /* Full height of the viewport */
+  z-index: 2; /* Make sure the video appears on top */
+}
+
+/* Initial video state */
+.video {
+  width: 100%; /* Video takes up the full container width */
+  height: 100%; /* Video takes up the full container height */
+  object-fit: cover; /* Ensures the video scales nicely */
+  transition: all 0.1s ease; /* Smooth transition for scaling */
+}
+
+/* Fullscreen state for video */
+.video.full-screen {
+  width: 100vw; /* Full width of the viewport */
+  height: 100vh; /* Full height of the viewport */
+}

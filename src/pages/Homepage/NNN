@@ -1,0 +1,105 @@
+{/* Left section */}
+                <div
+                    className="flex flex-col justify-between bg-white-500 bg-opacity-50"
+                    style={{
+                        width: `${leftWidth}vw`,
+                        transition: "width 0.5s ease",
+                    }}
+                    onMouseMove={handleMouseMove}
+                    onClick={zoomLeft}
+                >
+                    {leftWidth > 10 ? (
+                        <>
+                            <div style={{ padding: "50px"}}>
+                                <div>
+                                    <p>For Employers</p>
+                                    <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold italic" style={{minWidth:"250px", maxWidth:"450px"}}>
+                                        Hire the Talent That <br /> Drives Your Business Forward
+                                    </h1>
+
+
+                                    <div className="flex">
+                                        <div>
+                                            <p className="mt-2 text-sm md:text-md lg:text-lg">
+                                                Discover top candidates, streamline your recruitment <br /> process, and build a team that excels.
+                                            </p>
+                                            <div className="mt-4">
+                                                <button className="outline p-2 rounded-lg text-black hover:bg-blue-600">
+                                                    Post Your Job
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <img
+                                            alt="man"
+                                            className="md:h-48 lg:h-72 mt-4 hidden lg:block ml-auto"
+                                            src="https://s3-alpha-sig.figma.com/img/95fa/5422/282802ca6aaf1062ef124a3944d8eaff?Expires=1732492800&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=asI0wuWGVZHpRl1HsAmZDsub7TRixbUGft9JOh1AMRw7FFogBHD-WFTNz6auoeMGxAf-cm79Hm5mTel7TPjtzOnJSdmM-fihi4lIZ-InmCVTm7W-xIHBjlk9sBLXNRpmzTryb01vO1jubJRWLlx8eGzW4CzrB27LSJ988a73M32iP9mDx~xHwvaWcg9DyJ7vyeGv6ftYpp-n6dADrn~kDQ0Hnw9j6rR0NTgJRvQSwflDEMhP~kNG-T6zJk78aps~OouL4qoNnbcUFd7dTblmDIQSovpIqGKMXRBFGcmyZMiIGAsFNE3ktkRbY9hrg-52~aNlBP1Eirm9AnwTHqhq7A__"
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                        </>
+                    ) : (
+                        <div className="flex justify-center items-center" style={{ height: "100vh" }}>
+                            <p className="relative group text-white-800">
+                                <span className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 ml-2">
+                                    Switch
+                                </span>
+                            </p>
+                            <MdArrowForwardIos size={30} />
+                        </div>
+                    )}
+                </div>
+
+                {/* Right section */}
+                <div
+                    className= "bg-red-500 bg-opacity-50 text-white flex flex-col justify-between"
+                    onClick={zoomRight}
+                    style={{ width: `${rightWidth}%` }}
+                    onMouseMove={handleMouseMove}
+                >
+                    {rightWidth > 10 ? (
+                        <>
+                            <div style={{ paddingLeft: "50px", paddingTop: "50px" }}>
+
+                                    
+                                <p>For Job Seekers</p>
+                                <h1 className="text-xl md:text-2xl lg:text-3xl font-bold italic">
+                                    Find Your Next <br /> Career Opportunity <br /> Today
+                                </h1>
+                                <div className='flex'>
+                                    <div>
+                                <p className="mt-2 text-sm md:text-md lg:text-lg" style={{minWidth:"150px"}}>
+                                    Find jobs that fit your skills and schedule. Apply <br /> easily and get paid securely with our live booking system!
+                                </p>
+                                <div className="mt-4">
+                                    <button className="outline p-2 rounded-lg text-white hover:bg-blue-600">
+                                        Find Jobs
+                                    </button>
+                                </div>
+                                </div>
+                                <img
+                                    alt="man"
+                                    className="h-24 md:h-48 lg:h-72 mt-4 hidden lg:block ml-auto"
+                                    src="https://s3-alpha-sig.figma.com/img/d37b/b719/5a5450c10b1bf3f8ff5018af364ba98c?Expires=1732492800&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=GSh1Yw45nHIefGCMo8ivdBdYMrslbctGc-fbaTdraTeUA~T0xBpNPnQRTHk3QSEOXbhgCXNB7JPLD8rxOS4LStonjptk0wMJbiiRQSZHL5Fa0vdOU0M~YaJZEVaSFoY4mIqD3VO5Xo6~XG~rgqaPebU0A3ksaeaOEEnIGKlsu5VUhAxbDsYwqnOKuajaEMRl-mgLl4mT3UtdKqKZN4PuKR2PAcyjWRFEVyF1F0i57zoHc3jsv77WXmo1DJaR~8SUCkmovF99ALSoXEjR9Zy~9xHYDYstmf8o28Ow2Yd4GnEi1njeNdj5gE0Yzsk0y4NnPS3S6WtThsKgIsIJuXUvgw__"
+                                />
+                                </div>
+                               
+                            </div>
+
+            
+
+                            <div className="flex justify-end items-end">
+                                
+                            </div>
+                        </>
+                    ) : (
+                        <div className="flex justify-center items-center" style={{ height: "100vh" }}>
+                            <MdArrowBackIos size={30} className='ml-5' />
+                            <p className="relative group text-white-800">
+                                <span className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 ml-2">
+                                    Switch
+                                </span>
+                            </p>
+                        </div>
+                    )}
+                </div>

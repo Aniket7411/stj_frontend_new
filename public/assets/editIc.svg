@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
+  <g id="edit" transform="translate(-1114.991 -279.991)">
+    <g id="view" transform="translate(1114.991 279.991)">
+      <g id="Ellipse_3" data-name="Ellipse 3" fill="rgba(255,255,255,0.05)" stroke="#4598cb" stroke-width="1">
+        <circle cx="10" cy="10" r="10" stroke="none"/>
+        <circle cx="10" cy="10" r="9.5" fill="none"/>
+      </g>
+      <g id="eye" transform="translate(0.311 0.311)">
+        <path id="Path_40" data-name="Path 40" d="M0,0H19.168V19.168H0Z" fill="none"/>
+        <path id="Icon_material-edit" data-name="Icon material-edit" d="M4.5,11.344v1.8H6.3l5.314-5.314-1.8-1.8Zm8.509-4.906a.478.478,0,0,0,0-.677L11.885,4.637a.478.478,0,0,0-.677,0l-.879.879,1.8,1.8Z" transform="translate(0.759 0.763)" fill="#4598cb"/>
+      </g>
+    </g>
+  </g>
+</svg>

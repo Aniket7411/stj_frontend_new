@@ -1,0 +1,193 @@
+.gradient-divider {
+    width: 100%;
+    max-width: 1024px; 
+    border-width: 0.5px; /* Reduced border width for a sleeker look */
+    border-style: solid;
+    border-color: transparent;
+    border-image-source: linear-gradient(270deg, rgba(255, 255, 255, 0) -0.71%, #FFFFFF 45.62%, rgba(255, 255, 255, 0) 94.96%);
+    border-image-slice: 1;
+    margin-top: 1rem;
+  }
+  /*section 6 */
+  .gradient-border {
+    border: 1px solid transparent;
+    border-image-source: linear-gradient(0deg, rgba(52, 52, 52, 0) 0%, #A2A2A2 100%); 
+    border-image-slice: 1; 
+    border-radius: 1px;
+  }
+  /* Basic container styling */
+.section-container {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+/* Title and description initial state */
+.title, .description {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 1s ease, transform 1s ease;
+}
+
+/* Fade-in effect */
+.title.visible, .description.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Card container styling */
+.cards-container {
+  justify-content: center;
+  display: flex;
+  gap: 20px;
+  opacity: 100;
+  transform: translateY(50vh);
+  transition: opacity 1s ease, transform 5s ease;
+}
+
+.cards-container.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* SectionThree.css */
+.section-three-title {
+  font-family: "Futura TS New", sans-serif;
+  font-size: 61.42px;
+  font-weight: 400;
+  line-height: 76.17px;
+  text-align: center;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 1s ease, transform 1s ease;
+}
+
+.section-three-title.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+/* Centering cards (step 3) */
+.cards-container.center {
+  transform: translateY(0);
+  opacity: 1;
+  justify-content: center;
+  gap: 10px;
+}
+
+
+/* Smooth transition for cards */
+.card {
+  transition: transform 2s ease-in-out;
+}
+
+/* Card styling with background images */
+.card {
+  width: 250px;
+  height: 350px;
+  background-size: cover;
+  background-position: center;
+  border-radius: 12px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  position: relative;
+  overflow: hidden;
+  transition: transform 1s ease, opacity 1s ease;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+/* Card title and icon */
+.card-content {
+  color: #fff;
+  font-family: "Futura TS New", sans-serif;
+  text-align: center;
+  position: relative;
+  z-index: 2;
+}
+
+.card-title {
+  font-family: "Futura TS New", sans-serif;
+  font-size: 65px;
+  font-weight: 200;
+  line-height: 158.75px;
+  text-align: center;
+  text-underline-position: from-font; 
+  text-decoration-skip-ink: none; 
+}
+.card-icon {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  width: 40px;
+  height: 40px;
+  z-index: 2;
+  transition: transform 0.3s ease; 
+}
+
+/* Overlay effect */
+/* .card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 1;
+} */
+
+/* Step 4 Separation Effect */
+.cards-container.separate .card:nth-child(1) {
+  transform: translateX(-120px) rotate(-5deg);
+}
+
+.cards-container.separate .card:nth-child(2) {
+  transform: translateY(-40px) scale(1.1);
+}
+
+.cards-container.separate .card:nth-child(3) {
+  transform: translateX(120px) rotate(5deg);
+}
+
+/* hover effect */
+.card-hover-content {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #FFFFFF !important;
+  visibility: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  transition: opacity 0.3s ease, visibility 0s 0.3s;
+  color: black;
+}
+
+.card:hover .card-hover-content {
+  opacity: 1;
+  visibility: visible;
+}
+
+.card:hover {
+  background-color: #FFFFFF;  /* This ensures the card has a white background on hover */
+}
+
+.card:hover .card-icon {
+  display: block;
+  transform: scale(1.1);  /* Optionally hide the icon on hover */
+}
+
+.card:hover .card-content {
+  display: none;
+}
+
+.card:hover .card-image {
+  opacity: 0; 
+}
