@@ -100,7 +100,7 @@ const UploadDocuments = () => {
         setIsLoading(true);
         try {
             const response = await HttpClient.get("/user/profile/uploads");
-            if (response.success) {
+            if (response?.success) {
                 const updatedFormData = {};
                 const updatedPreviews = {};
 
@@ -116,7 +116,6 @@ const UploadDocuments = () => {
             }
         } catch (err) {
             console.error("Error:", err);
-            toast.error("Failed to load documents");
         } finally {
             setIsLoading(false);
         }
@@ -310,8 +309,12 @@ const UploadDocuments = () => {
 
                         <div className="mt-10 pt-6 border-t border-gray-100 flex flex-col sm:flex-row justify-end space-y-4 sm:space-y-0 sm:space-x-4">
                             <button
+                            
+                            style={{
+                                outline:"2px solid #c5363c"
+                            }}
                                 type="button"
-                                className="px-8 py-3 bg-white border border-gray-300 text-gray-700 rounded-xl hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition-all duration-200 font-medium"
+                                className="px-3 py-2 bg-white border border-gray-300 text-gray-700 rounded-xl hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition-all duration-200 font-medium"
                                 onClick={() => window.history.back()}
                             >
                                 Cancel
@@ -319,7 +322,7 @@ const UploadDocuments = () => {
                             <button
                                 type="submit"
                                 disabled={loading.form}
-                                className="px-8 py-3 bg-indigo-600 text-white rounded-xl hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 font-medium flex items-center justify-center min-w-[160px]"
+                                className="px-3 py-2 bg-[#c5363c] text-white rounded-xl hover:bg-[#c5363C] focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 font-medium flex items-center justify-center min-w-[160px]"
                             >
                                 {loading.form ? (
                                     <>

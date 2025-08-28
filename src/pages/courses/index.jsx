@@ -10,12 +10,12 @@ import ClipLoader from "react-spinners/ClipLoader";
 import { toast } from "react-toastify";
 
 const Courses = () => {
-   const [location, setLocation] = useState({
-      latitude: null,
-      longitude: null,
-    });
-    const [distanceRange, setDistanceRange] = useState("");
-     const [error, setError] = useState(null);
+  const [location, setLocation] = useState({
+    latitude: null,
+    longitude: null,
+  });
+  const [distanceRange, setDistanceRange] = useState("");
+  const [error, setError] = useState(null);
   const [activeTab, setActiveTab] = useState("allCourses");
   const [courseData, setCourseData] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -34,6 +34,13 @@ const Courses = () => {
   const [selectedCity, setSelectedCity] = useState("");
 
 
+  const [filters, setFilters] = useState({
+    course: "",
+    distanceRange: 0,
+    country: "",
+    category: "",
+    keyword: "",
+  });
 
   const getAllCategories = async () => {
     setIsLoading(true);
@@ -52,29 +59,22 @@ const Courses = () => {
       console.log(error);
     }
   };
-   const selectDistance = (event) => {
-      setDistanceRange(event.target.value);
-      if(location.latitude===null || location.longitude===null){
-        toast.error('you need to allow location sharing for this filter')
-      }
-      setFilters((prev) => ({
-        ...prev,
-        city: event.target.value,
-      }));
-    };
+  const selectDistance = (event) => {
+    setDistanceRange(event.target.value);
+    if (location.latitude === null || location.longitude === null) {
+      toast.error('you need to allow location sharing for this filter')
+    }
+    setFilters((prev) => ({
+      ...prev,
+      city: event.target.value,
+    }));
+  };
 
   useEffect(() => {
     getAllCategories()
-  }, [])
+  },)
 
 
-  const [filters, setFilters] = useState({
-    course: "",
-    distanceRange: 0,
-    country: "",
-    category: "",
-    keyword: "",
-  });
 
   const paginate = (pageNumber) => {
     setCurrentPage(pageNumber);
@@ -84,13 +84,12 @@ const Courses = () => {
   const fetchCoursesData = async (page, updatedFilters = filters) => {
     try {
       setLoading(true);
-      //debugger;
       const params = {
         page,
         course: updatedFilters.course,
         //city: updatedFilters.city,
         // country: updatedFilters.country,
-        distanceRange:location.latitude?{latitude:location.latitude,longitude:location.longitude,range:distanceRange}:undefined,
+        distanceRange: location.latitude ? { latitude: location.latitude, longitude: location.longitude, range: distanceRange } : undefined,
         category: updatedFilters.category,
         keyword: updatedFilters.keyword, // Pass the keyword
       };
@@ -101,7 +100,7 @@ const Courses = () => {
 
       const formattedCourses = response.courses.map((eachCourse) => ({
         courseId: eachCourse?._id,
-        productId:eachCourse?.productId,
+        productId: eachCourse?.productId,
         courseImage: eachCourse?.courseCertificates?.courseImage,
         courseTitle: eachCourse?.courseDetails?.title,
         cratedOn: eachCourse?.createdAt,
@@ -122,8 +121,8 @@ const Courses = () => {
         endAmPM: eachCourse?.courseDetails?.endTime?.am_pm,
         courseDescription: eachCourse?.courseDetails?.description,
         certificateImage: eachCourse?.courseCertificates?.certificateImage,
-        courseInstructor:eachCourse?.courseDetails?.instructorName,
-        
+        courseInstructor: eachCourse?.courseDetails?.instructorName,
+
       }))
       console.log("formattedCourses", formattedCourses)
       setCourseData(formattedCourses)
@@ -158,7 +157,7 @@ const Courses = () => {
       ...prevFilters,
       course: debouncedKeyword,
       category: selectedCategory,
-       distanceRange:location.latitude?{latitude:location.latitude,longitude:location.longitude,range:distanceRange}:undefined,
+      distanceRange: location.latitude ? { latitude: location.latitude, longitude: location.longitude, range: distanceRange } : undefined,
       //city: selectedCity,
     }));
   }, [selectedCategory, debouncedKeyword, selectedCity, showFilters]);
@@ -172,9 +171,9 @@ const Courses = () => {
   }, [filters]);
 
 
-   useEffect(() => {
-    
-    if (location.latitude===null && location.longitude===null && navigator.geolocation) {
+  useEffect(() => {
+
+    if (location.latitude === null && location.longitude === null && navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         (position) => {
           setLocation({
@@ -286,12 +285,21 @@ const Courses = () => {
                 <option value={2}>{"2 km"}</option>
                 <option value={5}>{"5 km"}</option>
                 <option value={10}>{"10 km"}</option>
-                
+
 
               </select>
             </div>
 
-     
+            <button
+              onClick={() => window.location.reload()}
+              className="px-3 py-1 bg-[#c5363c] text-white rounded-lg shadow hover:bg-red-600 transition-all duration-200 ease-in-out"
+            >
+              Reset
+            </button>
+
+
+
+
 
             <img
               onClick={() => {
