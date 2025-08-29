@@ -239,16 +239,41 @@ const Jobapplying = () => {
                 <span>{jobDetails?.jobRequirements?.dressCode || "Not specified"}</span>
               </div>
 
-             
+              {/* <div className="flex flex-wrap mt-3 gap-3 sm:gap-6 justify-between">
+          <div className="flex items-center px-2 py-1 rounded-md text-xs sm:text-sm">
+            <MdCalendarMonth />
+            <p className="ml-1">6 Months</p>
+          </div>
+          <div className="flex items-center px-2 py-1 rounded-md text-xs sm:text-sm">
+            <CiClock1 />
+            <p className="ml-1">30+ hrs/week</p>
+          </div>
+          <div className="flex items-center px-2 py-1 rounded-md text-xs sm:text-sm">
+            <AiOutlineSchedule />
+            <p className="ml-1">Intermediate</p>
+          </div>
+          <div className="flex items-center text-xs sm:text-sm">
+            <FaMoneyBillWave className="mr-2" />
+            <p className="text-[#505050] font-semibold">
+              $250 <br />
+              <span className="font-normal text-[#787878] text-[12px]">
+                Fixed price
+              </span>
+            </p>
+          </div>
+        </div> */}
             </div>
 
-         <p className="text-right mt-2 text-[#505050] text-sm sm:text-base">
-  Required Credits :{" "}
-  <span className="font-semibold text-[#407BFF]">1 Credit</span>
-</p>
+            <p className="text-right mt-2 text-[#505050] text-sm sm:text-base">
+              Required Credits :{" "}
+              <span className="font-semibold text-[#407BFF]">1 Credit</span>
+            </p>
 
+            {/* <p className="text-right text-sm font-bold text-[#D3555A]">
+              20 credits left
+            </p> */}
 
-            <div className="flex justify-between mt-2">
+            <div className="flex justify-between">
               <strong className="text-sm sm:text-base">Write your proposal</strong>
               {/* <h3 className="text-[#407BFF] underline text-sm sm:text-base">
           Upgrade your plan to get more credits & earn more
@@ -284,8 +309,7 @@ const Jobapplying = () => {
                 (
                   <>
 
-                  {
-                    jobDetails?.jobRequirements?.coverletterRequired  &&<div className="flex gap-2 items-center text-[#407BFF] mt-2">
+                    <div className="flex gap-2 items-center text-[#407BFF] mt-2">
                       <IoIosAttach />
                       <input
                         type="file"
@@ -301,8 +325,6 @@ const Jobapplying = () => {
                         </span>
                       </label>
                     </div>
-                  }
-                    
                   </>
                 )
             }
@@ -328,8 +350,8 @@ const Jobapplying = () => {
               ) : (
                 <>
 
-                
-                  {jobDetails?.jobRequirements?.coverletterRequired  &&  <div className="flex gap-2 items-center text-[#407BFF] mt-2">
+
+                  <div className="flex gap-2 items-center text-[#407BFF] mt-2">
                     <IoIosAttach />
                     <input
                       type="file"
@@ -344,9 +366,8 @@ const Jobapplying = () => {
                         Add cover letter (pdf)
                       </span>
                     </label>
-                  </div>}
-                
-                 
+                  </div>
+
                 </>
               )
             }
