@@ -74,7 +74,7 @@ function Header() {
 
   let notificationsCount = notifications.filter(notification => !notification.isRead).length;
 
-  console.log("notificationsnotificationsnotonsnotificationsnotifications", notificationsCount); // Output: 0
+  console.log("notificationsnotificationsnotonsnotificationsnotific", notificationsCount); // Output: 0
 
 
 
