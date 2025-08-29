@@ -52,7 +52,7 @@ const JobDescriptionDetails = () => {
         setApplyStatus(response?.applyStatus);
       }
     } catch (error) {
-   
+
       console.error("Error fetching job details:", error.message);
       setIsLoading(false)
     }
@@ -89,7 +89,7 @@ const JobDescriptionDetails = () => {
     getJobDetails();
   }, []);
 
-  console.log("jobDetailsjobDetailsjobDetails", jobDetails)
+  console.log("jobDetailsjobDetailsjobDetail", jobDetails?.jobDetails?.salary?.frequency)
 
   return (
     <>
@@ -165,16 +165,20 @@ const JobDescriptionDetails = () => {
                             Posted {new Date(jobDetails?.createdAt).toLocaleDateString()}
                           </span>
                         </div>
-                        <div className="flex flex-wrap gap-2">
-                          <span className="inline-flex items-center bg-blue-50 text-blue-700 px-3 py-1 rounded-full text-sm">
-                            £{jobDetails?.jobDetails?.salary?.amount}/ Hour
-                            {/* {jobDetails?.jobDetails?.salary?.frequency === "monthly" ? "mo" : "wk"} */}
+                        <div className="flex flex-wrap gap-3">
+                          {/* Salary */}
+                          <span className="inline-flex items-center bg-blue-50 text-blue-700 px-3 py-1 rounded-full text-sm font-medium">
+                            £ {jobDetails?.jobDetails?.salary?.amount ?? "N/A"} /{" "}
+                            {jobDetails?.jobDetails?.salary?.frequency === "Hourly" ? "Hour" : "Month"}
                           </span>
-                          <span className="inline-flex items-center bg-green-50 text-green-700 px-3 py-1 rounded-full text-sm">
-                            {jobDetails?.jobRequirements?.minimumExp}-
-                            {jobDetails?.jobRequirements?.maximumExp} yrs exp
+
+                          {/* Experience */}
+                          <span className="inline-flex items-center bg-green-50 text-green-700 px-3 py-1 rounded-full text-sm font-medium">
+                            {jobDetails?.jobRequirements?.minimumExp ?? 0} -{" "}
+                            {jobDetails?.jobRequirements?.maximumExp ?? 0} yrs exp
                           </span>
                         </div>
+
                       </div>
                       <div className="mt-3 md:mt-0">
                         <img
@@ -198,7 +202,7 @@ const JobDescriptionDetails = () => {
                         <div>
                           <p className="text-sm text-gray-500">Location</p>
                           <p className="font-medium">
-                            {jobDetails?.jobDetails?.city}, {jobDetails?.jobDetails?.country}
+                            {jobDetails?.jobDetails?.city}, {jobDetails?.jobDetails?.country}{jobDetails?.location}
                           </p>
                         </div>
                         <div>
@@ -211,7 +215,7 @@ const JobDescriptionDetails = () => {
                         <div>
                           <p className="text-sm text-gray-500">Minimum Qualification</p>
                           <p className="font-medium">
-                            {jobDetails?.jobRequirements?.minimumEducation || ""}
+                            {jobDetails?.jobRequirements?.minimumQualification || ""}
                           </p>
                         </div>
                       </div>
@@ -223,27 +227,51 @@ const JobDescriptionDetails = () => {
                         <CiClock1 className="text-[#c5363c] mr-2" />
                         Job Insights
                       </h3>
-                      <div className="space-y-3">
+                      <div className="space-y-4">
+                        {/* Schedule */}
                         <div>
                           <p className="text-sm text-gray-500">Schedule</p>
                           <p className="font-medium">
-                            {jobDetails?.workSchedule?.workingDays?.join(', ')} •{' '}
-                            {jobDetails?.workSchedule?.startTime}-{jobDetails?.workSchedule?.endTime}
+                            {jobDetails?.workSchedule?.workingDays?.length
+                              ? jobDetails.workSchedule.workingDays.join(", ")
+                              : "Not specified"}
+                            <br />
+                            <strong>Timings: </strong>
+                            {jobDetails?.workSchedule?.startTime && jobDetails?.workSchedule?.endTime
+                              ? `${jobDetails.workSchedule.startTime} - ${jobDetails.workSchedule.endTime}`
+                              : "Not specified"}
                           </p>
                         </div>
+
+                        {/* Start Date */}
                         <div>
                           <p className="text-sm text-gray-500">Start Date</p>
                           <p className="font-medium">
-                            {new Date(jobDetails?.workSchedule?.startDate).toLocaleDateString()}
+                            {jobDetails?.workSchedule?.startDate
+                              ? new Date(jobDetails.workSchedule.startDate).toLocaleDateString("en-GB", {
+                                day: "2-digit",
+                                month: "short",
+                                year: "numeric",
+                              })
+                              : "Not specified"}
                           </p>
                         </div>
+
+                        {/* Deadline */}
                         <div>
                           <p className="text-sm text-gray-500">Deadline</p>
                           <p className="font-medium">
-                            {new Date(jobDetails?.jobDetails?.applicationDeadline).toLocaleDateString()}
+                            {jobDetails?.jobDetails?.applicationDeadline
+                              ? new Date(jobDetails.jobDetails.applicationDeadline).toLocaleDateString("en-GB", {
+                                day: "2-digit",
+                                month: "short",
+                                year: "numeric",
+                              })
+                              : "Not specified"}
                           </p>
                         </div>
                       </div>
+
                     </div>
                   </div>
 

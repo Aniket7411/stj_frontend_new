@@ -213,9 +213,11 @@ const Publish = () => {
 
           <hr className="border-gray-300 mb-2 mt-4" />
           <div className="shadow-lg  p-4">
-            <p className="text-[#976063] font-bold text-xl">
-              {companyDetails.companyName}
+            <p className="text-xl font-bold text-[#976063]">
+              <span className="font-extrabold text-[#5a2d2f]">Company:</span>{" "}
+              {companyDetails?.companyName || "N/A"}
             </p>
+
             <h2 className="font-futura text-2xl mt-1">{jobDetails.title}</h2>
             <p className="mb-2 text-sm">
               <strong>Posting Date:</strong> {jobDetails.jobPostingDate}
@@ -223,9 +225,10 @@ const Publish = () => {
             <div className="flex items-center text-[#976063] font-bold mb-2">
               <CiLocationOn className="mb-1" />
               <p className="mb-1 text-sm">
-                {jobDetails.postCode} {jobDetails.city}
+                {jobDetails.postCode} {jobDetails.city} {jobDetails?.location}
               </p>
             </div>
+
             <span className="bg-[#F0F0F0] font-semibold mb-4 rounded-md px-3 py-1">
               £ {jobDetails.salary.amount} / {jobDetails.salary.frequency === "Monthly" ? "Month" : "Hour"}
             </span>
@@ -268,7 +271,7 @@ const Publish = () => {
                   <FaBookOpenReader className="mt-1 mr-2 text-[#D3555A]" />
                   <div>
                     <h4 className="font-bold">Minimum Qualification</h4>
-                    <p>{jobRequirements?.minimumEducation}</p>
+                    <p>{jobRequirements?.minimumQualification}</p>
                   </div>
                 </div>
               </div>

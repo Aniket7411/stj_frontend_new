@@ -115,10 +115,10 @@ const EmployerInfo = () => {
                 <p className="text-sm text-red-500 font-semibold">Employer</p>
               </div>
             </div>
-            <div className="text-right">
+            <div className="text-left">
             <Link
   to="/employerprofile"
-  className="inline-block px-5 py-2 rounded-lg bg-gradient-to-r from-blue-500 to-indigo-600 text-white font-semibold shadow-md hover:shadow-lg hover:scale-105 transition-all duration-300"
+  className="inline-block px-3 py-1 rounded-lg bg-gradient-to-r from-blue-500 to-indigo-600 text-white font-semibold shadow-md hover:shadow-lg hover:scale-105 transition-all duration-300"
 >
   Go to Dashboard
 </Link>

@@ -444,9 +444,9 @@ const Userdashborad = () => {
             <div className="p-4 rounded-lg shadow-lg bg-white border border-gray-200 flex-grow sm:flex-grow-0 sm:w-[30%] min-h-[145px]">
 
 
-              <div className="flex justify-between items-center mb-2">
+              <div className="flex justify-between w-[200px] items-center mb-2">
                 <p className="text-[#C5363C] font-medium">Lost Bids</p>
-                <Infoicon information="Number of jobs you have applied for whose status is rejected" />
+                <Infoicon information="Jobs you applied for that were rejected. Check notifications for details." />
                 <img src="/assets/auction.png" alt="auction" />
               </div>
 

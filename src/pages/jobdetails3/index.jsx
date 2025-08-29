@@ -167,11 +167,11 @@ const AddJobDetails34 = () => {
               <div className="w-full md:w-1/3">
                 <label className="block text-sm font-semibold mb-2">Minimum Qualification</label>
                 <select
-                  value={jobRequirements?.minimumEducation || ""}
+                  value={jobRequirements?.minimumQualification || ""}
                   onChange={(e) =>
                     setJobRequirements((prevState) => ({
                       ...prevState,
-                      minimumEducation: e.target.value,
+                      minimumQualification: e.target.value,
                     }))
                   }
                   className="w-full border border-gray-300 rounded-lg p-3 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -351,13 +351,13 @@ const AddJobDetails34 = () => {
               </label>
             </div>
 
-            <h2 className="text-2xl font-semibold mb-2">
+            {/* <h2 className="text-2xl font-semibold mb-2">
               Need field related documents?
-            </h2>
-            <label className="block mb-3 text-lg">
+            </h2> */}
+            {/* <label className="block mb-3 text-lg">
               Add fields for candidates to add job-related documents.
-            </label>
-
+            </label> */}
+{/* 
             <div className="flex flex-wrap gap-4 mb-2">
               <div className="flex-1 min-w-[200px]">
                 <label htmlFor="document-title" className="block mb-2">
@@ -384,7 +384,7 @@ const AddJobDetails34 = () => {
                   />
                 </div>
               </div>
-            </div>
+            </div> */}
 
             <label className="block mb-3 text-lg">Choose document side</label>
 

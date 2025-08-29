@@ -219,7 +219,7 @@ const UserCourses = () => {
           ))}
         </div>
       ) : (
-        <p className="text-gray-500 text-lg">No courses added yet.</p>
+        <p className="text-gray-500 text-lg">You haven’t enrolled in any courses.</p>
       )}
     </div>
   );

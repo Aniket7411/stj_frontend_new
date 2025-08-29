@@ -1,14 +1,15 @@
 import { useLoadScript, Autocomplete, GoogleMap } from "@react-google-maps/api";
 import { useRef, useState } from "react";
 
-const MapSearch = ({setJobDetails,type}) => {
+const MapSearch = ({ setJobDetails, type, jobDetails }) => {
+
     //console.log(googleMapData,".................")
     const autocompleteRef = useRef(null);
-    const [searchValue,setSearchValue]=useState("");
+    const [searchValue, setSearchValue] = useState("");
     const { isLoaded, loadError } = useLoadScript({
         // googleMapsApiKey: "AIzaSyDGSlhaWmPcOQXsi-Wqe4l5JZj4_tJ41lA",
         // googleMapsApiKey:"AIzaSyAtc1qnhk3GcaqTFm2MO4H-dsBSyjyVcl8",
-        googleMapsApiKey:"AIzaSyDqtaMGsIB-4GbnBjdpfzNTlEBXviBd3zM",
+        googleMapsApiKey: "AIzaSyDqtaMGsIB-4GbnBjdpfzNTlEBXviBd3zM",
         libraries: ["places"],
     });
 
@@ -47,48 +48,50 @@ const MapSearch = ({setJobDetails,type}) => {
             }
         });
 
-       if(type==="job"){
-         setJobDetails((pre) => ({
-            ...pre,
-            city: city,
-            state: state,
-            jobAddress: place?.formatted_address,
-            latitude: lat,
-            longitude: lng,
-        }));
-       }
-       else if(type==="course"){
-         setJobDetails((pre) => ({
-            ...pre,
-            townCity: city,
-            address: place?.formatted_address,
-            latitude: lat,
-            longitude: lng,
-        }));
-       }
-        else if(type==="employerProfile"){
+        if (type === "job") {
+            setJobDetails((pre) => ({
+                ...pre,
+                city: city,
+                state: state,
+                jobAddress: place?.formatted_address,
+                latitude: lat,
+                longitude: lng,
+                location: place?.formatted_address
+            }));
+        }
+        else if (type === "course") {
+            setJobDetails((pre) => ({
+                ...pre,
+                townCity: city,
+                address: place?.formatted_address,
+                latitude: lat,
+                longitude: lng,
+            }));
+        }
+        else if (type === "employerProfile") {
             //debugger
-         setJobDetails((pre) => ({
-            ...pre,
-            townCity: city,
-            address: place?.formatted_address,
-            latitude: lat,
-            longitude: lng,
-            state:state
-        }));
-       }
-        else if(type==="employeeProfile"){
+            setJobDetails((pre) => ({
+                ...pre,
+                townCity: city,
+                address: place?.formatted_address,
+                latitude: lat,
+                longitude: lng,
+                state: state,
+                location: searchValue
+            }));
+        }
+        else if (type === "employeeProfile") {
             //debugger
-         setJobDetails((pre) => ({
-            ...pre,
-            town: city,
-            city:city,
-            address: place?.formatted_address,
-            latitude: lat,
-            longitude: lng,
-            state:state
-        }));
-       }
+            setJobDetails((pre) => ({
+                ...pre,
+                town: city,
+                city: city,
+                address: place?.formatted_address,
+                latitude: lat,
+                longitude: lng,
+                state: state
+            }));
+        }
         setSearchValue(place?.formatted_address)
     };
 
@@ -100,19 +103,19 @@ const MapSearch = ({setJobDetails,type}) => {
             onLoad={(ref) => (autocompleteRef.current = ref)}
             onPlaceChanged={onPlaceChanged}
             options={{
-                componentRestrictions: { country: "uk" },
+                componentRestrictions: { country: "UK" },
                 types: ["address"],
             }}
         >
             <input
-                onChange={(e)=>{
+                onChange={(e) => {
                     setSearchValue(e.target.value)
                 }}
                 value={searchValue}
                 type="text"
                 required
                 name="jobAddress"
-                placeholder="Enter location"
+                placeholder={jobDetails?.location?.trim() === "" ? "Enter job location" : jobDetails.location}
                 className="w-full border border-gray-300 rounded-lg p-3"
             />
         </Autocomplete>

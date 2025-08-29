@@ -123,26 +123,26 @@ const Jobapplying = () => {
       contact: userData?.phoneNumber,
     }
 
- try {
-  if (billamount > 0) {
-    let sendData = { type: 'proposal', amount: billamount };
-    navigate('/payment', { state: sendData });
-    return;
-  }
+    try {
+      if (billamount > 0) {
+        let sendData = { type: 'proposal', amount: billamount };
+        navigate('/payment', { state: sendData });
+        return;
+      }
 
-  const response = await HttpClient.post(`/applyJob/create`, sendData);
+      const response = await HttpClient.post(`/applyJob/create`, sendData);
 
-  if (response?.message === 'Job application submitted successfully') {
-    toast.success('Application Submitted Successfully'); // success message
+      if (response?.message === 'Job application submitted successfully') {
+        toast.success('Application Submitted Successfully'); // success message
 
-    setTimeout(() => {
-      navigate('/findjobs');
-    }, 4000); // wait 2 seconds before redirect
-  }
-} catch (err) {
-  toast.error(err?.response?.data?.message);
-  return;
-}
+        setTimeout(() => {
+          navigate('/findjobs');
+        }, 4000); // wait 2 seconds before redirect
+      }
+    } catch (err) {
+      toast.error(err?.response?.data?.message);
+      return;
+    }
 
 
 
@@ -194,17 +194,27 @@ const Jobapplying = () => {
                 </p>
 
               </div>
-              <div className="flex items-center text-[#976063] text-sm sm:text-base">
-                <CiLocationOn />
-                <p className="font-bold">{jobDetails?.jobDetails?.city}, {jobDetails?.jobDetails?.country}</p>
+              <div className="flex items-center text-[#976063] text-sm sm:text-base gap-1">
+                <CiLocationOn className="text-lg" />
+                <p className="font-bold">
+                  {jobDetails?.jobDetails?.city}, {jobDetails?.jobDetails?.country}
+                </p>
+                {jobDetails?.jobDetails?.location && (
+                  <span className="ml-1 text-gray-600">({jobDetails?.jobDetails?.location})</span>
+                )}
               </div>
+
 
               <div className="flex flex-wrap mt-2 gap-2">
                 <p className="bg-[#F0F0F0] w-fit rounded-md px-2 py-1">
-                  <strong>£ {jobDetails?.jobDetails?.salary?.amount} / Per </strong>
-                  {jobDetails?.jobDetails?.salary?.frequency?.slice(0, -1)}
-
+                  <strong>
+                    £ {jobDetails?.jobDetails?.salary?.amount} /{" "}
+                  </strong>
+                  {jobDetails?.jobDetails?.salary?.frequency === "Hourly"
+                    ? "Hour"
+                    : "Month"}
                 </p>
+
                 <p className="bg-[#EBF6FF] rounded-lg px-2 py-1 text-xs sm:text-sm">
                   {jobDetails?.jobDetails?.employmentType}
                 </p>
@@ -224,39 +234,21 @@ const Jobapplying = () => {
                 </p>
               </div>
 
-              {/* <div className="flex flex-wrap mt-3 gap-3 sm:gap-6 justify-between">
-          <div className="flex items-center px-2 py-1 rounded-md text-xs sm:text-sm">
-            <MdCalendarMonth />
-            <p className="ml-1">6 Months</p>
-          </div>
-          <div className="flex items-center px-2 py-1 rounded-md text-xs sm:text-sm">
-            <CiClock1 />
-            <p className="ml-1">30+ hrs/week</p>
-          </div>
-          <div className="flex items-center px-2 py-1 rounded-md text-xs sm:text-sm">
-            <AiOutlineSchedule />
-            <p className="ml-1">Intermediate</p>
-          </div>
-          <div className="flex items-center text-xs sm:text-sm">
-            <FaMoneyBillWave className="mr-2" />
-            <p className="text-[#505050] font-semibold">
-              $250 <br />
-              <span className="font-normal text-[#787878] text-[12px]">
-                Fixed price
-              </span>
-            </p>
-          </div>
-        </div> */}
+              <div className="flex items-center text-sm sm:text-base mt-1 text-gray-700">
+                <span className="font-semibold text-[#976063] mr-1">Dress Code:</span>
+                <span>{jobDetails?.jobRequirements?.dressCode || "Not specified"}</span>
+              </div>
+
+             
             </div>
 
-            <p className="text-right mt-2 text-[#505050] text-sm sm:text-base">
-              Required Credits : <strong>1 credit</strong>
-            </p>
-            {/* <p className="text-right text-sm font-bold text-[#D3555A]">
-              20 credits left
-            </p> */}
+         <p className="text-right mt-2 text-[#505050] text-sm sm:text-base">
+  Required Credits :{" "}
+  <span className="font-semibold text-[#407BFF]">1 Credit</span>
+</p>
 
-            <div className="flex justify-between">
+
+            <div className="flex justify-between mt-2">
               <strong className="text-sm sm:text-base">Write your proposal</strong>
               {/* <h3 className="text-[#407BFF] underline text-sm sm:text-base">
           Upgrade your plan to get more credits & earn more
@@ -291,7 +283,9 @@ const Jobapplying = () => {
               ) :
                 (
                   <>
-                    <div className="flex gap-2 items-center text-[#407BFF] mt-2">
+
+                  {
+                    jobDetails?.jobRequirements?.coverletterRequired  &&<div className="flex gap-2 items-center text-[#407BFF] mt-2">
                       <IoIosAttach />
                       <input
                         type="file"
@@ -307,6 +301,8 @@ const Jobapplying = () => {
                         </span>
                       </label>
                     </div>
+                  }
+                    
                   </>
                 )
             }
@@ -331,7 +327,9 @@ const Jobapplying = () => {
                 </div>
               ) : (
                 <>
-                  <div className="flex gap-2 items-center text-[#407BFF] mt-2">
+
+                
+                  {jobDetails?.jobRequirements?.coverletterRequired  &&  <div className="flex gap-2 items-center text-[#407BFF] mt-2">
                     <IoIosAttach />
                     <input
                       type="file"
@@ -346,7 +344,9 @@ const Jobapplying = () => {
                         Add cover letter (pdf)
                       </span>
                     </label>
-                  </div>
+                  </div>}
+                
+                 
                 </>
               )
             }
@@ -388,8 +388,8 @@ const Jobapplying = () => {
 
             {/* <h2 className="text-sm sm:text-base mt-4">Enter Especialisation</h2> */}
             {/* <div className="bg-[#EBEBEB] w-full sm:w-[250px] flex items-center p-2 rounded-md"> */}
-              {/* <FaDollarSign className="text-[#000] mr-2" /> */}
-              {/* <input
+            {/* <FaDollarSign className="text-[#000] mr-2" /> */}
+            {/* <input
                 type="text"
                 className="bg-transparent border-none outline-none placeholder:text-gray-500 text-black w-full"
                 placeholder="Enter your Especialisation"
@@ -449,7 +449,7 @@ const Jobapplying = () => {
       </div> */}
 
             {/* Notification Option */}
-            <div className="flex items-center text-sm sm:text-base">
+            <div className="flex items-center mt-2 text-sm sm:text-base">
               <input
                 type="checkbox"
                 id="notify"

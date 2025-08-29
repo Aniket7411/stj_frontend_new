@@ -19,6 +19,8 @@ const Proposal = ({ JobId, jobDetails }) => {
         type: "jobId",
         status: status,
       });
+
+      console.log("responseresponse", response)
       setProposalList(response);
     } catch (err) {
       toast.error(err?.message);
@@ -55,21 +57,28 @@ const Proposal = ({ JobId, jobDetails }) => {
         <div className="flex flex-wrap justify-between items-center mb-6">
           {/* Proposal Status Filters */}
           <div className="flex font-semibold space-x-6 text-sm sm:text-base">
-            {["applied", "shortlist", "reject","approved"].map((type) => (
-              <h4
-                key={type}
-                onClick={() => setStatus(type)}
-                className={`cursor-pointer ${status === type
-                    ? "text-blue-600 underline"
-                    : "text-gray-600 hover:text-blue-500"
-                  }`}
-              >
-                {type === "applied"
-                  ? "All Proposals"
-                  : type.charAt(0).toUpperCase() + type.slice(1)}
-              </h4>
-            ))}
+            {["applied", "shortlist", "reject", "approved"].map((type) => {
+              let label = "";
+              if (type === "applied") label = "All Proposals";
+              else if (type === "shortlist") label = "Shortlisted";
+              else if (type === "reject") label = "Rejected";
+              else label = type.charAt(0).toUpperCase() + type.slice(1);
+
+              return (
+                <h4
+                  key={type}
+                  onClick={() => setStatus(type)}
+                  className={`cursor-pointer ${status === type
+                      ? "text-blue-600 underline"
+                      : "text-gray-600 hover:text-blue-500"
+                    }`}
+                >
+                  {label}
+                </h4>
+              );
+            })}
           </div>
+
 
           {/* Search Bar */}
           <div className="w-full sm:w-auto mt-4 sm:mt-0">
@@ -94,11 +103,11 @@ const Proposal = ({ JobId, jobDetails }) => {
               {/* Profile Section */}
               <div className="flex flex-wrap justify-between items-center">
                 <div className="flex items-center space-x-4">
-                  <img
+                  {/* <img
                     src={item?.profile}
                     alt="profile-image"
                     className="w-16 h-16 rounded-full object-cover"
-                  />
+                  /> */}
                   <div>
                     <p className="text-[#D3555A] font-semibold">
                       {item?.username}
@@ -111,16 +120,16 @@ const Proposal = ({ JobId, jobDetails }) => {
                 {/* Action Buttons */}
                 <div className="flex items-center space-x-2">
                   {status === 'reject' && (
-                    <h3 className="text-red-700 bg-red-100 px-3 py-1 rounded-full text-sm font-semibold shadow-sm">
-                       Rejected
-                      </h3>
+                    <h3 className="text-red-700 bg-red-100 px-2 py-1 rounded-full text-sm font-semibold shadow-sm">
+                      Rejected
+                    </h3>
                   )}
 
                   {status === 'shortlist' && (
                     <>
                       <button
                         onClick={() => updateStatus(item?._id, "reject")}
-                        className="bg-[#D3555A] text-white py-2 px-4 rounded-md hover:bg-[#B94A45] transition"
+                        className="bg-[#D3555A] text-white py-1 px-2 rounded-md hover:bg-[#B94A45] transition"
                       >
                         Reject
                       </button>
@@ -149,7 +158,7 @@ const Proposal = ({ JobId, jobDetails }) => {
                       </button>
                     </>
                   )}
-                   {status === 'approved' && (
+                  {status === 'approved' && (
                     <>
                       <h3 className="text-green-700 bg-green-100 px-3 py-1 rounded-full text-sm font-semibold shadow-sm">
                         Approved
@@ -163,44 +172,55 @@ const Proposal = ({ JobId, jobDetails }) => {
 
               {/* Proposal Details */}
               <div className="mt-4 flex flex-wrap gap-4">
-                {/* Resume & Cover Letter Links */}
-                <div className="flex items-center space-x-2">
-                  <p className="text-sm">Resume:</p>
-                  <a
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    href={item?.resume}
-                    className="bg-[#F2F2F2] flex items-center space-x-2 py-2 px-4 rounded-md text-black hover:bg-[#e0e0e0] transition"
-                    download
-                  >
-                    <IoEye />
-                    <span className="font-semibold">View Resume</span>
-                  </a>
-                </div>
+                {/* Resume Link */}
+                {item?.resume && item?.resume !== "" && (
+                  <div className="flex items-center space-x-2">
+                    <p className="text-sm">Resume:</p>
+                    <a
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      href={item?.resume}
+                      className="bg-[#F2F2F2] flex items-center space-x-2 py-2 px-4 rounded-md text-black hover:bg-[#e0e0e0] transition"
+                      download
+                    >
+                      <IoEye />
+                      <span className="font-semibold">View Resume</span>
+                    </a>
+                  </div>
+                )}
 
-                <div className="flex items-center space-x-2">
-                  <p className="text-sm">Cover Letter:</p>
-                  <a
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    href={item?.coverLetter}
-                    className="bg-[#F2F2F2] flex items-center space-x-2 py-2 px-4 rounded-md text-black hover:bg-[#e0e0e0] transition"
-                    download
-                  >
-                    <IoEye />
-                    <span className="font-semibold">View Cover Letter</span>
-                  </a>
-                </div>
+                {/* Cover Letter Link */}
+                {item?.coverLetter && item?.coverLetter !== "" && (
+                  <div className="flex items-center space-x-2">
+                    <p className="text-sm">Cover Letter:</p>
+                    <a
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      href={item?.coverLetter}
+                      className="bg-[#F2F2F2] flex items-center space-x-2 py-2 px-4 rounded-md text-black hover:bg-[#e0e0e0] transition"
+                      download
+                    >
+                      <IoEye />
+                      <span className="font-semibold">View Cover Letter</span>
+                    </a>
+                  </div>
+                )}
               </div>
 
+
               {/* Additional Details */}
-              <div className="mt-4 flex items-center">
+              {/* <div className="mt-4 flex items-center">
                 <TbJewishStarFilled className="text-[#f7c932]" />
                 <p className="text-[#505050] mx-2">Specializes in</p>
                 <strong>{item?.specialist}</strong>
+              </div> */}
+              <div className="mt-3 p-3 border rounded-lg bg-gray-50">
+                <p className="text-sm sm:text-base text-gray-700">
+                  <span className="font-semibold text-gray-800 block mb-1">Candidate's Message:</span>
+                  {item?.description || "No message provided"}
+                </p>
               </div>
 
-              <p className="text-gray-700 mt-2">{item?.description}</p>
             </div>
           ))
         ) : (

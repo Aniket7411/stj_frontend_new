@@ -58,7 +58,7 @@ function Header() {
 
   // Mark all notifications as read
   const markAllAsRead = () => {
-    // Your implementation
+    setIsOpen(!isOpen);
   };
 
   // Calculate unread count

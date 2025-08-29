@@ -217,7 +217,7 @@ const AddJobDetailsStep2 = () => {
     //   longitude:googleMapData?.longitude
 
     // }))
-    console.log(jobDetails,"..........................220")
+    console.log(jobDetails, "..........................220")
     setPostingJob((prevPostingJob) => ({
       ...prevPostingJob,
       jobDetails,
@@ -242,7 +242,7 @@ const AddJobDetailsStep2 = () => {
     getAllCategories()
   }, [])
 
-
+  console.log("jobDetailsjobDetailsjobDetails", jobDetails?.location)
 
   return (
     <>
@@ -369,6 +369,15 @@ const AddJobDetailsStep2 = () => {
                   />
                 </FormField>
 
+                {jobDetails?.location && (
+                  <div className="flex items-center gap-2 mt-2 text-gray-700">
+                    <span className="font-semibold text-gray-900">📍Current Job Location:</span>
+                    <span className="capitalize">{jobDetails.location}</span>
+                  </div>
+                )}
+
+
+
                 {/* <FormField label="Address">
                   <input
                     type="text"
@@ -385,10 +394,11 @@ const AddJobDetailsStep2 = () => {
                     }
                   />
                 </FormField> */}
-               
-                      <MapSearch   setJobDetails={setJobDetails} type={"job"} />
 
-               
+                <MapSearch setJobDetails={setJobDetails} jobDetails={jobDetails} type={"job"} />
+
+
+
 
                 <FormField label="Job Description" required>
                   <textarea
@@ -541,32 +551,32 @@ const AddJobDetailsStep2 = () => {
                 </LoadScript> */}
 
 
-<FormField label="Application Deadline" required>
-  <input
-    type="date"
-    className="border border-gray-300 rounded-lg p-2 focus:ring-2 focus:ring-blue-500 outline-none"
-    min={new Date().toISOString().split("T")[0]} // No past dates
-    value={(() => {
-      const [y, m, d] = (jobDetails.applicationDeadline || "0000-00-00").split("-");
-      return `${y.padStart(4, "0")}-${m.padStart(2, "0")}-${d.padStart(2, "0")}`;
-    })()}
-    onChange={(e) => {
-      const [year, month, day] = e.target.value.split("-");
-      setJobDetails((prev) => ({
-        ...prev,
-        applicationDeadline: `${Number(year)}-${Number(month)}-${Number(day)}`,
-      }));
-    }}
-  />
-  {jobDetails.applicationDeadline && (
-    <span className="ml-3 text-sm text-gray-600">
-      {(() => {
-        const [y, m, d] = (jobDetails.applicationDeadline || "0000-00-00").split("-");
-        return `${d.padStart(2, "0")}/${m.padStart(2, "0")}/${y}`;
-      })()}
-    </span>
-  )}
-</FormField>
+                <FormField label="Application Deadline" required>
+                  <input
+                    type="date"
+                    className="border border-gray-300 rounded-lg p-2 focus:ring-2 focus:ring-blue-500 outline-none"
+                    min={new Date().toISOString().split("T")[0]} // No past dates
+                    value={(() => {
+                      const [y, m, d] = (jobDetails.applicationDeadline || "0000-00-00").split("-");
+                      return `${y.padStart(4, "0")}-${m.padStart(2, "0")}-${d.padStart(2, "0")}`;
+                    })()}
+                    onChange={(e) => {
+                      const [year, month, day] = e.target.value.split("-");
+                      setJobDetails((prev) => ({
+                        ...prev,
+                        applicationDeadline: `${Number(year)}-${Number(month)}-${Number(day)}`,
+                      }));
+                    }}
+                  />
+                  {jobDetails.applicationDeadline && (
+                    <span className="ml-3 text-sm text-gray-600">
+                      {(() => {
+                        const [y, m, d] = (jobDetails.applicationDeadline || "0000-00-00").split("-");
+                        return `${d.padStart(2, "0")}/${m.padStart(2, "0")}/${y}`;
+                      })()}
+                    </span>
+                  )}
+                </FormField>
 
 
 
@@ -592,7 +602,7 @@ const AddJobDetailsStep2 = () => {
                     >
 
                       <option value="Hourly">Hourly</option>
-                       {/* <option value="Annual">Annualy</option> */}
+                      {/* <option value="Annual">Annualy</option> */}
 
                       <option value="Monthly">Monthly</option>
 
