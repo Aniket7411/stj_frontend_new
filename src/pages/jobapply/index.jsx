@@ -171,7 +171,12 @@ const Jobapplying = () => {
             <div className="flex justify-between items-center">
               <div>
 
-                <p className="text-[#976063] text-sm sm:text-base"> <strong className="text-[#c5363c]">Company Name: </strong> {jobDetails?.companyDetails?.companyName}</p>
+                <p className="text-[#976063] text-sm sm:text-base"> <strong className="text-[#c5363c]">Company Name: </strong>
+                  {jobDetails?.companyDetails?.companyName
+                    ?.toLowerCase()
+                    .replace(/\b\w/g, (char) => char.toUpperCase())}
+
+                </p>
                 <h2 className="text-lg sm:text-xl font-semibold"> <strong className="text-[#c5363c]">Job Title: </strong>
                   {jobDetails?.jobDetails?.jobTitle}
                 </h2>

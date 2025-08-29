@@ -212,7 +212,8 @@ const Completedjobdescription = () => {
                             </p>
                         </div>
 
-                        {/* Visit Company Website */}
+                        {/* Visit Company Website */}   
+                        
                         <a
                             href={
                                 jobDetails?.companyDetails?.companyWebsite.startsWith("http")
