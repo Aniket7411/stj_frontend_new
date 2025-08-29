@@ -315,10 +315,17 @@ function FindJobs() {
       //   ).values()
       // ];
 
-      const availableJobCategory = response?.data.map(item => ({
-  id: item._id,
-  jobCategory: item?.jobDetails?.jobCategory || "N/A"
-}));
+      const availableJobCategory = Array.from(
+        new Map(
+          response?.data.map(item => [
+            item?.jobDetails?.jobCategory || "N/A",
+            {
+              id: item._id,
+              jobCategory: item?.jobDetails?.jobCategory || "N/A"
+            }
+          ])
+        ).values()
+      );
 
 
 
@@ -881,10 +888,11 @@ function FindJobs() {
               {isOpen ? "Hide Categories" : "Show Categories"}
             </button>
 
+
             {/* List: always visible on md+, toggled on small screens */}
             <ul
               className={`space-y-2 text-sm mt-2 ${isOpen ? "block" : "hidden"} md:block`}
-              style={{ overflowY: "auto", maxHeight: "200px" }}
+              style={{ overflowY: "auto"}}
             >
               {allJobsCategories.map((each) => (
                 <li className="flex items-center" key={each.id}>

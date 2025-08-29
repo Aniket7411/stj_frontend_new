@@ -191,31 +191,36 @@ const JobDescriptionDetails = () => {
                   </div>
 
                   {/* Job Details Sections */}
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-3">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-1">
                     {/* Profile Insights */}
                     <div className="bg-white rounded-xl shadow-sm p-6">
-                      <h3 className="flex items-center text-lg font-semibold text-gray-800 mb-3">
+                      <h3 className="flex items-center text-lg font-semibold text-gray-800 mb-4 border-b pb-2">
                         <CgProfile className="text-[#c5363c] mr-2" />
                         Profile Insights
                       </h3>
-                      <div className="space-y-3">
+                      <div className="space-y-4">
                         <div>
-                          <p className="text-sm text-gray-500">Location</p>
-                          <p className="font-medium">
-                            {jobDetails?.jobDetails?.city}, {jobDetails?.jobDetails?.country}{jobDetails?.location}
+                          <p className="text-xs text-gray-500 uppercase tracking-wide">Location</p>
+                          <p className="font-medium text-gray-800">
+                            {jobDetails?.jobDetails?.city}, {jobDetails?.jobDetails?.country} {jobDetails?.location}
                           </p>
                         </div>
                         <div>
-                          <p className="text-sm text-gray-500">Experience Level</p>
-                          <p className="font-medium">
-                            {jobDetails?.jobRequirements?.minimumExp}-
-                            {jobDetails?.jobRequirements?.maximumExp} years
+                          <p className="text-xs text-gray-500 uppercase tracking-wide">Experience Level</p>
+                          <p className="font-medium text-gray-800">
+                            {jobDetails?.jobRequirements?.minimumExp}-{jobDetails?.jobRequirements?.maximumExp} years
                           </p>
                         </div>
                         <div>
-                          <p className="text-sm text-gray-500">Minimum Qualification</p>
-                          <p className="font-medium">
-                            {jobDetails?.jobRequirements?.minimumQualification || ""}
+                          <p className="text-xs text-gray-500 uppercase tracking-wide">Minimum Qualification</p>
+                          <p className="font-medium text-gray-800">
+                            {jobDetails?.jobRequirements?.minimumQualification || "Not specified"}
+                          </p>
+                        </div>
+                        <div>
+                          <p className="text-xs text-gray-500 uppercase tracking-wide">Job Category</p>
+                          <p className="font-medium text-gray-800">
+                            {jobDetails?.jobDetails?.jobCategory || "Not specified"}
                           </p>
                         </div>
                       </div>
@@ -223,30 +228,67 @@ const JobDescriptionDetails = () => {
 
                     {/* Job Insights */}
                     <div className="bg-white rounded-xl shadow-sm p-6">
-                      <h3 className="flex items-center text-lg font-semibold text-gray-800 mb-3">
+                      <h3 className="flex items-center text-lg font-semibold text-gray-800 mb-4 border-b pb-2">
                         <CiClock1 className="text-[#c5363c] mr-2" />
                         Job Insights
                       </h3>
-                      <div className="space-y-4">
+                      <div className="space-y-5">
                         {/* Schedule */}
                         <div>
-                          <p className="text-sm text-gray-500">Schedule</p>
-                          <p className="font-medium">
+                          <p className="text-xs text-gray-500 uppercase tracking-wide">Schedule</p>
+                          <p className="font-medium text-gray-800">
                             {jobDetails?.workSchedule?.workingDays?.length
                               ? jobDetails.workSchedule.workingDays.join(", ")
                               : "Not specified"}
                             <br />
-                            <strong>Timings: </strong>
-                            {jobDetails?.workSchedule?.startTime && jobDetails?.workSchedule?.endTime
-                              ? `${jobDetails.workSchedule.startTime} - ${jobDetails.workSchedule.endTime}`
-                              : "Not specified"}
+                            <span className="text-sm text-gray-600">
+                              {jobDetails?.workSchedule?.startTime && jobDetails?.workSchedule?.endTime
+                                ? `${jobDetails.workSchedule.startTime} - ${jobDetails.workSchedule.endTime}`
+                                : "Timings not specified"}
+                            </span>
                           </p>
+                        </div>
+
+                        {/* Requirements */}
+                        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                          <div>
+                            <p className="text-xs text-gray-500 uppercase tracking-wide">Dress Code</p>
+                            <span className="inline-block bg-gray-100 text-gray-800 px-3 py-1 rounded-full text-sm font-medium">
+                              {jobDetails?.jobRequirements?.dressCode || "Not specified"}
+                            </span>
+                          </div>
+
+                          <div>
+                            <p className="text-xs text-gray-500 uppercase tracking-wide">Resume Required</p>
+                            {jobDetails?.jobRequirements?.resumeRequired ? (
+                              <span className="inline-block bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm font-semibold">
+                                Yes
+                              </span>
+                            ) : (
+                              <span className="inline-block bg-red-100 text-red-600 px-3 py-1 rounded-full text-sm font-semibold">
+                                No
+                              </span>
+                            )}
+                          </div>
+
+                          <div>
+                            <p className="text-xs text-gray-500 uppercase tracking-wide">Cover Letter</p>
+                            {jobDetails?.jobRequirements?.coverletterRequired ? (
+                              <span className="inline-block bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm font-semibold">
+                                Yes
+                              </span>
+                            ) : (
+                              <span className="inline-block bg-red-100 text-red-600 px-3 py-1 rounded-full text-sm font-semibold">
+                                No
+                              </span>
+                            )}
+                          </div>
                         </div>
 
                         {/* Start Date */}
                         <div>
-                          <p className="text-sm text-gray-500">Start Date</p>
-                          <p className="font-medium">
+                          <p className="text-xs text-gray-500 uppercase tracking-wide">Start Date</p>
+                          <p className="font-medium text-gray-800">
                             {jobDetails?.workSchedule?.startDate
                               ? new Date(jobDetails.workSchedule.startDate).toLocaleDateString("en-GB", {
                                 day: "2-digit",
@@ -259,8 +301,8 @@ const JobDescriptionDetails = () => {
 
                         {/* Deadline */}
                         <div>
-                          <p className="text-sm text-gray-500">Deadline</p>
-                          <p className="font-medium">
+                          <p className="text-xs text-gray-500 uppercase tracking-wide">Deadline</p>
+                          <p className="font-medium text-gray-800">
                             {jobDetails?.jobDetails?.applicationDeadline
                               ? new Date(jobDetails.jobDetails.applicationDeadline).toLocaleDateString("en-GB", {
                                 day: "2-digit",
@@ -271,9 +313,9 @@ const JobDescriptionDetails = () => {
                           </p>
                         </div>
                       </div>
-
                     </div>
                   </div>
+
 
                   {/* Job Description */}
                   <div className="bg-white rounded-xl shadow-sm p-4 mb-1">

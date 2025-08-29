@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 function Footer() {
   const role = localStorage.getItem("USER_INFO");
   // console.log(role, "kk");
-  
+
   return (
     <footer className="bg-white text-black p-2">
       <div className="mx-auto flex flex-col sm:flex-row lg:justify-between px-4 md:px-10">
@@ -38,7 +38,8 @@ function Footer() {
               target="_blank"
               rel="noopener noreferrer"
             >
-              <img src="/assets/igLogo.svg" alt="Instagram Logo" className="hover:text-red-500"/>
+              <FaInstagram className="hover:text-red-500" />
+
             </a>
           </div>
         </div>

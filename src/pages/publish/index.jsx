@@ -107,82 +107,56 @@ const Publish = () => {
 
   return (
     <div>
-      {/* Top section with background image */}
+      {/* Top section with background + overlay */}
       <div
-        className="top-section flex justify-start items-end p-3"
+        className="relative flex items-end p-6 h-[220px] w-full rounded-b-lg"
         style={{
           backgroundImage: 'url("/assets/publishingjob.png")',
           backgroundSize: "cover",
           backgroundPosition: "center",
-          height: "200px",
-          width: "100vw",
         }}
       >
-        <div>
-          <img src="/assets/star.png" alt="star" className="w-[25px]" />
-
-          <h1 className="text-white text-2xl">Post Job : Publishing Job</h1>
-          <p className="text-[#fff]">
-            Fill in the details below to reach qualified candidates quickly and
-            securely.
+        {/* <div className="absolute inset-0 bg-black/50 rounded-b-lg"></div> */}
+        <div className="relative z-10">
+          <img src="/assets/star.png" alt="star" className="w-[30px] mb-2" />
+          <h1 className="text-white text-3xl font-bold">Post Job: Publishing Job</h1>
+          <p className="text-gray-200 text-sm max-w-lg">
+            Fill in the details below to reach qualified candidates quickly and securely.
           </p>
         </div>
       </div>
 
-      <div className="p-3 md:p-10 bg-[#F0F0F0]">
-        <div className="bg-white p-5 rounded-lg shadow-md">
-          <h2 className="text-2xl font-semibold text-gray-800 mb-6 text-center">
+      <div className="p-4 md:p-10 bg-[#F9FAFB]">
+        <div className="bg-white p-6 rounded-2xl shadow-lg">
+          {/* Heading */}
+          <h2 className="text-2xl md:text-3xl font-bold text-gray-800 mb-8 text-center">
             Add New Job Details
           </h2>
-          <div className="hidden md:flex justify-between flex-wrap items-center mb-3">
+
+          {/* Stepper for desktop */}
+          <div className="hidden md:flex justify-between items-center mb-8">
             {[
-              {
-                step: 1,
-                label: "Enter Company Details",
-                active: true,
-                navroute: "entercompanydetails",
-              },
-              {
-                step: 2,
-                label: "Enter Job Details",
-                active: true,
-                navroute: "enterjobdetails",
-              },
-              {
-                step: 3,
-                label: "Job Requirements",
-                active: true,
-                navroute: "jobrequirements",
-              },
-              {
-                step: 4,
-                label: "Job Timings & Dates",
-                active: true,
-                navroute: "jobtimings",
-              },
-              {
-                step: 5,
-                label: "Publish",
-                active: false,
-                navroute: "publishjob",
-              },
+              { step: 1, label: "Enter Company Details", active: true, navroute: "entercompanydetails" },
+              { step: 2, label: "Enter Job Details", active: true, navroute: "enterjobdetails" },
+              { step: 3, label: "Job Requirements", active: true, navroute: "jobrequirements" },
+              { step: 4, label: "Job Timings & Dates", active: true, navroute: "jobtimings" },
+              { step: 5, label: "Publish", active: false, navroute: "publishjob" },
             ].map((item, index, array) => (
               <React.Fragment key={item.step}>
-                <div className="flex items-center flex-col">
-                  {/* Step Number Circle */}
+                <div className="flex flex-col items-center">
                   <div
-                    className={`w-10 h-10 flex justify-center items-center rounded-full ${item.active
-                      ? "bg-[#D3555A] text-white" // Highlight for active steps
-                      : "bg-white text-gray-700 border border-gray-300" // Default style for inactive steps
+                    className={`w-10 h-10 flex justify-center items-center rounded-full shadow-sm transition-all duration-200 ${item.active
+                        ? "bg-[#D3555A] text-white"
+                        : "bg-gray-100 text-gray-700 border border-gray-300"
                       }`}
                   >
                     {item.step}
                   </div>
-
-                  {/* Step Label */}
                   <Link to={`/${item.navroute}`}>
                     <p
-                      className={`text-sm font-medium w-35 text-center transition duration-200 ${item.active ? "text-[#D3555A]" : "text-gray-600 hover:text-[#D3555A]"
+                      className={`mt-2 text-sm font-bold text-center ${item.active
+                          ? "text-[#D3555A]"
+                          : "text-gray-600 hover:text-[#D3555A]"
                         }`}
                     >
                       {item.label}
@@ -190,226 +164,216 @@ const Publish = () => {
                   </Link>
                 </div>
 
-                {/* Dashed Line Between Steps */}
+                {/* Connector line */}
                 {index !== array.length - 1 && (
-                  <div
-                    className={`flex-1 h-1 border-dashed mx-4 ${item.active ? "border-t-4 border-[#D3555A]" : "border-t-2 border-gray-300"
-                      }`}
-                  ></div>
+                  <div className="flex-1 border-t-2 border-dashed mx-2 border-gray-300"></div>
                 )}
               </React.Fragment>
             ))}
           </div>
-          {/* Compact Step Navigation (Visible on Small Screens) */}
-          <div className="md:hidden flex justify-between items-center bg-gray-100 p-4 rounded-md">
+
+          {/* Compact stepper (mobile) */}
+          <div className="md:hidden flex justify-between items-center bg-gray-100 p-3 rounded-lg mb-6">
             <p className="text-sm font-medium text-gray-600">
               Step 5 of 5:{" "}
-              <span className="text-[#D3555A] font-semibold">
-                Pubishing Job
-              </span>
+              <span className="text-[#D3555A] font-semibold">Publishing Job</span>
             </p>
           </div>
 
-
-          <hr className="border-gray-300 mb-2 mt-4" />
-          <div className="shadow-lg  p-4">
+          {/* Job Card */}
+          <div className="shadow-md p-5 rounded-xl space-y-4">
             <p className="text-xl font-bold text-[#976063]">
               <span className="font-extrabold text-[#5a2d2f]">Company:</span>{" "}
               {companyDetails?.companyName || "N/A"}
             </p>
 
-            <h2 className="font-futura text-2xl mt-1">{jobDetails.title}</h2>
-            <p className="mb-2 text-sm">
+            <h2 className="text-2xl font-semibold">{jobDetails.title}</h2>
+            <p className="text-sm text-gray-600">
               <strong>Posting Date:</strong> {jobDetails.jobPostingDate}
             </p>
-            <div className="flex items-center text-[#976063] font-bold mb-2">
-              <CiLocationOn className="mb-1" />
-              <p className="mb-1 text-sm">
+
+            <div className="flex items-center text-[#976063] font-medium">
+              <CiLocationOn className="mr-1" />
+              <span>
                 {jobDetails.postCode} {jobDetails.city} {jobDetails?.location}
-              </p>
+              </span>
             </div>
 
-            <span className="bg-[#F0F0F0] font-semibold mb-4 rounded-md px-3 py-1">
-              £ {jobDetails.salary.amount} / {jobDetails.salary.frequency === "Monthly" ? "Month" : "Hour"}
+            <span className="inline-block bg-gray-100 text-gray-800 font-semibold rounded-md px-3 py-1">
+              £ {jobDetails.salary.amount} /{" "}
+              {jobDetails.salary.frequency === "Monthly" ? "Month" : "Hour"}
             </span>
-            <div className="flex text-[#505050] mt-3 flex-wrap gap-3">
-              <p className="bg-[#EBF6FF] rounded-md px-3 py-2 text-sm">
+
+            <div className="flex flex-wrap gap-3 text-sm text-gray-700">
+              <p className="bg-[#EBF6FF] rounded-full px-4 py-1">
                 {postingJob.workSchedule.workingDays?.length > 0
                   ? postingJob.workSchedule.workingDays.join(", ")
                   : "N/A"}
               </p>
-              <p className="bg-[#EBF6FF] rounded-md px-3 py-2 text-sm">
+              <p className="bg-[#EBF6FF] rounded-full px-4 py-1">
                 {jobRequirements?.minimumExp} - {jobRequirements?.maximumExp} years
               </p>
             </div>
 
-            <hr className="border-[#CFCFCF] my-4" />
+            <hr className="border-gray-300" />
 
-            <div className="flex justify-between flex-wrap gap-4">
-              <div className="w-full sm:w-1/2 lg:w-1/3">
-                <h4 className="font-bold">Profile Insights</h4>
-                <div className="flex items-start mb-3 text-[#5F5F5F]">
+            {/* Insights Section */}
+            <div className="grid md:grid-cols-2 gap-6">
+              {/* Profile Insights */}
+              <div className="space-y-3">
+                <h4 className="font-bold text-gray-800">Profile Insights</h4>
+                <div className="flex items-start text-gray-600">
                   <CgProfile className="mt-1 mr-2 text-[#D3555A]" />
                   <div>
-                    <h4 className="font-bold">Location</h4>
+                    <h4 className="font-semibold">Location</h4>
                     <p>
                       {jobDetails.postCode ? `${jobDetails.postCode}, ` : ""}
                       {jobDetails.city || "N/A"}
                     </p>
                   </div>
                 </div>
-                <div className="flex mb-3 items-start text-[#5F5F5F]">
+                <div className="flex items-start text-gray-600">
                   <CgProfile className="mt-1 mr-2 text-[#D3555A]" />
                   <div>
-                    <h4 className="font-bold">Preferred Experience Level</h4>
+                    <h4 className="font-semibold">Preferred Experience</h4>
                     <p>
                       {jobRequirements?.minimumExp} - {jobRequirements?.maximumExp} years
                     </p>
                   </div>
                 </div>
-                <div className="flex items-start text-[#5F5F5F]">
+                <div className="flex items-start text-gray-600">
                   <FaBookOpenReader className="mt-1 mr-2 text-[#D3555A]" />
                   <div>
-                    <h4 className="font-bold">Minimum Qualification</h4>
+                    <h4 className="font-semibold">Qualification</h4>
                     <p>{jobRequirements?.minimumQualification}</p>
                   </div>
                 </div>
               </div>
 
-              <div className="w-full sm:w-1/2 lg:w-1/3">
-                <h4 className="font-bold">Job Insights</h4>
-                <div className="flex items-start mb-3 text-[#5F5F5F]">
-                  <CiClock1 className="mt-1 mr-2 font-bold text-[#D3555A]" />
+              {/* Job Insights */}
+              <div className="space-y-3">
+                <h4 className="font-bold text-gray-800">Job Insights</h4>
+                <div className="flex items-start text-gray-600">
+                  <CiClock1 className="mt-1 mr-2 text-[#D3555A]" />
                   <div>
-                    <h4 className="font-bold">Shift & Schedule</h4>
-                    <p>
-                      {workSchedule.startTime} AM - {workSchedule.endTime} PM
-                    </p>
+                    <h4 className="font-semibold">Shift & Schedule</h4>
+                    <p>{workSchedule.startTime} AM - {workSchedule.endTime} PM</p>
                   </div>
                 </div>
-                <div className="flex items-start mb-3 text-[#5F5F5F]">
+                <div className="flex items-start text-gray-600">
                   <AiOutlineSchedule className="mt-1 mr-2 text-[#D3555A]" />
                   <div>
-                    <h4 className="font-bold">Job Start Date</h4>
-                    <p>
-                      {new Date(workSchedule?.startDate).toLocaleDateString("en-GB")}
-                    </p>
+                    <h4 className="font-semibold">Job Start Date</h4>
+                    <p>{new Date(workSchedule?.startDate).toLocaleDateString("en-GB")}</p>
                   </div>
                 </div>
-                <div className="flex items-start text-[#5F5F5F]">
+                <div className="flex items-start text-gray-600">
                   <MdCalendarMonth className="mt-1 mr-2 text-[#D3555A]" />
                   <div>
-                    <h4 className="font-bold">Application Deadline</h4>
-                    <p>
-                      {new Date(jobDetails?.applicationDeadline).toLocaleDateString("en-GB")}
-                    </p>
+                    <h4 className="font-semibold">Application Deadline</h4>
+                    <p>{new Date(jobDetails?.applicationDeadline).toLocaleDateString("en-GB")}</p>
                   </div>
                 </div>
               </div>
             </div>
 
-            <div className="flex items-center mt-4">
-              <MdNotes className="text-[#D3555A] mr-2" />
-              <h3 className="text-[#5F5F5F] font-semibold">Job Description</h3>
-            </div>
-            <div className="bg-white mt-4 rounded-lg ">
-              <p className="text-gray-700 text-sm">{postingJob.jobDetails.jobDescription}</p>
+            {/* Job Description */}
+            <div className="mt-6">
+              <div className="flex items-center mb-3">
+                <MdNotes className="text-[#D3555A] mr-2" />
+                <h3 className="text-gray-800 font-semibold text-lg">Job Description</h3>
+              </div>
+              <div className="bg-gray-50 p-4 rounded-lg shadow-sm">
+                <p className="text-gray-700 text-sm leading-relaxed">
+                  {postingJob.jobDetails.jobDescription}
+                </p>
+                <div className="flex items-center mt-4">
+                  <HiOutlineLightBulb className="mr-2 text-[#D3555A] text-xl" />
+                  <p className="text-gray-700 font-semibold">Skills</p>
+                </div>
+                <div className="flex flex-wrap gap-2 mt-2">
+                  {jobRequirements.jobSkills.map((skill, i) => (
+                    <span
+                      key={i}
+                      className="bg-[#ECECEC] hover:bg-[#D3555A] hover:text-white transition px-3 py-1 rounded-full text-sm cursor-default"
+                    >
+                      {skill}
+                    </span>
+                  ))}
+                </div>
 
-              <div className="mt-2">
-                <p className="text-gray-900 font-semibold text-md">
-                  <span className="text-blue-500">Employer Name:</span> {companyDetails.employerName}
-                </p>
-                <p className="mt-2 text-gray-800 font-medium">
-                  <span className="text-blue-500">Email:</span> {companyDetails?.contactEmail}
-                </p>
-                <p className="mt-2 text-gray-800 font-medium">
-                  <span className="text-blue-500">Contact Number:</span> {companyDetails?.contactNumber}
-                </p>
-                <p className="mt-2 text-gray-800 font-medium">
-                  <a
-                    href={`https://${companyDetails?.companyWebsite}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-blue-600 hover:text-blue-800"
-                  >
-                    {companyDetails?.companyWebsite}
-                  </a>
-                </p>
+                {/* Employer Info */}
+                <div className="mt-4 space-y-2 text-sm text-gray-700">
+                  <p>
+                    <span className="font-semibold text-blue-500">Employer:</span>{" "}
+                    {companyDetails.employerName}
+                  </p>
+                  <p>
+                    <span className="font-semibold text-blue-500">Email:</span>{" "}
+                    {companyDetails?.contactEmail}
+                  </p>
+                  <p>
+                    <span className="font-semibold text-blue-500">Contact:</span>{" "}
+                    {companyDetails?.contactNumber}
+                  </p>
+                  <p>
+                    <span className="font-semibold text-blue-500">Website:</span>{" "}
+                    <a
+                      href={`https://${companyDetails?.companyWebsite}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-blue-600 hover:underline"
+                    >
+                      {companyDetails?.companyWebsite}
+                    </a>
+                  </p>
+                </div>
               </div>
             </div>
 
-            <hr className="border-[#CFCFCF] my-4" />
-
-            <div className="flex flex-wrap gap-5 p-4">
+            {/* Footer Info */}
+            <hr className="border-gray-300 my-4" />
+            <div className="flex flex-wrap gap-4 text-gray-700">
               <div className="flex items-center">
                 <MdCalendarMonth className="mr-2" />
-                <p className="text-[#505050] font-semibold">{workSchedule.duration} Days</p>
+                <p className="font-medium">{workSchedule.duration} Days</p>
               </div>
-
-              {/* <div className="flex items-center">
-                <CiClock1 className="mr-2" />
-                <p className="text-[#505050] font-semibold">30+ hrs/week</p>
-              </div> */}
-
-              {/* <div className="flex items-center">
-                <IoIosAlert className="mr-2" />
-                <p className="text-[#505050] font-semibold">Intermediate</p>
-              </div> */}
-
               <div className="flex items-center">
                 <FaMoneyBillWave className="mr-2" />
-                <p className="text-[#505050] font-semibold">£{jobDetails.salary.amount} / {jobDetails.salary.frequency}</p>
+                <p className="font-medium">
+                  £{jobDetails.salary.amount} /{" "}
+                  {jobDetails.salary.frequency === "Hourly" ? "Hour" : "Month"}
+                </p>
               </div>
             </div>
 
-            <hr className="border-[#CFCFCF] my-4" />
-
-            <div className="flex items-center p-4">
-              <HiOutlineLightBulb className="mr-2 text-[#D3555A] text-2xl" />
-              <p className="text-[#505050] font-semibold">Skills</p>
-            </div>
-
-            <div className="flex flex-wrap gap-2">
-              {jobRequirements.jobSkills.map((each, index) => (
-                <p
-                  key={index}
-                  className="bg-[#ECECEC] px-3 py-2 rounded-md text-sm"
-                >
-                  {each}
-                </p>
-              ))}
-            </div>
-
-            <div className="mt-4 flex flex-wrap justify-center gap-4">
+            {/* Buttons */}
+            <div className="mt-6 flex flex-wrap justify-center gap-4">
               <Link to="/jobtimings">
-                <button
-                  type="button"
-                  className="border bg-[#D3555A] py-1 px-2 text-white rounded-lg "
-                >
+                <button style={{
+                  outline:"1px solid #c5363c"
+                }} className="border bg-white text-[#c5363c] px-2 py-1 rounded-lg shadow-sm hover:bg-gray-100 transition">
                   Back
                 </button>
               </Link>
               <button
-                onClick={() => publishJob('paid')}
-                className="bg-[#D3555A] text-white w-auto font-semibold py-1 px-2 rounded-md"
+                onClick={() => publishJob("paid")}
+                className="bg-[#c5363c] text-white w-auto px-2 py-1 rounded-lg shadow hover:bg-[#c5363c] transition"
               >
                 Featured Publish
               </button>
               <button
-                className="bg-[#D3555A] text-white font-semibold py-1 px-2 rounded-md"
-                onClick={() => publishJob('normal')}
+                onClick={() => publishJob("normal")}
+                className="bg-[#c5363c] text-white w-auto px-5 py-2 rounded-lg shadow hover:bg-[#c5363c] transition"
               >
                 Publish Job
               </button>
             </div>
           </div>
-
-
-
-
         </div>
       </div>
     </div>
+
   );
 };
 
