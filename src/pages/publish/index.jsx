@@ -11,23 +11,17 @@ import { IoIosAlert } from "react-icons/io";
 import { FaMoneyBillWave } from "react-icons/fa";
 import { HiOutlineLightBulb } from "react-icons/hi";
 import { JobContext } from "../jobcontext";
-
+import { ClipLoader } from "react-spinners";
 import { HttpClient } from "../../server/client/http";
 import { toast } from "react-toastify";
 
-const postingDate = new Date();  // Getting the current date
-
-// Format the date to include only the day and date
+const postingDate = new Date();
 const formattedDate = postingDate.toLocaleString('en-GB', {
   weekday: 'short',
   year: 'numeric',
   month: 'short',
   day: '2-digit'
 });
-
-console.log(formattedDate);  // Output: Wed, 08 Jan 2025
-
-
 
 const Publish = () => {
   const {
@@ -40,73 +34,88 @@ const Publish = () => {
   } = useContext(JobContext);
 
   const navigate = useNavigate();
-
+  const [isPublishing, setIsPublishing] = useState(false);
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [publishedJobId, setPublishedJobId] = useState(null);
 
   const jobPostingDetails = {
     workSchedule,
     jobRequirements,
     companyDetails,
     jobDetails
-  }
-
-
-  console.log("jobPostingDetailsjobPostingDetails", jobPostingDetails)
-
-
+  };
 
   const publishJob = async (type) => {
-
-    //console.log("jobPostingDetails", jobPostingDetails?.jobDetails?.jobTitle)
-
     if (jobPostingDetails?.jobDetails?.jobTitle === "") {
-      return toast.warn("Please fill all the job details")
+      return toast.warn("Please fill all the job details");
     }
 
+    // Prevent multiple clicks
+    if (isPublishing) return;
+
+    setIsPublishing(true);
+
     try {
-      // debugger
       const response = await HttpClient.post(
         "/jobs/job-posts",
         jobPostingDetails
       );
+
       console.log("Response Data:", response.data);
+      setPublishedJobId(response.data._id);
 
       if (type === 'normal') {
-        toast.success("Job details submitted successfully!");
-        // setPostingJob({
-        //   jobDetails: jobDetails,
-        //   jobRequirements: jobRequirements,
-        //   companyDetails: companyDetails,
-        //   workSchedule: workSchedule,
-        // });
-        navigate("/findjobs");
-        // Adjust the route as needed
-      }
-
-      else if (type === 'paid') {
+        setShowSuccessModal(true);
+      } else if (type === 'paid') {
         toast.success("Job details submitted successfully! Kindly pay the amount to make it featured");
         const data = await HttpClient.post(`/stripe/create-checkout-session`, {
           product: 'featured',
           paidFor: 'featured',
           jobId: response.data._id
         });
-        // debugger
+
         if (data.success === true || data.status === 200) {
-          window.location.href = data.url
+          window.location.href = data.url;
         }
       }
-
-
-
-    }
-
-    catch (error) {
+    } catch (error) {
       console.error("Error submitting job details:", error);
-      toast.info(error?.message ? error?.message : "there is some issue. try re-login")
+      toast.info(error?.message ? error?.message : "There is some issue. Try re-login");
+    } finally {
+      setIsPublishing(false);
     }
-  }
+  };
+
+  const handleSeePostedJob = () => {
+    setShowSuccessModal(false);
+    navigate("/findjobs");
+  };
 
   return (
     <div>
+      {/* Success Modal */}
+      {showSuccessModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-lg p-6 max-w-md w-full shadow-xl">
+            <div className="text-center">
+              <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <svg className="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
+                </svg>
+              </div>
+              <h3 className="text-2xl font-bold text-gray-800 mb-2">Job Published Successfully!</h3>
+              <p className="text-gray-600 mb-6">Your job listing is now live and visible to potential candidates.</p>
+              <button
+                onClick={handleSeePostedJob}
+                className="bg-[#c5363c] hover:bg-[#a52c31] text-white font-medium py-2 px-6 rounded-lg transition-colors"
+              >
+                See Posted Job
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Top section with background + overlay */}
       <div
         className="relative flex items-end p-6 h-[220px] w-full rounded-b-lg"
@@ -116,12 +125,11 @@ const Publish = () => {
           backgroundPosition: "center",
         }}
       >
-        {/* <div className="absolute inset-0 bg-black/50 rounded-b-lg"></div> */}
         <div className="relative z-10">
           <img src="/assets/star.png" alt="star" className="w-[30px] mb-2" />
           <h1 className="text-white text-3xl font-bold">Post Job: Publishing Job</h1>
           <p className="text-gray-200 text-sm max-w-lg">
-            Fill in the details below to reach qualified candidates quickly and securely.
+            Review the job you are posting.
           </p>
         </div>
       </div>
@@ -130,7 +138,7 @@ const Publish = () => {
         <div className="bg-white p-6 rounded-2xl shadow-lg">
           {/* Heading */}
           <h2 className="text-2xl md:text-3xl font-bold text-gray-800 mb-8 text-center">
-            Add New Job Details
+            Publishing job
           </h2>
 
           {/* Stepper for desktop */}
@@ -146,8 +154,8 @@ const Publish = () => {
                 <div className="flex flex-col items-center">
                   <div
                     className={`w-10 h-10 flex justify-center items-center rounded-full shadow-sm transition-all duration-200 ${item.active
-                        ? "bg-[#D3555A] text-white"
-                        : "bg-gray-100 text-gray-700 border border-gray-300"
+                      ? "bg-[#D3555A] text-white"
+                      : "bg-gray-100 text-gray-700 border border-gray-300"
                       }`}
                   >
                     {item.step}
@@ -155,8 +163,8 @@ const Publish = () => {
                   <Link to={`/${item.navroute}`}>
                     <p
                       className={`mt-2 text-sm font-bold text-center ${item.active
-                          ? "text-[#D3555A]"
-                          : "text-gray-600 hover:text-[#D3555A]"
+                        ? "text-[#D3555A]"
+                        : "text-gray-600 hover:text-[#D3555A]"
                         }`}
                     >
                       {item.label}
@@ -351,29 +359,30 @@ const Publish = () => {
             <div className="mt-6 flex flex-wrap justify-center gap-4">
               <Link to="/jobtimings">
                 <button style={{
-                  outline:"1px solid #c5363c"
+                  outline: "1px solid #c5363c"
                 }} className="border bg-white text-[#c5363c] px-2 py-1 rounded-lg shadow-sm hover:bg-gray-100 transition">
                   Back
                 </button>
               </Link>
               <button
                 onClick={() => publishJob("paid")}
-                className="bg-[#c5363c] text-white w-auto px-2 py-1 rounded-lg shadow hover:bg-[#c5363c] transition"
+                disabled={isPublishing}
+                className="bg-[#c5363c] text-white w-auto px-2 py-1 rounded-lg shadow hover:bg-[#c5363c] transition disabled:opacity-70 disabled:cursor-not-allowed"
               >
-                Featured Publish
+                {isPublishing ? <ClipLoader size={16} color="#fff" /> : "Featured Publish"}
               </button>
               <button
                 onClick={() => publishJob("normal")}
-                className="bg-[#c5363c] text-white w-auto px-5 py-2 rounded-lg shadow hover:bg-[#c5363c] transition"
+                disabled={isPublishing}
+                className="bg-[#c5363c] text-white w-auto px-5 py-2 rounded-lg shadow hover:bg-[#c5363c] transition disabled:opacity-70 disabled:cursor-not-allowed"
               >
-                Publish Job
+                {isPublishing ? <ClipLoader size={16} color="#fff" /> : "Publish Job"}
               </button>
             </div>
           </div>
         </div>
       </div>
     </div>
-
   );
 };
 

@@ -71,12 +71,17 @@ const JobDescriptionDetails = () => {
 
   const deleteJob = async (jobId) => {
     console.log(jobId);
+    setIsLoading(true)
     try {
       const response = await HttpClient.delete(`/jobs/job-posts/${jobId}`);
       toast.success(response?.message || "Job deleted successfully");
+      setIsLoading(false)
+      setjobDetails(undefined)
       console.log(response);
     } catch (error) {
       console.error(error); // Always good for debugging
+      setIsLoading(false)
+
 
       // Access the error response safely
       const errorMessage = error?.response?.data?.message || "Something went wrong!";
@@ -90,6 +95,7 @@ const JobDescriptionDetails = () => {
   }, []);
 
   console.log("jobDetailsjobDetailsjobDetail", jobDetails?.jobDetails?.salary?.frequency)
+
 
   return (
     <>
@@ -321,15 +327,18 @@ const JobDescriptionDetails = () => {
                   <div className="bg-white rounded-xl shadow-sm p-4 mb-1">
                     <div className="flex justify-between items-center mb-1">
                       <h3 className="text-lg font-semibold text-gray-800">Job Description</h3>
-                      {JSON.parse(localStorage.getItem('USER_INFO') || '{}')?.role === 'employer' && (
-                        <button
-                          onClick={() => deleteJob(jobDetails?._id)}
-                          className="inline-flex items-center bg-[#c5363c] text-white px-2 py-1 w-auto rounded-md hover:bg-[#a82e33] transition-colors text-sm"
-                        >
-                          <FaTrashAlt className="mr-2" />
-                          Delete Job
-                        </button>
-                      )}
+                      {["employer", "admin"].includes(
+                        JSON.parse(localStorage.getItem("USER_INFO") || "{}")?.role
+                      ) && (
+                          <button
+                            onClick={() => deleteJob(jobDetails?._id)}
+                            className="inline-flex items-center bg-[#c5363c] text-white px-2 py-1 w-auto rounded-md hover:bg-[#a82e33] transition-colors text-sm"
+                          >
+                            <FaTrashAlt className="mr-2" />
+                            Delete Job
+                          </button>
+                        )}
+
                     </div>
                     <div className="prose max-w-none text-gray-700">
                       {jobDetails?.jobDetails?.jobDescription}
@@ -454,9 +463,13 @@ const JobDescriptionDetails = () => {
         </>
       )}
 
-      {viewer.role !== "employee" && (
-        <Proposal JobId={location?.pathname.split('/').pop()} jobDetails={jobDetails} />
+      {viewer.role !== "employee" && viewer.role !== "admin" && (
+        <Proposal
+          JobId={location?.pathname.split("/").pop()}
+          jobDetails={jobDetails}
+        />
       )}
+
     </>
   );
 };
