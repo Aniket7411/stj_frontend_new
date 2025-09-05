@@ -36,9 +36,9 @@ const Proposal = ({ JobId, jobDetails }) => {
   // Memoized filtered proposals based on search query
   const filteredProposals = useMemo(() => {
     if (!searchQuery) return proposalList;
-    
+
     const query = searchQuery.toLowerCase();
-    return proposalList.filter(item => 
+    return proposalList.filter(item =>
       item.username?.toLowerCase().includes(query) ||
       item.email?.toLowerCase().includes(query) ||
       item.contact?.toLowerCase().includes(query) ||
@@ -68,7 +68,7 @@ const Proposal = ({ JobId, jobDetails }) => {
   const updateStatus = async (id, newStatus) => {
     // Optimistic UI update
     setProposalList(prev => prev.filter(item => item._id !== id));
-    
+
     try {
       const response = await HttpClient.put("/applyJob/update", {
         status: newStatus,
@@ -105,8 +105,8 @@ const Proposal = ({ JobId, jobDetails }) => {
                 key={type}
                 onClick={() => setStatus(type)}
                 className={`cursor-pointer whitespace-nowrap ${status === type
-                    ? "text-blue-600 underline"
-                    : "text-gray-600 hover:text-blue-500"
+                  ? "text-blue-600 underline"
+                  : "text-gray-600 hover:text-blue-500"
                   }`}
               >
                 {label}
@@ -161,13 +161,13 @@ const Proposal = ({ JobId, jobDetails }) => {
                       <>
                         <button
                           onClick={() => updateStatus(item?._id, "reject")}
-                          className="bg-[#D3555A] text-white py-1 px-3 rounded-md hover:bg-[#B94A45] transition text-sm whitespace-nowrap"
+                          className="bg-[#D3555A] text-white py-1 px-2 rounded-md hover:bg-[#B94A45] transition text-sm whitespace-nowrap"
                         >
                           Reject
                         </button>
                         <button
                           onClick={() => updateStatus(item?._id, "approved")}
-                          className="bg-[#407BFF] text-white py-2 px-4 rounded-md hover:bg-[#0056b3] transition text-sm whitespace-nowrap"
+                          className="bg-[#407BFF] text-white py-1 px-2 rounded-md hover:bg-[#0056b3] transition text-sm whitespace-nowrap"
                         >
                           Approve
                         </button>
@@ -178,13 +178,13 @@ const Proposal = ({ JobId, jobDetails }) => {
                       <>
                         <button
                           onClick={() => updateStatus(item?._id, "reject")}
-                          className="bg-[#D3555A] text-white py-2 px-3 rounded-md hover:bg-[#B94A45] transition text-sm whitespace-nowrap"
+                          className="bg-[#D3555A] text-white py-1 px-3 rounded-md hover:bg-[#B94A45] transition text-sm whitespace-nowrap"
                         >
                           Reject
                         </button>
                         <button
                           onClick={() => updateStatus(item?._id, "shortlist")}
-                          className="bg-[#407BFF] text-white py-2 px-4 rounded-md hover:bg-[#0056b3] transition text-sm whitespace-nowrap"
+                          className="bg-[#407BFF] text-white py-1 px-3 rounded-md hover:bg-[#0056b3] transition text-sm whitespace-nowrap"
                         >
                           Shortlist
                         </button>
