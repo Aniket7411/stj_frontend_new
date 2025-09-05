@@ -512,7 +512,7 @@ const AddJobDetailsStep2 = () => {
                     className="w-full border border-gray-300 rounded-lg p-3"
                     value={jobDetails?.state}
                     onChange={(e) => setSelectedState(e.target.value)}
-                    placeholder="Enter State"
+                    placeholder="Enter County"
                   />
                 </FormField>
 
