@@ -68,7 +68,7 @@ const Approved = () => {
             }`}
           onClick={() => setActiveTab("active")}
         >
-          Active Jobs
+         Jobs (Accepted)
         </button>
         <button
           className={`px-2 py-1 w-auto rounded font-medium transition ${activeTab === "completed"
