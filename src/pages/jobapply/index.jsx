@@ -181,10 +181,7 @@ const Jobapplying = () => {
                   {jobDetails?.jobDetails?.jobTitle}
                 </h2>
               </div>
-              {/* <div className="flex mb-4 space-x-2">
-                <CiBookmark className="bg-[#E6E6E6] w-[30px] h-[30px] rounded-md px-1" />
-                <CiShare2 className="bg-[#E6E6E6] w-[30px] h-[30px] rounded-md px-1" />
-              </div> */}
+
             </div>
             <div>
               <div className="flex items-center text-sm sm:text-base">
@@ -244,29 +241,7 @@ const Jobapplying = () => {
                 <span>{jobDetails?.jobRequirements?.dressCode || "Not specified"}</span>
               </div>
 
-              {/* <div className="flex flex-wrap mt-3 gap-3 sm:gap-6 justify-between">
-          <div className="flex items-center px-2 py-1 rounded-md text-xs sm:text-sm">
-            <MdCalendarMonth />
-            <p className="ml-1">6 Months</p>
-          </div>
-          <div className="flex items-center px-2 py-1 rounded-md text-xs sm:text-sm">
-            <CiClock1 />
-            <p className="ml-1">30+ hrs/week</p>
-          </div>
-          <div className="flex items-center px-2 py-1 rounded-md text-xs sm:text-sm">
-            <AiOutlineSchedule />
-            <p className="ml-1">Intermediate</p>
-          </div>
-          <div className="flex items-center text-xs sm:text-sm">
-            <FaMoneyBillWave className="mr-2" />
-            <p className="text-[#505050] font-semibold">
-              $250 <br />
-              <span className="font-normal text-[#787878] text-[12px]">
-                Fixed price
-              </span>
-            </p>
-          </div>
-        </div> */}
+
             </div>
 
             <p className="text-right mt-2 text-[#505050] text-sm sm:text-base">
@@ -274,20 +249,14 @@ const Jobapplying = () => {
               <span className="font-semibold text-[#407BFF]">1 Credit</span>
             </p>
 
-            {/* <p className="text-right text-sm font-bold text-[#D3555A]">
-              20 credits left
-            </p> */}
 
             <div className="flex justify-between">
               <strong className="text-sm sm:text-base">Write your proposal</strong>
-              {/* <h3 className="text-[#407BFF] underline text-sm sm:text-base">
-          Upgrade your plan to get more credits & earn more
-        </h3> */}
+
             </div>
 
 
-            {/* Proposal Text Area */}
-            {/* <strong className="text-sm sm:text-base">Write your proposal</strong> */}
+
             <textarea
               style={{ outline: "1px solid #CBCBCB" }}
               className={`h-32 rounded-lg w-full mt-2 p-2 placeholder:text-gray-400 text-sm sm:text-base ${errors.proposal ? "border-red-500" : ""
@@ -301,7 +270,6 @@ const Jobapplying = () => {
             )}
 
 
-            {/* File Upload */}
             {
               loading ? (
 
@@ -314,7 +282,7 @@ const Jobapplying = () => {
                 (
                   <>
 
-                    <div className="flex gap-2 items-center text-[#407BFF] mt-2">
+                    <div className="flex gap-2 items-center text-[#407BFF] mb-2 mt-2">
                       <IoIosAttach />
                       <input
                         type="file"
@@ -329,6 +297,13 @@ const Jobapplying = () => {
                           Add resume (pdf)
                         </span>
                       </label>
+
+                      {
+                        resume !== null && <div>
+                          <button onClick={() => setResume(null)} className="bg-[#c5363c] py-1 px-2 rounded-xl text-[#fff]">Remove</button>
+                        </div>
+                      }
+
                     </div>
                   </>
                 )
@@ -346,7 +321,6 @@ const Jobapplying = () => {
             }
 
 
-            {/* Cover Letter Upload */}
             {
               loading ? (
                 <div className="flex justify-center items-center h-full">
@@ -356,7 +330,7 @@ const Jobapplying = () => {
                 <>
 
 
-                  <div className="flex gap-2 items-center text-[#407BFF] mt-2">
+                  <div className="flex gap-2 mb-2 items-center text-[#407BFF] mt-2">
                     <IoIosAttach />
                     <input
                       type="file"
@@ -371,7 +345,18 @@ const Jobapplying = () => {
                         Add cover letter (pdf)
                       </span>
                     </label>
+
+
+
+                    {
+                      coverLetter !== null && <div>
+                        <button onClick={() => setCoverLetter(null)} className="bg-[#c5363c] py-1 px-2 rounded-xl text-[#fff]">Remove</button>
+                      </div>
+                    }
+                  
                   </div>
+
+
 
                 </>
               )
@@ -423,9 +408,9 @@ const Jobapplying = () => {
                 onChange={handleSpecialistChange}
               /> */}
             {/* </div> */}
-            {errors.amount && (
+            {/* {errors.amount && (
               <p className="text-red-500 text-sm mt-1">{errors.amount}</p>
-            )}
+            )} */}
 
             {/* Featured & Elite Options */}
             {/* <div className="rounded-lg p-4 my-2" style={{ outline: "1px solid #D6D6D6" }}>

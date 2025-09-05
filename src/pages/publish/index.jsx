@@ -374,7 +374,7 @@ const Publish = () => {
               <button
                 onClick={() => publishJob("normal")}
                 disabled={isPublishing}
-                className="bg-[#c5363c] text-white w-auto px-5 py-2 rounded-lg shadow hover:bg-[#c5363c] transition disabled:opacity-70 disabled:cursor-not-allowed"
+                className="bg-[#c5363c] text-white w-auto px-5 py-1 rounded-lg shadow hover:bg-[#c5363c] transition disabled:opacity-70 disabled:cursor-not-allowed"
               >
                 {isPublishing ? <ClipLoader size={16} color="#fff" /> : "Publish Job"}
               </button>
