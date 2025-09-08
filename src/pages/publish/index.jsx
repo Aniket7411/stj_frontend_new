@@ -360,10 +360,9 @@ const Publish = () => {
               {/* Back Button */}
               <Link to="/jobtimings">
                 <button
-
-                style={{
-                  outline :"1px solid #c5363c"
-                }}
+                  style={{
+                    outline: "1px solid #c5363c",
+                  }}
                   className="border border-[#c5363c] bg-white text-[#c5363c] px-3 py-1 rounded-lg shadow-sm hover:bg-gray-100 transition"
                 >
                   Back
@@ -385,12 +384,16 @@ const Publish = () => {
                 </button>
 
                 {/* Tooltip Wrapper */}
-                <div className="relative group flex items-center">
+                <div className="relative flex items-center group">
                   <FaInfoCircle className="text-gray-600 cursor-pointer" />
 
-                  {/* Tooltip */}
-                  <div className="absolute left-7 top-1/2 -translate-y-1/2 w-72 bg-black text-white text-xs rounded-md px-3 py-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 shadow-lg z-10">
-                    After job posting, You will have to pay later to make it featured.
+                  {/* Tooltip (only on icon hover) */}
+                  <div
+                    className="absolute left-7 top-1/2 -translate-y-1/2 w-72 bg-black text-white text-xs rounded-md px-3 py-2 
+                   opacity-0 group-hover:opacity-100 transition-opacity duration-300 shadow-lg z-50 
+                   pointer-events-none group-hover:pointer-events-auto"
+                  >
+                    After job posting, you will have to pay later to make it featured.
                     {/* Arrow */}
                     <div className="absolute -left-2 top-1/2 -translate-y-1/2 w-0 h-0 border-t-6 border-b-6 border-r-8 border-transparent border-r-black"></div>
                   </div>
@@ -406,6 +409,7 @@ const Publish = () => {
                 {isPublishing ? <ClipLoader size={16} color="#fff" /> : "Publish Job"}
               </button>
             </div>
+
 
 
           </div>

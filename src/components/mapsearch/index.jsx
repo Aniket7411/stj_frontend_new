@@ -7,6 +7,7 @@ const MapSearch = ({ setJobDetails = () => {}, type = "", jobDetails = {} }) => 
 
   const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: "AIzaSyDqtaMGsIB-4GbnBjdpfzNTlEBXviBd3zM",
+    
     libraries: ["places"],
   });
 
