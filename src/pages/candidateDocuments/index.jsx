@@ -180,9 +180,9 @@ const UploadDocuments = () => {
             )}
 
             <div className="max-w-6xl mx-auto">
-                <div className="text-center mb-10">
-                    <h1 className="text-4xl font-bold text-gray-900 mb-3">Document Upload</h1>
-                    <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+                <div className="text-center mb-2">
+                    <h1 className="text-xl md:text-2xl lg:text-4xl font-bold text-gray-900 mb-2">Document Upload</h1>
+                    <p className="text-lg text-gray-600  mx-auto">
                         Upload and manage your important documents. All files are securely stored and encrypted.
                     </p>
                 </div>
@@ -264,41 +264,35 @@ const UploadDocuments = () => {
                                                     )}
                                                 </div>
 
-                                                {/* Remove Button - Replaced with MdDelete */}
-                                                <button
-                                                    type="button"
-                                                    onClick={(e) => {
-                                                        e.stopPropagation();
-                                                        removeImage(key);
-                                                    }}
-                                                    className="absolute -top-7 -right-1 bg-red-500 text-white rounded-full  hover:bg-red-600 transition-colors duration-200 shadow-md"
-                                                    aria-label={`Remove ${label}`}
-                                                >
-                                                    {/* <MdDelete size={16} /> */}
-                                                    Remove
-                                                </button>
+                                                {/* Action Buttons Container */}
+                                                <div className="absolute -top-1 -right-1 flex flex-col gap-1">
+                                                    {/* Remove Button */}
+                                                    <button
+                                                        type="button"
+                                                        onClick={(e) => {
+                                                            e.stopPropagation();
+                                                            removeImage(key);
+                                                        }}
+                                                        className="w-7 h-7 bg-red-500 text-white rounded-full flex items-center justify-center hover:bg-red-600 transition-all duration-200 shadow-lg hover:shadow-xl hover:scale-110 z-10"
+                                                        aria-label={`Remove ${label}`}
+                                                        title="Remove document"
+                                                    >
+                                                        <FiX size={14} />
+                                                    </button>
 
-                                                {/* View Overlay */}
-                                                <div className="absolute inset-0 flex items-center justify-center rounded-lg">
-                                                    <div className="relative w-full h-full">
-                                                        {/* Semi-transparent overlay */}
-                                                        <div
-                                                            className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-all duration-300 rounded-lg"
-                                                            aria-hidden="true"
-                                                        />
-
-                                                        {/* Eye icon */}
-                                                        <button
-                                                            type="button"
-                                                            onClick={() => openDocumentViewer(previews[key], key)}
-                                                            className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                                                            aria-label={`View ${label}`}
-                                                        >
-                                                            <div className="bg-white/95 p-3 rounded-full shadow-md transition-transform duration-300 hover:scale-110 hover:shadow-lg">
-                                                                <FiEye className="text-indigo-600" size={22} />
-                                                            </div>
-                                                        </button>
-                                                    </div>
+                                                    {/* View Button */}
+                                                    <button
+                                                        type="button"
+                                                        onClick={(e) => {
+                                                            e.stopPropagation();
+                                                            openDocumentViewer(previews[key], key);
+                                                        }}
+                                                        className="w-7 h-7 bg-indigo-500 text-white rounded-full flex items-center justify-center hover:bg-indigo-600 transition-all duration-200 shadow-lg hover:shadow-xl hover:scale-110 z-10"
+                                                        aria-label={`View ${label}`}
+                                                        title="View document"
+                                                    >
+                                                        <FiEye size={14} />
+                                                    </button>
                                                 </div>
                                             </div>
                                         )}
@@ -307,22 +301,27 @@ const UploadDocuments = () => {
                             ))}
                         </div>
 
-                        <div className="mt-10 pt-6 border-t border-gray-100 flex flex-col sm:flex-row justify-end space-y-4 sm:space-y-0 sm:space-x-4">
+                        <div className="mt-10 pt-6 border-t border-gray-100 flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4">
                             <button
-                            
-                            style={{
-                                outline:"2px solid #c5363c"
-                            }}
+                                style={{ outline: "2px solid #c5363c" }}
                                 type="button"
-                                className="px-3 py-2 bg-white border border-gray-300 text-gray-700 rounded-xl hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition-all duration-200 font-medium"
-                                onClick={() => window.history.back()}
+                                className="px-3 py-2 bg-white border border-gray-300 text-gray-700 rounded-md hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition-all duration-200 font-medium"
+                                onClick={() =>
+                                    setFormData({
+                                        educationalCertificate: null,
+                                        drivingLicense: null,
+                                        skillCertificate: null,
+                                        bankDetails: null,
+                                    })
+                                }
                             >
                                 Cancel
                             </button>
+
                             <button
                                 type="submit"
                                 disabled={loading.form}
-                                className="px-3 py-2 bg-[#c5363c] text-white rounded-xl hover:bg-[#c5363C] focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 font-medium flex items-center justify-center min-w-[160px]"
+                                className="px-3 py-2 bg-[#c5363c] text-white rounded-md hover:bg-[#c5363C] focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 font-medium flex items-center justify-center w-auto"
                             >
                                 {loading.form ? (
                                     <>

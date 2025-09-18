@@ -22,11 +22,11 @@ const NotFound = () => {
       <h1 className="text-6xl font-bold text-gray-800">404</h1>
       <p className="mt-4 text-2xl text-gray-600">Page Not Found</p>
       <p className="mt-2 text-lg text-gray-500">
-        Redirecting to the home page in <span className="font-bold">{seconds}</span>{" "}
+        Redirecting to the Login page in <span className="font-bold">{seconds}</span>{" "}
         second{seconds !== 1 && "s"}...
       </p>
       <Link
-        to="/"
+        to="/login"
         className="mt-6 px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
       >
         Go Back Home
