@@ -173,7 +173,7 @@ function Header() {
 
   const Navbar1 = (
     <div className="flex items-center font-semibold justify-between px-3  md:px-10 py-5">
-     
+
       <ul className="flex items-center gap-8 w-[40%]">
         <Link to="/">
           <li className="text-[#000000] text-xl font-bold">
@@ -196,19 +196,19 @@ function Header() {
       </ul>
       {/* Right-side items */}
       <ul
-        className={`flex items-center  gap-6 w-[40%] text-[15px] justify-end ${isFindJobsRoute ? "text-[#000l]" : "text-[#000]"
+        className={`flex items-center  gap-6 w-[40%] text-[15px] justify-end ${isFindJobsRoute ? "text-[#000]" : "text-[#000]"
           }`}
       >
         <Link to="/login">
           <li
-            className={` cursor-pointer ${isScrolled ? "text-red-800 " : ""}`}
+            className={` cursor-pointer ${isScrolled ? "text-red-800 " : "text-[#000]"}`}
           >
             Sign In
           </li>
         </Link>
         <Link to="/signup">
           <li
-            className={` cursor-pointer ${isScrolled ? "text-red-800 " : ""}`}
+            className={` cursor-pointer ${isScrolled ? "text-red-800 " : "text-[#000]"}`}
           >
             Join
           </li>
@@ -567,7 +567,7 @@ function Header() {
                       )}
 
 
-                      {JSON.parse(localStorage.getItem("userData"))?.role ===
+                    {JSON.parse(localStorage.getItem("userData"))?.role ===
                       "employee" && (
                         <Link to="/saved_courses">
                           <li className="p-2 hover:bg-gray-100 cursor-pointer">
