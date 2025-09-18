@@ -33,7 +33,7 @@ const Jobapplying = () => {
   const [notify, setNotify] = useState(false);
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
-  const [coverLetter, setCoverLetter] = useState("");
+  const [coverLetter, setCoverLetter] = useState(null);
 
 
   const handleProposalChange = (e) => setProposal(e.target.value);
@@ -299,7 +299,7 @@ const Jobapplying = () => {
                       </label>
 
                       {
-                        resume !== null && <div>
+                        resume && resume.length > 0 && <div>
                           <button onClick={() => setResume(null)} className="bg-[#c5363c] py-1 px-2 rounded-xl text-[#fff]">Remove</button>
                         </div>
                       }
@@ -349,11 +349,11 @@ const Jobapplying = () => {
 
 
                     {
-                      coverLetter !== null && <div>
+                      coverLetter && coverLetter.length > 0 && <div>
                         <button onClick={() => setCoverLetter(null)} className="bg-[#c5363c] py-1 px-2 rounded-xl text-[#fff]">Remove</button>
                       </div>
                     }
-                  
+
                   </div>
 
 

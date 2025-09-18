@@ -189,7 +189,7 @@ const Publish = () => {
           </div>
 
           {/* Job Card */}
-          <div className="shadow-md p-5 rounded-xl space-y-4">
+          <div className=" rounded-xl space-y-4">
             <p className="text-xl font-bold text-[#976063]">
               <span className="font-extrabold text-[#5a2d2f]">Company:</span>{" "}
               {companyDetails?.companyName || "N/A"}
