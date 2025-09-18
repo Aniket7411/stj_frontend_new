@@ -207,16 +207,12 @@ const AddJobDetailsStep2 = () => {
   const handleSave = (e) => {
     e.preventDefault();
 
+    // Validation
+    if (!jobDetails.jobTitle || !jobDetails.jobCategory || !jobDetails.jobDescription || !jobDetails.employmentType || !jobDetails.applicationDeadline || !jobDetails.salary.amount) {
+      alert("Please fill in all required fields: job title, category, description, employment type, application deadline, and salary.");
+      return;
+    }
 
-    // setJobDetails((pre) => ({
-    //   ...pre,
-    //   city: googleMapData?.city,
-    //   state: googleMapData?.state,
-    //   jobAddress:googleMapData?.address,
-    //   latitude:googleMapData?.latitude,
-    //   longitude:googleMapData?.longitude
-
-    // }))
     console.log(jobDetails, "..........................220")
     setPostingJob((prevPostingJob) => ({
       ...prevPostingJob,
@@ -343,7 +339,7 @@ const AddJobDetailsStep2 = () => {
             <p className="text-sm font-medium text-gray-600">
               Step 2 of 5:{" "}
               <span className="text-[#D3555A] font-semibold">
-                Enter Company Details
+                Enter Job Details
               </span>
             </p>
 

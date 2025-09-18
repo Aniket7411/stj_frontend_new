@@ -892,7 +892,7 @@ function FindJobs() {
             {/* List: always visible on md+, toggled on small screens */}
             <ul
               className={`space-y-2 text-sm mt-2 ${isOpen ? "block" : "hidden"} md:block`}
-              style={{ overflowY: "auto"}}
+              style={{ overflowY: "auto" }}
             >
               {allJobsCategories.map((each) => (
                 <li className="flex items-center" key={each.id}>

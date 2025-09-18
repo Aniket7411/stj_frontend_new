@@ -173,7 +173,7 @@ function Header() {
 
   const Navbar1 = (
     <div className="flex items-center font-semibold justify-between px-3  md:px-10 py-5">
-      {/* Left-side items */}
+     
       <ul className="flex items-center gap-8 w-[40%]">
         <Link to="/">
           <li className="text-[#000000] text-xl font-bold">
@@ -196,7 +196,7 @@ function Header() {
       </ul>
       {/* Right-side items */}
       <ul
-        className={`flex items-center  gap-6 w-[40%] text-[15px] justify-end ${isFindJobsRoute ? "text-[#000]" : "text-[#000]"
+        className={`flex items-center  gap-6 w-[40%] text-[15px] justify-end ${isFindJobsRoute ? "text-[#000l]" : "text-[#000]"
           }`}
       >
         <Link to="/login">

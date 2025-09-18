@@ -127,7 +127,7 @@ const Publish = () => {
       >
         <div className="relative z-10">
           <img src="/assets/star.png" alt="star" className="w-[30px] mb-2" />
-          <h1 className="text-white text-3xl font-bold">Post Job: Publishing Job</h1>
+          <h1 className="text-white text-3xl font-semibold">Post Job: Publishing Job</h1>
           <p className="text-gray-200 text-sm max-w-lg">
             Review the job you are posting.
           </p>
@@ -137,7 +137,7 @@ const Publish = () => {
       <div className="p-4 md:p-10 bg-[#F9FAFB]">
         <div className="bg-white p-6 rounded-2xl shadow-lg">
           {/* Heading */}
-          <h2 className="text-2xl md:text-3xl font-bold text-gray-800 mb-8 text-center">
+          <h2 className="text-xl md:text-2xl font-semibold text-gray-800 mb-8 text-center">
             Publishing job
           </h2>
 

@@ -19,7 +19,7 @@ const AddJobDetailsStep = () => {
   });
   const [logoPreview, setLogoPreview] = useState(null);
   const [loading, setLoading] = useState(false);
-  const { companyDetails, setCompanyDetails } = useContext(JobContext);
+  const { companyDetails, setCompanyDetails, setPostingJob } = useContext(JobContext);
 
 
 
@@ -69,6 +69,13 @@ const AddJobDetailsStep = () => {
       alert("Please fill in all the details.");
       return; // Prevent further execution if any field is empty
     }
+
+    // Update postingJob with company details
+    setPostingJob((prevPostingJob) => ({
+      ...prevPostingJob,
+      companyDetails,
+    }));
+
     navigate("/enterjobdetails");
   };
 
@@ -178,7 +185,7 @@ const AddJobDetailsStep = () => {
             <p className="text-sm font-medium text-gray-600">
               Step 1 of 5:{" "}
               <span className="text-[#D3555A] font-semibold">
-                Job Requirements
+                Enter Company Details
               </span>
             </p>
           </div>
@@ -281,7 +288,7 @@ const AddJobDetailsStep = () => {
                 <select
                   className="border border-gray-300 rounded-lg p-2 bg-gray-50 sm:w-[80px] w-full"
                   value={companyDetails.countryCode}
-                  onChange={(e) => setCompanyDetails(prevDetails => ({ ...prevDetails, employerName: e.target.value }))}
+                  onChange={(e) => setCompanyDetails(prevDetails => ({ ...prevDetails, countryCode: e.target.value }))}
                   name="countryCode"
                 >
                   <option value="+44">+44</option>

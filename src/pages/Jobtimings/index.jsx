@@ -36,9 +36,13 @@ function AddJobDetails4() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // Prepare data to send
+    // Validation
+    if (!workSchedule.startTime || !workSchedule.endTime || !workSchedule.startDate || !workSchedule.duration || workSchedule.workingDays.length === 0) {
+      alert("Please fill in all required fields: start time, end time, start date, duration, and select at least one working day.");
+      return;
+    }
 
-    // Axios POST request
+    // Prepare data to send
     console.log("timing", workSchedule);
 
     setPostingJob((prevPostingJob) => ({
@@ -119,8 +123,8 @@ function AddJobDetails4() {
                   {/* Step Number Circle */}
                   <div
                     className={`w-10 h-10 flex justify-center items-center rounded-full ${item.active
-                        ? "bg-[#D3555A] text-white" // Highlight for active steps
-                        : "bg-white text-gray-700 border border-gray-300" // Default style for inactive steps
+                      ? "bg-[#D3555A] text-white" // Highlight for active steps
+                      : "bg-white text-gray-700 border border-gray-300" // Default style for inactive steps
                       }`}
                   >
                     {item.step}
@@ -153,7 +157,7 @@ function AddJobDetails4() {
             <p className="text-sm font-medium text-gray-600">
               Step 4 of 5:{" "}
               <span className="text-[#D3555A] font-semibold">
-                Job Requirements
+                Job Timings & Dates
               </span>
             </p>
           </div>
