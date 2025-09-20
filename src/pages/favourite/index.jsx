@@ -25,9 +25,10 @@ function Favourite() {
   const [searchCandidate, setSearchCandidate] = useState("");
   const [allJobCategories, setAllJobCategories] = useState([])
   const [isLoading, setIsLoading] = useState(false)
+  const [favoriteLoading, setFavoriteLoading] = useState({}) // Track loading state for each candidate
 
 
-  
+
 
 
 
@@ -55,7 +56,7 @@ function Favourite() {
         }));
 
       setCandidates(formattedData);
-          setIsLoading(false)
+      setIsLoading(false)
 
 
 
@@ -98,14 +99,47 @@ function Favourite() {
 
 
   const makeFavourite = async (candidateId) => {
-    console.log(candidateId)
+    // Set loading state for this specific candidate
+    setFavoriteLoading(prev => ({ ...prev, [candidateId]: true }));
 
-    const status = true
     try {
-      const response = await HttpClient.post("favCandidate/favorite", { candidateId, status })
-      console.log(response)
+      // Find current favorite status
+      const currentCandidate = candidates.find(c => c.id === candidateId);
+      const isCurrentlyFavorite = currentCandidate?.favStatus || false;
+
+      // Toggle the status
+      const newStatus = !isCurrentlyFavorite;
+
+      const response = await HttpClient.post("favCandidate/favorite", {
+        candidateId
+      });
+
+      console.log(response);
+
+      // Update local state immediately for better UX
+      const updateCandidates = (candidatesList) =>
+        candidatesList.map(candidate =>
+          candidate.id === candidateId
+            ? { ...candidate, favStatus: newStatus }
+            : candidate
+        );
+
+      setCandidates(updateCandidates);
+      setFilteredCandidates(updateCandidates);
+
+      // Show success message
+      alert(
+        newStatus
+          ? "Candidate added to favorites!"
+          : "Candidate removed from favorites!"
+      );
+
     } catch (error) {
-      console.log(error?.message)
+      console.log(error?.message);
+      alert("Failed to update favorite status. Please try again.");
+    } finally {
+      // Clear loading state for this candidate
+      setFavoriteLoading(prev => ({ ...prev, [candidateId]: false }));
     }
   }
 
@@ -201,23 +235,23 @@ function Favourite() {
 
               {/* Button Section */}
               <div className="p-4">
-             
 
 
-                <div className="flex flex-wrap shadow-lg lg:rounded-full sm:rounded-lg mt-3 items-center justify-between space-x-2 px-2 py-2">
+
+                <div className="flex flex-wrap shadow-lg lg:rounded-full sm:rounded-lg mt-3 items-center justify-between px-2 py-2">
                   <Link to="/findcandidate">
-                    <button className="border-lg px-2 text-black h-auto w-full sm:w-[140px]" style={{ height: '60px' }}>Find Candidate</button>
+                    <button className="border-lg px-3 py-1 text-black h-auto w-full w-auto" >Find Candidate</button>
                   </Link>
 
                   <Link to="/requests">
-                    <button className="border-lg px-2 text-black h-auto w-full sm:w-[140px]" style={{ height: '60px' }}>Requested</button>
+                    <button className="border-lg px-3 py-1 text-black h-auto w-full w-auto" >Requested</button>
                   </Link>
                   {/* <Link to="/confirm">
-                    <button className="border-lg px-2 text-black h-auto w-full sm:w-[140px]" style={{ height: '60px' }}>Confirmed</button>
+                    <button className="border-lg px-2 text-black h-auto w-full w-auto" >Confirmed</button>
                   </Link> */}
 
                   <Link to="/favorite">
-                    <button className="bg-black border-lg px-2 py-1 text-white h-auto w-full sm:w-[140px]" style={{ height: '60px' }}>View Favourites</button>
+                    <button className=" text-[#c5363c] outline border-lg px-2 py-1 h-auto w-full w-auto" >View Favourites</button>
                   </Link>
                 </div>
               </div>
@@ -245,7 +279,7 @@ function Favourite() {
                     <button
                       type="button"
                       onClick={() => setIsModalOpen(true)}
-                      className="flex items-center mb-2 md:m-0 bg-[#c5363c] text-white rounded-lg px-4 py-2 hover:bg-[#a02d31] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#c5363c]"
+                      className="flex items-center mb-2 md:m-0 bg-[#c5363c] text-white rounded-lg px-4 py-2 hover:bg-[#a02d31] "
                       aria-label="Open filter modal"
                     >
                       <IoFilter className="mr-2" aria-hidden="true" />
@@ -297,8 +331,18 @@ function Favourite() {
                           </div>
                           <div className="flex items-center justify-between">
 
-                            <button onClick={() => makeFavourite(candidate?.id)} className="focus:outline-none">
-                              {candidate?.favStatus ? <VscHeartFilled size={30} color="#c5363c" /> : <CiHeart size={30} />}
+                            <button
+                              onClick={() => makeFavourite(candidate?.id)}
+                              className=" disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 hover:scale-110"
+                              disabled={favoriteLoading[candidate?.id]}
+                            >
+                              {favoriteLoading[candidate?.id] ? (
+                                <ClipLoader color="#c5363c" size={20} />
+                              ) : candidate?.favStatus ? (
+                                <VscHeartFilled size={30} color="#c5363c" />
+                              ) : (
+                                <CiHeart size={30} className="hover:text-red-500 transition-colors duration-200" />
+                              )}
                             </button>
 
                             <div className=" text-right">

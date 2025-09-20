@@ -78,15 +78,15 @@ function Requests() {
         const response = await HttpClient.get(
           `${process.env.REACT_APP_URL}/jobs/invite`
         );
-        console.log(response,"......................response-81")
+        console.log(response, "......................response-81")
         const data = response?.invitations;
         const formattedData = data.map((candidate) => ({
           id: candidate.userId,
           name: candidate.name,
           email: candidate.email,
           //isRequested: candidate?.isRequested,
-          category:candidate.jobCategory,
-          profession:candidate.profession
+          category: candidate.jobCategory,
+          profession: candidate.profession
           // Add more fields as required, e.g., profile picture, experience, etc.
         }));
         setCandidates(formattedData);
@@ -124,112 +124,89 @@ function Requests() {
           {/* Button Section */}
           <div className="flex flex-wrap justify-between space-x-2 shadow-lg lg:rounded-full sm:rounded-lg mt-3 p-3 items-center z-10">
             <Link to="/findcandidate">
-              <button
-                className="border-lg px-2 text-black h-auto w-full sm:w-[140px]"
-                style={{ height: "60px" }}
-              >
+              <button className="border-lg px-3 py-1 text-black h-auto w-auto">
                 Find Candidate
               </button>
             </Link>
             <Link to="/requests">
-              <button
-                className="bg-black border-lg px-2 py-1 text-white h-auto w-full sm:w-[140px]"
-                style={{ height: "60px" }}
-              >
+              <button className="border-lg px-2 py-1 outline text-[#c5363c] h-auto w-auto">
                 Requested
               </button>
             </Link>
             {/* <Link to="/confirm">
-              <button
-                className="border-lg px-2 py-1 text-black h-auto w-full sm:w-[140px]"
-                style={{ height: "60px" }}
-              >
-                Confirmed
-              </button>
-            </Link> */}
+        <button className="border-lg px-2 py-1 text-black h-auto w-auto">
+          Confirmed
+        </button>
+      </Link> */}
             <Link to="/favorite">
-              <button
-                className="border-lg px-2 py-1 text-black h-auto w-full sm:w-[140px]"
-                style={{ height: "60px" }}
-              >
+              <button className="border-lg px-2 py-1 text-black h-auto w-auto">
                 View Favourites
               </button>
             </Link>
           </div>
 
           {/* Cards Section */}
+          {loading ? (
+            <div className="flex justify-center items-center h-[300px]">
+              <ClipLoader color="#c5363c" size={50} />
+            </div>
+          ) : error ? (
+            <p className="text-red-500 text-center font-semibold">{error}</p>
+          ) : filteredCandidates.length > 0 ? (
+            <div className="mt-2 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {filteredCandidates.map((candidate) => (
+                <div
+                  key={candidate.id}
+                  className="px-6 py-4 border rounded-lg shadow-md bg-white hover:shadow-lg transition-shadow duration-300"
+                >
+                  {/* Header */}
+                  <div className="flex justify-between items-center mb-2">
+                    <h3 className="font-semibold text-lg text-gray-800">
+                      {candidate.name || "N/A"}
+                    </h3>
+                    <img
+                      src={candidate?.candidateImage}
+                      className="w-12 h-12 rounded-full object-cover"
+                      alt="profile"
+                    />
+                  </div>
 
-          {
-            false ?
-              <div className="flex items-center justify-center h-[200px] mt-2 border border-gray-300 rounded-lg shadow-md">
-                <p className="text-xl font-semibold text-gray-700">No requested candidate</p>
-              </div>
-              :
-
-              <> {loading ? (
-                <div className="flex justify-center items-center h-[300px]">
-                  <ClipLoader color="#c5363c" size={50} />
-                </div>
-              ) : error ? (
-                <p className="text-red-500 text-center font-semibold">{error}</p>
-              ) : (
-                <div className="mt-2 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                  {filteredCandidates.length > 0 ? (
-                    filteredCandidates.map((candidate) => (
-                      <div
-                        key={candidate.id}
-                        className="px-6 py-4 border rounded-lg shadow-md bg-white hover:shadow-lg transition-shadow duration-300"
-                      >
-                        {/* Header */}
-                        <div className="flex justify-between items-center mb-2">
-                          <h3 className="font-semibold text-lg text-gray-800">{candidate.name || "N/A"}</h3>
-
-                          <img src={candidate?.candidateImage} className="w-12 h-12 rounded-full object-cover" alt="profile" />
-
-                        </div>
-
-                        {/* Details */}
-                        <div className="space-y-2">
-                          <div className="flex items-center gap-2">
-                            <CiMail className="text-gray-500" />
-                            <span className="text-sm px-2 py-1 rounded-lg bg-[#c1e2e3] text-gray-700">
-                              {candidate.email || "N/A"}
-                            </span>
-                          </div>
-
-                          <div className="flex items-center gap-2">
-                            <GrUserWorker className="text-gray-500" />
-                            <p className="text-sm text-gray-600">{candidate?.profession || "N/A"}</p>
-                          </div>
-                          <div className="flex items-center gap-2">
-                            <MdCategory className="text-gray-500" />
-                            <p className="text-sm text-gray-600">{candidate?.category || "N/A"}</p>
-                          </div>
-                        </div>
-                        {/* <div className="flex items-center justify-between">
-
-                          <button className="focus:outline-none">
-                            {false ? <VscHeartFilled size={30} color="#c5363c" /> : <CiHeart size={30} />}
-                          </button>
-
-                        
-                        </div> */}
-
-                        {/* Footer */}
-
-                      </div>
-                    ))
-                  ) : (
-                    <div className="p-6 text-center w-full text-gray-500 bg-gray-100 rounded-lg">
-                      No candidates found. Please try changing the Job Title filter.
+                  {/* Details */}
+                  <div className="space-y-2">
+                    <div className="flex items-center gap-2">
+                      <CiMail className="text-gray-500" />
+                      <span className="text-sm px-2 py-1 rounded-lg bg-[#c1e2e3] text-gray-700">
+                        {candidate.email || "N/A"}
+                      </span>
                     </div>
-                  )}
-                </div>
-              )}</>
 
-          }
+                    <div className="flex items-center gap-2">
+                      <GrUserWorker className="text-gray-500" />
+                      <p className="text-sm text-gray-600">
+                        {candidate?.profession || "N/A"}
+                      </p>
+                    </div>
+
+                    <div className="flex items-center gap-2">
+                      <MdCategory className="text-gray-500" />
+                      <p className="text-sm text-gray-600">
+                        {candidate?.category || "N/A"}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div className="flex items-center justify-center w-full h-40 mt-2 border border-gray-300 rounded-lg shadow-md">
+              <p className="text-xl font-semibold text-gray-700">
+                No requested candidate found.
+              </p>
+            </div>
+          )}
         </div>
       </div>
+
 
 
 

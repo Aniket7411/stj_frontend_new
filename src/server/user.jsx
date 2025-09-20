@@ -51,13 +51,18 @@ export function LogIn({ accessToken, refreshToken, userData }) {
   setAccessToken(accessToken);
   setRefreshToken(refreshToken);
   setUserData(userData);
-    
+
+  // Dispatch custom event for login
+  window.dispatchEvent(new CustomEvent('userLogin'));
 }
 
 export function LogOut() {
   removeAccessToken();
   removeRefreshToken();
   removeUserData();
+
+  // Dispatch custom event for logout
+  window.dispatchEvent(new CustomEvent('userLogout'));
 }
 
 export async function RefreshAccessToken() {

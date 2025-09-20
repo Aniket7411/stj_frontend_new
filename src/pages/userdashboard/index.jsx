@@ -15,6 +15,7 @@ import ProfileContext from "../../profilecontext";
 import MapView from "../../components/mapview";
 import { FiPlus } from "react-icons/fi";
 import Infoicon from "../../components/common/infoicon";
+import { isLoggedIn } from "../../server/user";
 
 const Userdashborad = () => {
   const [range, setRange] = useState("10 miles"); // Default range
@@ -40,6 +41,13 @@ const Userdashborad = () => {
   const email = JSON.parse(localStorage.getItem("userData"))?.email
 
   const getProfileDetails = async () => {
+    // Only fetch profile if user is logged in
+    if (!isLoggedIn()) {
+      console.log("User not logged in, skipping profile fetch");
+      setIsLoading(false);
+      return;
+    }
+
     setIsLoading(true);
     try {
       //debugger
@@ -61,6 +69,12 @@ const Userdashborad = () => {
   };
 
   const getDashboardData = async () => {
+    // Only fetch dashboard data if user is logged in
+    if (!isLoggedIn()) {
+      console.log("User not logged in, skipping dashboard fetch");
+      return;
+    }
+
     try {
       const response = await HttpClient.get(
         `/dashBoard/`

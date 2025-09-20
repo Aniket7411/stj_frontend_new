@@ -20,6 +20,7 @@ import { toast } from "react-toastify";
 import { HttpClient } from "../../server/client/http";
 import ProfileContext from "../../profilecontext";
 import MapView from "../../components/mapview";
+import { isLoggedIn } from "../../server/user";
 
 // Marker Icon Fix
 delete L.Icon.Default.prototype._getIconUrl;
@@ -29,21 +30,21 @@ L.Icon.Default.mergeOptions({
   shadowUrl: require("leaflet/dist/images/marker-shadow.png"),
 });
 
-  const userName = localStorage.getItem("name");
-  const parsedName = JSON.parse(userName); // Parse the JSON string into an object
-  const userData = localStorage.getItem("userData");
-  const parsedUserData = JSON.parse(userData); // Parse the JSON string into an object
-  console.log(parsedUserData, "pud");
+const userName = localStorage.getItem("name");
+const parsedName = JSON.parse(userName); // Parse the JSON string into an object
+const userData = localStorage.getItem("userData");
+const parsedUserData = JSON.parse(userData); // Parse the JSON string into an object
+console.log(parsedUserData, "pud");
 
-  const name = parsedName?.role;
-  const userGmail = parsedUserData?.email;
-  const phoneNumber = parsedUserData?.phoneNumber;
+const name = parsedName?.role;
+const userGmail = parsedUserData?.email;
+const phoneNumber = parsedUserData?.phoneNumber;
 
 
 function EmployerProfile() {
   const [range, setRange] = useState("10 miles"); // Default range
   const [searchTerm, setSearchTerm] = useState(""); // Search term for location
-  const [position,setPosition] = useState([]); // Default coordinates
+  const [position, setPosition] = useState([]); // Default coordinates
   const [activeTab, setActiveTab] = useState("dashboard"); // Default tab
   const [dashboardData, setdashboardData] = useState();
   const [employerDetails, setEmployerDetails] = useState()
@@ -67,7 +68,7 @@ function EmployerProfile() {
     setIsLoading(true)
     try {
       const response = await HttpClient.get(
-        `/dashBoard/`
+        `/dashboard`
       );
       console.log("fffffffffffffffffff", response)
 
@@ -81,6 +82,13 @@ function EmployerProfile() {
   };
 
   const getEmployerDetails = async () => {
+    // Only fetch employer details if user is logged in
+    if (!isLoggedIn()) {
+      console.log("User not logged in, skipping employer details fetch");
+      setIsLoading(false);
+      return;
+    }
+
     setIsLoading(true)
     try {
       const response = await HttpClient.get("/user/profile/");
@@ -93,6 +101,8 @@ function EmployerProfile() {
 
     } catch (error) {
       console.error("Error fetching employer details:", error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -107,7 +117,7 @@ function EmployerProfile() {
       case "dashboard":
         return <Candidatedashboard dashboardData={dashboardData} />;
       case "profile":
-        return <DashboardProfile dashboardData={dashboardData}/>;
+        return <DashboardProfile dashboardData={dashboardData} />;
 
       default:
         return null;
@@ -279,8 +289,8 @@ function EmployerProfile() {
             </div> */}
 
             {/* Map Section */}
-            <MapView position={position} role="employer"/>
-            
+            <MapView position={position} role="employer" />
+
           </div>
         </div>
       }

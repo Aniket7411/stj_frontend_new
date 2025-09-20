@@ -458,7 +458,7 @@ function App() {
     },
 
     {
-      path: "/userprofile/:userId/:category",
+      path: "/userprofile/:id",
       element: (
         <Layout>
           <UserprofileDetails />

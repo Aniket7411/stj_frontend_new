@@ -1,6 +1,7 @@
 import React, { createContext, useEffect, useState } from "react";
 import { HttpClient } from "../../server/client/http";
 import { toast } from "react-toastify";
+import { isLoggedIn } from "../../server/user";
 
 export const NotificationContext = createContext({
   notifications: [], // Default value for notifications
@@ -14,6 +15,12 @@ const NotificationProvider = ({ children }) => {
   const [notificationCountToShow, setNotificationCountToShow] = useState(0)
 
   const getNotifications = async () => {
+    // Only fetch notifications if user is logged in
+    if (!isLoggedIn()) {
+      console.log("User not logged in, skipping notification fetch");
+      return;
+    }
+
     try {
       // debugger
       const response = await HttpClient.get("/notification/");
@@ -47,6 +54,45 @@ const NotificationProvider = ({ children }) => {
 
   useEffect(() => {
     getNotifications();
+  }, []);
+
+  // Listen for storage changes to detect login/logout
+  useEffect(() => {
+    const handleStorageChange = (e) => {
+      if (e.key === 'accessToken') {
+        if (e.newValue) {
+          // User logged in, fetch notifications
+          getNotifications();
+        } else {
+          // User logged out, clear notifications
+          setNotifications([]);
+          setNotificationCount(0);
+          setNotificationCountToShow(0);
+          setUnreadNotification(0);
+        }
+      }
+    };
+
+    // Listen for storage events (when user logs in/out in another tab)
+    window.addEventListener('storage', handleStorageChange);
+
+    // Also listen for custom login/logout events
+    const handleLogin = () => getNotifications();
+    const handleLogout = () => {
+      setNotifications([]);
+      setNotificationCount(0);
+      setNotificationCountToShow(0);
+      setUnreadNotification(0);
+    };
+
+    window.addEventListener('userLogin', handleLogin);
+    window.addEventListener('userLogout', handleLogout);
+
+    return () => {
+      window.removeEventListener('storage', handleStorageChange);
+      window.removeEventListener('userLogin', handleLogin);
+      window.removeEventListener('userLogout', handleLogout);
+    };
   }, []);
 
   return (

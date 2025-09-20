@@ -1,33 +1,38 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { HttpClient } from "../../server/client/http";
 import { FiMail, FiPhone, FiCalendar, FiGlobe, FiAward, FiBriefcase } from "react-icons/fi";
 import { FaLanguage, FaPassport, FaCar, FaFirstAid } from "react-icons/fa";
 import { MdWork, MdDriveEta } from "react-icons/md";
-import { GiHealthNormal,      } from "react-icons/gi";
+import { GiHealthNormal, } from "react-icons/gi";
 import { FaPersonMilitaryRifle } from "react-icons/fa6";
 import { toast } from "react-toastify";
+import ProfileContext from "../../profilecontext";
+
 
 const UserprofileDetails = () => {
-    const { userId,category } = useParams();
+    const { userId, category } = useParams();
+    const { profile } = useContext(ProfileContext);
+    console.log("profile", profile)
+
     //const location=useLocation();
     //console.log(id,"....13");
     const [candidate, setCandidate] = useState();
-    const navigate=useNavigate();
+    const navigate = useNavigate();
 
     const requestCandidate = async () => {
         try {
             const response = await HttpClient.post(`/jobs/invite`, {
                 userId: userId,
-                category:category
+                category: category
             });
-            if(response.success===true){
+            if (response.success === true) {
                 toast.success(response.message);
                 navigate('/findCandidate')
             }
             setCandidate(response?.user)
         } catch (error) {
-            toast.error(error.response.data.message||error.message||"internal server error")
+            toast.error(error.response.data.message || error.message || "internal server error")
             console.error("Error requesting candidate:", error);
         }
     };
@@ -45,6 +50,9 @@ const UserprofileDetails = () => {
             </div>
         </div>
     );
+
+
+    console.log("profilezz", profile?.profile)
 
     return (
         <div className="min-h-screen bg-gray-50 py-8 px-4 sm:px-6 lg:px-8">
@@ -76,13 +84,13 @@ const UserprofileDetails = () => {
                         </h2>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                             <div>
-                                <DetailItem icon={<FiMail />} label="Email" value={candidate?.email} />
-                                <DetailItem icon={<FiPhone />} label="Phone" value = "XXX- XXX"/>
+                                <DetailItem icon={<FiMail />} label="Email" value={profile?.email} />
+                                <DetailItem icon={<FiPhone />} label="Phone" value={profile?.phoneNumber} />
                                 <DetailItem icon={<FiCalendar />} label="Date of Birth" value={candidate?.profile?.personalInformation?.dob} />
                             </div>
                             <div>
-                                <DetailItem icon={<FiGlobe />} label="Nationality" value={candidate?.profile?.personalInformation?.nationality} />
-                                <DetailItem icon={<FaLanguage />} label="Languages" value={candidate?.profile?.generalInformation?.nationality} />
+                                <DetailItem icon={<FiGlobe />} label="Nationality" value={profile?.phoneNumber} />
+                                <DetailItem icon={<FaLanguage />} label="Languages" value={profile?.profile?.personalInformation?.address?.country} />
                             </div>
                         </div>
                     </div>
@@ -94,8 +102,8 @@ const UserprofileDetails = () => {
                             Skills
                         </h2>
                         <div className="flex flex-wrap gap-2">
-                            {candidate?.profile?.personalInformation?.skills?.length > 0 ? (
-                                candidate.profile.personalInformation.skills.map((skill, index) => (
+                            {profile?.profile?.personalInformation?.skills?.length > 0 ? (
+                                profile?.profile?.personalInformation?.skills.map((skill, index) => (
                                     <span
                                         key={index}
                                         className="bg-[#c5363c]/10 text-[#c5363c] px-3 py-1 rounded-full text-sm font-medium"
@@ -159,7 +167,7 @@ const UserprofileDetails = () => {
                             </div>
                             <div>
                                 <DetailItem icon={<MdWork />} label="Work Permit" value={candidate?.profile?.generalInformation?.workPermit} />
-                                <DetailItem icon={<FaPersonMilitaryRifle  />} label="Military Background" value={candidate?.profile?.generalInformation?.millitaryBackground} />
+                                <DetailItem icon={<FaPersonMilitaryRifle />} label="Military Background" value={candidate?.profile?.generalInformation?.millitaryBackground} />
                                 <DetailItem icon={<FaCar />} label="Willing to Travel" value={candidate?.profile?.generalInformation?.travelWill ? `${candidate?.profile?.generalInformation?.travelWill} miles` : null} />
                             </div>
                         </div>

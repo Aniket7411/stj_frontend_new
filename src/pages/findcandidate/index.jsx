@@ -24,6 +24,7 @@ function FindCandidate() {
   const [searchCandidate, setSearchCandidate] = useState("");
   const [allJobCategories, setAllJobCategories] = useState([])
   const [isLoading, setIsLoading] = useState(false)
+  const [favoriteLoading, setFavoriteLoading] = useState({}) // Track loading state for each candidate
   const navigate = useNavigate()
 
   const getAllCategories = async () => {
@@ -64,7 +65,7 @@ function FindCandidate() {
 
       console.log("candidate", response?.data)
       const formattedData = data.map((candidate) => ({
-        id: candidate?.userId,
+        id: candidate?._id,
         name: candidate?.name,
         favStatus: candidate?.favStatus,
 
@@ -111,14 +112,47 @@ function FindCandidate() {
   };
 
   const makeFavourite = async (candidateId) => {
-    console.log(candidateId)
+    // Set loading state for this specific candidate
+    setFavoriteLoading(prev => ({ ...prev, [candidateId]: true }));
 
-    const status = true
     try {
-      const response = await HttpClient.post("favCandidate/favorite", { candidateId, status })
-      console.log(response)
+      // Find current favorite status
+      const currentCandidate = candidates.find(c => c.id === candidateId);
+      const isCurrentlyFavorite = currentCandidate?.favStatus || false;
+
+      // Toggle the status
+      const newStatus = !isCurrentlyFavorite;
+
+      const response = await HttpClient.post("favCandidate/favorite", {
+        candidateId
+      });
+
+      console.log(response);
+
+      // Update local state immediately for better UX
+      const updateCandidates = (candidatesList) =>
+        candidatesList.map(candidate =>
+          candidate.id === candidateId
+            ? { ...candidate, favStatus: newStatus }
+            : candidate
+        );
+
+      setCandidates(updateCandidates);
+      setFilteredCandidates(updateCandidates);
+
+      // Show success message
+      toast.success(
+        newStatus
+          ? "Candidate added to favorites!"
+          : "Candidate removed from favorites!"
+      );
+
     } catch (error) {
-      console.log(error?.message)
+      console.log(error?.message);
+      toast.error("Failed to update favorite status. Please try again.");
+    } finally {
+      // Clear loading state for this candidate
+      setFavoriteLoading(prev => ({ ...prev, [candidateId]: false }));
     }
   }
 
@@ -174,7 +208,7 @@ function FindCandidate() {
                   To search candidate select your job posting first
                 </p>
                 <select
-                  className="w-full border rounded-md px-3 py-2 outline-none"
+                  className="w-auto border rounded-md px-3 py-2 outline-none"
                   value={selectedJob}
                   onChange={(e) => setSelectedJob(e.target.value)}
                 >
@@ -217,8 +251,8 @@ function FindCandidate() {
               <div className="flex flex-wrap justify-between space-x-2 shadow-lg lg:rounded-full sm:rounded-lg mt-3 p-3 items-center z-10">
                 <Link to="/findcandidate">
                   <button
-                    className="bg-black border-lg px-5 py-3 text-white h-auto w-full sm:w-[140px]"
-                    style={{ height: "60px" }}
+                    className=" border-lg px-3 py-1 text-[#c5363c] outline h-auto w-auto "
+
                   >
                     Find Candidate
                   </button>
@@ -226,24 +260,24 @@ function FindCandidate() {
 
                 <Link to="/requests">
                   <button
-                    className="border-lg px-4 text-black h-auto w-full sm:w-[140px]"
-                    style={{ height: "60px" }}
+                    className="border-lg px-3 py-1 text-black h-auto w-auto "
+
                   >
                     Requested
                   </button>
                 </Link>
                 {/* <Link to="/confirm">
                   <button
-                    className="border-lg px-4 text-black h-auto w-full sm:w-[140px]"
-                    style={{ height: "60px" }}
+                    className="border-lg px-4 text-black h-auto w-auto "
+                    
                   >
                     Confirmed
                   </button>
                 </Link> */}
                 <Link to="/favorite">
                   <button
-                    className="border-lg px-4 text-black h-auto w-full sm:w-[140px]"
-                    style={{ height: "60px" }}
+                    className="border-lg px-3 py-1 text-black h-auto w-auto "
+
                   >
                     View Favourites
                   </button>
@@ -258,7 +292,7 @@ function FindCandidate() {
                   value={searchCandidate}
                   onChange={handleSearch}
                   placeholder="Search Candidate"
-                  className="p-2 border rounded-lg w-full sm:w-[300px]"
+                  className="p-2 border rounded-lg w-auto sm:w-[300px]"
                 />
 
                 <div className="flex gap-2">
@@ -274,7 +308,7 @@ function FindCandidate() {
                   <button
                     type="button"
                     onClick={() => setIsModalOpen(true)}
-                    className="flex items-center mb-2 md:m-0 bg-[#c5363c] text-white rounded-lg px-4 py-2 hover:bg-[#a02d31] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#c5363c]"
+                    className="flex items-center mb-2 md:m-0 bg-[#c5363c] text-white rounded-lg px-4 py-2 hover:bg-[#a02d31] "
                     aria-label="Open filter modal"
                   >
                     <IoFilter className="mr-2" aria-hidden="true" />
@@ -330,19 +364,24 @@ function FindCandidate() {
                         </div>
                         <div className="flex items-center justify-between">
 
-                          <button onClick={() => makeFavourite(candidate?.id)} className="focus:outline-none">
-                            {candidate?.favStatus ? <VscHeartFilled size={30} color="#c5363c" /> : <CiHeart size={30} />}
+                          <button
+                            onClick={() => makeFavourite(candidate?.id)}
+                            className=" disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 hover:scale-110"
+                            disabled={favoriteLoading[candidate?.id]}
+                          >
+                            {favoriteLoading[candidate?.id] ? (
+                              <ClipLoader color="#c5363c" size={20} />
+                            ) : candidate?.favStatus ? (
+                              <VscHeartFilled size={30} color="#c5363c" />
+                            ) : (
+                              <CiHeart size={30} className="hover:text-red-500 transition-colors duration-200" />
+                            )}
                           </button>
 
                           <div className=" text-right">
-                            <button onClick={() => {
-                              if (selectedJob) {
-                                navigate(`/userprofile/${candidate?.id}/${selectedJob}`);
+                            <button onClick={() => {navigate(`/userprofile/${candidate?.id}`)
 
-                              }
-                              else {
-                                toast.info('Choose job profile');
-                              }
+                             
                             }}>
                               <p className="text-blue-500 underline cursor-pointer hover:text-blue-700 hover:underline-offset-2">
                                 View Profile
@@ -356,7 +395,7 @@ function FindCandidate() {
                       </div>
                     ))
                   ) : (
-                    <div className="p-6 flex justify-center items-center w-full text-gray-500 bg-gray-100 rounded-lg">
+                    <div className="p-6 flex justify-center items-center w-auto text-gray-500 bg-gray-100 rounded-lg">
                       <p className=" text-center "> No candidates found. Please try changing the Job Title filter.</p>
                     </div>
                   )}

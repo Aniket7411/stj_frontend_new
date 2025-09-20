@@ -35,7 +35,7 @@ const Completedjobdescription = () => {
     const getJobDetails = async () => {
         setIsLoading(true);
         try {
-            const response = await HttpClient.get(`/jobs/job-posts/${location?.pathname.split('/').pop()}`);
+            const response = await HttpClient.get(`/job/job-posts/${location?.pathname.split('/').pop()}`);
             setJobDetails(response?.data);
         } catch (error) {
             console.error("Error fetching job details:", error.message);
@@ -212,8 +212,8 @@ const Completedjobdescription = () => {
                             </p>
                         </div>
 
-                        {/* Visit Company Website */}   
-                        
+                        {/* Visit Company Website */}
+
                         <a
                             href={
                                 jobDetails?.companyDetails?.companyWebsite.startsWith("http")

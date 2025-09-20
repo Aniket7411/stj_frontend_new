@@ -365,6 +365,12 @@ function Homepage() {
 
 
   const checkcheck = async () => {
+    // Only fetch admin stats if user is logged in
+    if (!localStorage.getItem("accessToken")) {
+      console.log("User not logged in, skipping admin dashboard stats fetch");
+      return;
+    }
+
     try {
       const response = await fetch("http://217.21.95.69:5000/api/admin/dashboard-stats");
       const data = await response.json();

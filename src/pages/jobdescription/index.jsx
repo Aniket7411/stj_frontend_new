@@ -30,7 +30,7 @@ const JobDescription = () => {
      const getJobDetails = async () => {
         try {
           // setLoading(true);
-          const response = await HttpClient.get(`/jobs/job-posts/${location?.pathname.split('/').pop()}`);   
+          const response = await HttpClient.get(`/job/job-posts/${location?.pathname.split('/').pop()}`);   
           setjobDetails(response?.data);
           
         } catch (error) {

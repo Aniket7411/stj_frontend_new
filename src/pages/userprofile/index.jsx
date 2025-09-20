@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { HttpClient } from "../../server/client/http";
 import { toast } from "react-toastify";
+import { isLoggedIn } from "../../server/user";
 import ClipLoader from "react-spinners/ClipLoader";
 import { languages } from "../../utils/city";
 
@@ -330,6 +331,13 @@ const UserPofile = () => {
 
   //console.log("formData", formData);
   const getEmployeeDetails = async () => {
+    // Only fetch employee details if user is logged in
+    if (!isLoggedIn()) {
+      console.log("User not logged in, skipping employee details fetch");
+      setIsLoading(false);
+      return;
+    }
+
     setIsLoading(true)
     try {
       //  debugger;

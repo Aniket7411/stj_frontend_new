@@ -29,14 +29,14 @@ const JobProvider = ({ children }) => {
     jobDescription: "",
     employmentType: "",
     country: "UK",
-    location:"",
+    location: "",
     jobPostingDate: formattedDate,
     city: "",
     state: "",
     zipCode: "",
     jobAddress: "",
-    latitude:null,
-    longitude:null,
+    latitude: null,
+    longitude: null,
 
     applicationDeadline: "",
     salary: {
@@ -47,8 +47,8 @@ const JobProvider = ({ children }) => {
 
   const [jobRequirements, setJobRequirements] = useState({
     jobSkills: [],
-      minimumExp: "0",
-      maximumExp: "0",
+    minimumExp: "0",
+    maximumExp: "0",
     minimumQualification: "",
     dressCode: "",
     resumeRequired: false,
@@ -94,8 +94,8 @@ const JobProvider = ({ children }) => {
     contactNumber: "",
     companyWebsite: "",
     extension: "44",
-    companyLogoUrl: "",
-    countryCode:"44"
+    companyLogo: "",
+    countryCode: "+44"
   });
 
   const [workSchedule, setWorkSchedule] = useState({

@@ -73,7 +73,7 @@ const JobDescriptionDetails = () => {
     console.log(jobId);
     setIsLoading(true)
     try {
-      const response = await HttpClient.delete(`/jobs/job-posts/${jobId}`);
+      const response = await HttpClient.delete(`/job/job-posts/${jobId}`);
       toast.success(response?.message || "Job deleted successfully");
       setIsLoading(false)
       setjobDetails(undefined)

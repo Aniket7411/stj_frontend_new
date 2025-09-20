@@ -2,12 +2,13 @@
 import { useCallback, useEffect, useState } from "react";
 import { HttpClient } from "../../server/client/http";
 import { toast } from "react-toastify";
+import { isLoggedIn } from "../../server/user";
 import ClipLoader from "react-spinners/ClipLoader";
 
 
 import uploadImageOnCloudinary from "../../components/uploads/uploadImg";
 import { Modal } from "@react-pdf-viewer/core";
-import { languages   } from "../../utils/city";
+import { languages } from "../../utils/city";
 import { useRef } from "react";
 import MapSearch from "../../components/mapsearch";
 
@@ -88,7 +89,7 @@ const PersonalInfo = (props) => {
   const [modalIsOpen, setModalIsOpen] = useState(true);
   const [oldPassword, setOldPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
-  const [addressModal,setAddressModal]=useState(false);
+  const [addressModal, setAddressModal] = useState(false);
 
 
 
@@ -104,8 +105,8 @@ const PersonalInfo = (props) => {
     postCode: "",
     townCity: "",
     state: "",
-    latitude:0,
-    longitude:0,
+    latitude: 0,
+    longitude: 0,
     profession: "",
     skills: [],
     experiences: [],
@@ -186,13 +187,13 @@ const PersonalInfo = (props) => {
 
   const handleInput = (e, name) => {
 
-    if(name==='phoneNumber'){
-        if (e.target.value.length >= 1 && e.target.value[0] === '4') return;
-        if (e.target.value.length >= 2 && e.target.value[1] === '4') return;
-        setFormData((prev) => ({
-      ...prev,
-      [name]: e.target.value,
-    }));
+    if (name === 'phoneNumber') {
+      if (e.target.value.length >= 1 && e.target.value[0] === '4') return;
+      if (e.target.value.length >= 2 && e.target.value[1] === '4') return;
+      setFormData((prev) => ({
+        ...prev,
+        [name]: e.target.value,
+      }));
     }
     setFormData((prev) => ({
       ...prev,
@@ -202,7 +203,7 @@ const PersonalInfo = (props) => {
 
   const submitForm = async (e) => {
     e.preventDefault();
-   // console.log(formData);
+    // console.log(formData);
 
     //debugger;
 
@@ -219,10 +220,10 @@ const PersonalInfo = (props) => {
         address: {
           town: formData?.townCity,
           city: formData?.townCity,
-          state:formData?.state,
-          address:formData?.address,
-          latitude:formData?.latitude,
-          longitude:formData?.longitude,
+          state: formData?.state,
+          address: formData?.address,
+          latitude: formData?.latitude,
+          longitude: formData?.longitude,
           postCode: formData?.postCode || 0,
           country: formData?.country
         },
@@ -266,6 +267,13 @@ const PersonalInfo = (props) => {
 
   //console.log("formData", formData);
   const getEmployeeDetails = async () => {
+    // Only fetch employee details if user is logged in
+    if (!isLoggedIn()) {
+      console.log("User not logged in, skipping employee details fetch");
+      setIsLoading(false);
+      return;
+    }
+
     setIsLoading(true)
     try {
       // debugger;
@@ -542,15 +550,15 @@ const PersonalInfo = (props) => {
 
 
             <hr className="mt-2 mb-2" />
-              <div className="flex flex-wrap justify-between items-center">
+            <div className="flex flex-wrap justify-between items-center">
               <p className="font-bold text-base">
                 Address <span className="text-[#D3555A]">*</span>
               </p>
 
-             
-                  
+
+
               {
-                formData.address.length > 0 && addressModal===false? 
+                formData.address.length > 0 && addressModal === false ?
                   <>
                     <input
 
@@ -559,20 +567,21 @@ const PersonalInfo = (props) => {
                       required
                       name="address"
                       placeholder="Enter location"
-                    className="flex-1 p-3 text-sm text-gray-800 outline-none"
+                      className="flex-1 p-3 text-sm text-gray-800 outline-none"
                     />
-                    <button 
-                     onClick={()=>{
-                      setAddressModal(true)
-                    }} 
-                    className="w-auto px-2 py-1 text-[#C5363C] rounded-lg bg-[#fff]" style={{
-                outline: "1px solid #C5363C"}}
-                    
-                    
-                    
+                    <button
+                      onClick={() => {
+                        setAddressModal(true)
+                      }}
+                      className="w-auto px-2 py-1 text-[#C5363C] rounded-lg bg-[#fff]" style={{
+                        outline: "1px solid #C5363C"
+                      }}
+
+
+
                     >
                       Change address
-                      </button>
+                    </button>
                   </>
                   :
                   <>
@@ -785,9 +794,9 @@ const PersonalInfo = (props) => {
                   value={formData?.townCity}
                   style={{
                     height: '40px',
-                    justifyContent:'center'
+                    justifyContent: 'center'
                   }}
-                 // onChange={(e) => handleInput(e, "townCity")}
+                // onChange={(e) => handleInput(e, "townCity")}
                 >
                   {/* <option value="" disabled>
                     Select City

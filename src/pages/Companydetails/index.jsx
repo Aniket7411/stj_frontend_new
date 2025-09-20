@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useContext } from "react";
+import React, { useState, useCallback, useContext, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import uploadImageOnCloudinary from "../../components/uploads/uploadImg";
 import { JobContext } from "../jobcontext";
@@ -21,6 +21,13 @@ const AddJobDetailsStep = () => {
   const [loading, setLoading] = useState(false);
   const { companyDetails, setCompanyDetails, setPostingJob } = useContext(JobContext);
 
+  // Initialize logo preview from context when component mounts
+  useEffect(() => {
+    if (companyDetails.companyLogo) {
+      setLogoPreview(companyDetails.companyLogo);
+    }
+  }, [companyDetails.companyLogo]);
+
 
 
 
@@ -38,7 +45,7 @@ const AddJobDetailsStep = () => {
         ...prevState,
         companyLogo: url,
       }));
-      setLogoPreview(URL.createObjectURL(e.target.files[0]));
+      setLogoPreview(url); // Use the uploaded URL instead of object URL
     } catch (error) {
       console.error("Image upload failed:", error);
       alert("Failed to upload image. Please try again.");
@@ -49,7 +56,7 @@ const AddJobDetailsStep = () => {
 
   // Remove image
   const removeImage = () => {
-    setFormData((prevState) => ({
+    setCompanyDetails((prevState) => ({
       ...prevState,
       companyLogo: "",
     }));
@@ -340,12 +347,16 @@ const AddJobDetailsStep = () => {
                     getImageUrl(e); // Call your existing function if size is valid
                   }
                 }}
+                disabled={loading}
               />
+              {loading && (
+                <p className="text-sm text-gray-500 mt-2">Uploading logo...</p>
+              )}
 
-              {logoPreview && (
+              {(logoPreview || companyDetails.companyLogo) && (
                 <div className="relative w-32 h-32 mt-4">
                   <img
-                    src={logoPreview}
+                    src={logoPreview || companyDetails.companyLogo}
                     alt="Company Logo Preview"
                     className="object-cover border rounded-lg w-full h-full"
                   />

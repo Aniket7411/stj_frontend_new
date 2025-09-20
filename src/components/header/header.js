@@ -11,6 +11,7 @@ import { HttpClient } from "../../server/client/http";
 
 
 import { NotificationContext } from "../../pages/notificationprovider";
+import { isLoggedIn } from "../../server/user";
 function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
@@ -234,33 +235,35 @@ function Header() {
       {/* Menu toggle icon */}
       <ul className="md:hidden flex gap-2 items-center w-[15%]">
 
-        <li className="relative r cursor-pointer ">
-          <IoIosNotifications
-            onClick={toggleModal}
-            size={26}
+        {isLoggedIn() && (
+          <li className="relative r cursor-pointer ">
+            <IoIosNotifications
+              onClick={toggleModal}
+              size={26}
 
-            className={
-              currentPath === "findjobs" ||
-                currentPath === "userprofile" ||
-                currentPath === "employerprofile" ||
-                currentPath === "courses" ||
-                currentPath === "createdjob"
-                ? "text-red-800"
-                : isScrolled
+              className={
+                currentPath === "findjobs" ||
+                  currentPath === "userprofile" ||
+                  currentPath === "employerprofile" ||
+                  currentPath === "courses" ||
+                  currentPath === "createdjob"
                   ? "text-red-800"
-                  : "text-red-800"
-            }
-          />
+                  : isScrolled
+                    ? "text-red-800"
+                    : "text-red-800"
+              }
+            />
 
 
 
-          {notificationCountToShow !== 0 && <span className="absolute -top-1 -right-1 bg-red-600 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center"> {notificationCountToShow}
-          </span>}
+            {notificationCountToShow !== 0 && <span className="absolute -top-1 -right-1 bg-red-600 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center"> {notificationCountToShow}
+            </span>}
 
 
 
 
-        </li>
+          </li>
+        )}
         <li className="flex justify-center">
           <RiMenu4Fill
             className="text-[#000000] text-2xl cursor-pointer"
@@ -659,12 +662,17 @@ function Header() {
                 Find Jobs
               </li>
             </Link>
-
+            <Link to="/findcandidate" onClick={toggleMenu}>
+              <li className="transition-all duration-300 font-futura hover:text-red-800 hover:scale-125">
+                Find Candidate
+              </li>
+            </Link>
             <Link to="/courses" onClick={toggleMenu}>
               <li className="transition-all duration-300 font-futura hover:text-red-800 hover:scale-125">
                 Courses
               </li>
             </Link>
+
 
             <Link to="/termsofservice" onClick={toggleMenu}>
               <li className="transition-all duration-300 font-futura font-[100] hover:text-red-800 hover:scale-125">
