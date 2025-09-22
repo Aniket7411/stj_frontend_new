@@ -662,11 +662,15 @@ function Header() {
                 Find Jobs
               </li>
             </Link>
-            <Link to="/findcandidate" onClick={toggleMenu}>
-              <li className="transition-all duration-300 font-futura hover:text-red-800 hover:scale-125">
+         
+
+            {JSON.parse(localStorage.getItem("userData"))?.role === "employer" && (
+              <Link to="/findcandidate" onClick={toggleMenu}>
+                <li className="transition-all duration-300 font-futura hover:text-red-800 hover:scale-125">
                 Find Candidate
-              </li>
-            </Link>
+                </li>
+              </Link>
+            )}
             <Link to="/courses" onClick={toggleMenu}>
               <li className="transition-all duration-300 font-futura hover:text-red-800 hover:scale-125">
                 Courses
