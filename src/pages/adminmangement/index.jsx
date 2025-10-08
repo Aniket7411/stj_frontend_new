@@ -29,14 +29,22 @@ const AdminManagement = () => {
 
   const clickToDeleteUser = async (email) => {
     //console.log("Deleting admin with ID:", email);
-      try {
-        const response = await HttpClient.delete(`/admin/manage/${email}`)
-        if (response?.success) {
-          toast.success("Admin deleted")
-        }
-      } catch (error) {
-        console.log(error)
+
+
+    try {
+      const response = await HttpClient.delete(`/admin/manage/${email}`)
+      setLoading(true)
+
+      if (response?.success) {
+        toast.success("Admin successfully deleted")
+        setLoading(false)
+
       }
+    } catch (error) {
+      console.log(error)
+      setLoading(false)
+
+    }
   };
 
   const getAllAdmins = async () => {
@@ -47,19 +55,30 @@ const AdminManagement = () => {
       setLoading(false);
     } catch (err) {
       toast.error("There was an error fetching admins.");
-      
+
     }
   };
 
   const addNewAdmin = async (data) => {
+
     if (data?.phoneNumber.length !== 11) {
       return toast.info("Number should have 11 digits")
     }
+    setLoading(true)
     try {
       const response = await HttpClient.post("/admin/manage", data);
+      console.log("jhjhj", response)
+      toast.success(response?.message);
+
+      setLoading(false)
+
+
       getAllAdmins(); // Refresh the list after adding a new admin
     } catch (err) {
-      toast.error("There was an error adding the admin.");
+      console.log("jhjhj", err?.response?.data?.message)
+      toast.error(err?.response?.data?.message);
+      setLoading(false)
+
     }
   };
 
@@ -77,7 +96,7 @@ const AdminManagement = () => {
         <div className="flex justify-between mt-8 items-center mb-6">
           <h2 className="text-xl font-semibold ">Admin Management</h2>
           <p className="text-sm text-gray-500">{new Date().toDateString()}</p>
-         
+
         </div>
 
         {/* Search and Actions */}
@@ -134,7 +153,7 @@ const AdminManagement = () => {
                       className={`border-t text-sm ${index % 2 === 0 ? "bg-gray-50" : "bg-white"
                         }`}
                     >
-                      <td className="p-3">{admin?.name} </td>
+                      <td className="p-3 capitalize">{admin?.name}</td>
                       <td className="p-3">{admin?.email}</td>
                       <td className="p-3">{admin?.phoneNumber}</td>
                       <td className="p-3 text-green-600 font-medium">

@@ -141,7 +141,7 @@ const SupportAndFeedback = () => {
                     className="border-b hover:bg-gray-100 transition duration-200 ease-in-out"
                   >
                     <td className="p-4 text-gray-800">{index + 1}</td>
-                    <td className="p-4 text-gray-800">{eachCat?.name}</td>
+                    <td className="p-4 capitalize text-gray-800">{eachCat?.name}</td>
                     <td className="p-4 text-gray-800">{eachCat?.email}</td>
                      <td className="p-4 text-gray-800">{eachCat?.message}</td>
                    

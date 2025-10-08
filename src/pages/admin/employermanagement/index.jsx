@@ -127,7 +127,7 @@ const Employermanagement = () => {
                 {currentItems.length > 0 ? (
                   currentItems.map((employer) => (
                     <tr key={employer.id} className="hover:bg-gray-50">
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{employer.name}</td>
+                      <td className="px-6 py-4 whitespace-nowrap capitalize text-sm text-gray-900">{employer.name}</td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{employer.email}</td>
                       <td className="px-6 py-4 whitespace-nowrap">
                         <Switch

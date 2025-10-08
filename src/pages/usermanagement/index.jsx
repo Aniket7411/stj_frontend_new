@@ -168,7 +168,7 @@ const Usermanagement = () => {
                       className="w-8 h-8 rounded-full"
                     />
                     <div>
-                      <p className="font-semibold">{user.name}</p>
+                      <p className="font-semibold capitalize">{user.name}</p>
                       <p className="text-gray-500 text-sm">{user.email}</p>
                     </div>
                   </td>
