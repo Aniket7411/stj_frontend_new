@@ -80,7 +80,7 @@ function Footer() {
         {/* Copyright */}
       </div>
       <p className="text-sm text-gray-500 text-center mt-4 mb-4">
-        © 2024 <span className="text-red-500">securethatjob.com</span>
+        © 2025 <span className="text-red-500">securethatjob.com</span>
       </p>
     </footer>
   );
