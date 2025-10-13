@@ -627,7 +627,7 @@ function App() {
       ),
     },
     {
-      path: "/invited_jobs",
+      path: "/job_invites",
       element: (
         <Layout>
           <InvitedJobs />

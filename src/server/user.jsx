@@ -61,6 +61,9 @@ export function LogOut() {
   removeRefreshToken();
   removeUserData();
 
+  // Clear the keepLoggedIn flag when user explicitly logs out
+  localStorage.removeItem("keepLoggedIn");
+
   // Dispatch custom event for logout
   window.dispatchEvent(new CustomEvent('userLogout'));
 }

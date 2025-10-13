@@ -130,8 +130,8 @@ const Userdashborad = () => {
         <div className="lg:w-1/3">
           {/* Profile Card */}
           <div className="bg-[#F3F7FF] rounded-lg p-4">
-            <div className="flex">
-              <div className="flex items-center space-x-4">
+            <div className="flex ">
+              <div className="flex  items-center space-x-4">
                 {profiledata?.profile?.personalInformation?.profileImage ? (
                   <img
                     src={profiledata?.profile?.personalInformation?.profileImage}
@@ -387,8 +387,8 @@ const Userdashborad = () => {
               </div>
 
               {/* Job Invites Card */}
-              <div className="w-full md:w-[45%] mb-4">
-                <Link to="/invited_jobs" className="block">
+              <div className="w-full md:w-[45%] mb-2">
+                <Link to="/job_invites" className="block">
                   <div className="bg-white rounded-xl shadow-sm border border-gray-100 hover:border-purple-200 hover:shadow-md transition-all duration-200 p-5 h-full">
                     <div className="flex justify-between items-center">
                       <div className="flex items-center">
@@ -414,7 +414,7 @@ const Userdashborad = () => {
               {/* Completed Jobs Card */}
               <div className="w-full md:w-[45%] mb-4">
                 <Link to="/approvedjobs/completed" className="block">
-                  <div className="bg-white rounded-xl shadow-sm border border-gray-100 hover:border-green-200 hover:shadow-md transition-all duration-200 p-5 h-full">
+                  <div className="bg-white rounded-xl shadow-sm border border-gray-100 hover:border-green-200 hover:shadow-md transition-all duration-200 p-4 h-full">
                     <div className="flex justify-between items-center">
                       <div className="flex items-center">
                         <h3 className="text-lg font-semibold text-gray-800 mr-2">Completed Jobs</h3>

@@ -75,13 +75,11 @@ function Header() {
 
   let notificationsCount = notifications.filter(notification => !notification.isRead).length;
 
-  console.log("notificationsnotificationsnotonsnotificationsnotific", notificationsCount); // Output: 0
 
 
 
   const loggedIn = localStorage.getItem("accessToken") !== null
 
-  console.log("accessTokenaccessTokenaccessToken", loggedIn)
 
   let hideTimeout;
   const handleMouseEnter = () => {
@@ -116,7 +114,7 @@ function Header() {
   const notificationColor = location.pathname === "/userprofile"
 
 
-  console.log("isFindJobsRoute", isFindJobsRoute)
+  // console.log("isFindJobsRoute", isFindJobsRoute)
 
   const navigate = useNavigate();
   const clickToLogout = () => {
@@ -623,7 +621,7 @@ function Header() {
   );
 
 
-  console.log("profileprofileprofile", (JSON.parse(localStorage.getItem("userData")))?.name)
+  // console.log("profileprofileprofile", (JSON.parse(localStorage.getItem("userData")))?.name)
   return (
     <header
       className={`fixed w-full z-50 transition-all duration-300 ease-in-out ${currentPath === "findjobs"

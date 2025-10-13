@@ -27,6 +27,28 @@ const Login = () => {
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState();
+
+  // Check if user is already logged in and redirect
+  useEffect(() => {
+    const accessToken = localStorage.getItem("accessToken");
+    if (accessToken) {
+      // User is already logged in, redirect to appropriate dashboard
+      const userRole = JSON.parse(localStorage.getItem("USER_INFO"))?.role;
+      console.log("User already logged in, redirecting...");
+
+      if (userRole === 'employer') {
+        window.location.href = '/employerprofile';
+      } else if (userRole === 'employee') {
+        window.location.href = '/userprofile';
+      } else if (userRole === 'admin') {
+        window.location.href = '/admin-dashboard';
+      } else {
+        // Default redirect to home if role is unknown
+        window.location.href = '/';
+      }
+    }
+  }, []);
+
   const handleInputChange = (e) => {
     const { name, value, type, checked } = e.target;
     setFormData({
@@ -95,6 +117,17 @@ const Login = () => {
 
       console.log(localStorage.getItem("USER_INFO"));
       LogIn(response?.data);
+
+      // Handle "Keep me logged in" feature
+      if (values.keepLoggedIn) {
+        // Mark that user wants to stay logged in
+        localStorage.setItem("keepLoggedIn", "true");
+        console.log("Keep me logged in enabled - user session will persist");
+      } else {
+        // Remove the flag if unchecked
+        localStorage.removeItem("keepLoggedIn");
+      }
+
       toast.success("Login Successfully");
       console.log(response.data?.userData?.name, "name");
       localStorage.setItem(
@@ -314,7 +347,7 @@ const Login = () => {
                   <button
                     onClick={async () => {
                       try {
-                      //  debugger
+                        //  debugger
                         setLoading(true)
                         const response = await HttpClient.post('/user/sendOtp', {
                           email: email
@@ -327,7 +360,7 @@ const Login = () => {
 
                         }
                       } catch (err) {
-                        toast.error( "user not registered with this email")
+                        toast.error("user not registered with this email")
 
                       }
                     }}

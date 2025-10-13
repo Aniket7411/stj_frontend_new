@@ -16,7 +16,7 @@ const userInfoString = localStorage?.getItem("USER_INFO");
 const userInfo = userInfoString ? JSON.parse(userInfoString) : null;
 const userType = userInfo?.role;
 
-console.log("userTypeuserType", userType);
+// console.log("userTypeuserType", userType);
 
 const dashboardLink =
   userType === "employer"
