@@ -320,9 +320,9 @@ const Admindashboard = () => {
                         </label>
                       </td> */}
                       <td
-                        className={` ${user.verify === "Verified"
-                          ? "text-green-500"
-                          : "text-red-500"
+                        className={` ${user.verify === "verified"
+                          ? "text-green-500 capitalize"
+                          : "text-red-500 capitalize"
                           } font-medium`}
                       >
                         {user.verify}

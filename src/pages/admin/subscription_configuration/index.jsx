@@ -109,7 +109,7 @@ const SubscriptionConfiguration = () => {
   return (
     <div className="flex">
       <Admindashboard />
-      <div className="bg-[#F2F9FF] w-full p-5">
+      <div className="bg-[#F2F9FF] w-full h-screen p-5">
         <div className="flex justify-between mt-10">
           <h1 className="text-xl font-bold mb-5">Product Configuration</h1>
           <p className="text-sm text-gray-500">{new Date().toDateString()}</p>
@@ -246,7 +246,7 @@ const SubscriptionConfiguration = () => {
 
 
             <button
-              className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition"
+              className="w-full bg-blue-600 text-white py-1 rounded-lg hover:bg-blue-700 transition"
               onClick={clickToUpdate}
               disabled={isLoading}
             >
@@ -256,7 +256,7 @@ const SubscriptionConfiguration = () => {
           <div className="min-w-[120px]">
 
             <button
-              className=" w-full bg-red-500 text-white py-2 rounded-lg hover:bg-red-600 transition"
+              className=" w-full bg-red-500 text-white py-1 rounded-lg hover:bg-red-600 transition"
               onClick={closeModal}
             >
               Cancel

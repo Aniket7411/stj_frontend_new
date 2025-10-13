@@ -13,7 +13,7 @@ const CourseTable = () => {
   const [courses, setAllCourses] = useState();
   const [course, setSingleCourse] = useState();
   const navigate = useNavigate();
-  
+
   // Pagination state
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(5); // You can adjust this number
@@ -102,7 +102,7 @@ const CourseTable = () => {
             <ClipLoader size={50} color="#3b82f6" />
           </div>
         ) : (
-          <div className="bg-white rounded-lg shadow-sm border border-gray-100 overflow-hidden">
+          <div className="bg-white h-screen rounded-lg shadow-sm border border-gray-100 overflow-hidden">
             <div className="overflow-x-auto">
               <table className="min-w-full divide-y divide-gray-200">
                 <thead className="bg-gray-50">
@@ -129,12 +129,12 @@ const CourseTable = () => {
                     currentItems.map((item) => (
                       <tr key={item._id} className="hover:bg-gray-50 transition-colors">
                         <td className="px-6 py-4 whitespace-nowrap">
-                          <div className="text-sm font-medium text-gray-900">
+                          <div className="text-sm capitalize font-medium text-gray-900">
                             {item?.title}
                           </div>
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
-                          <div className="text-sm text-gray-500">
+                          <div className="text-sm capitalize text-gray-500">
                             {item?.educator}
                           </div>
                         </td>
@@ -146,9 +146,9 @@ const CourseTable = () => {
                         <td className="px-2 py-4 whitespace-nowrap">
                           <button
                             onClick={() => fetchSingleData(item._id)}
-                            className="inline-flex items-center px-2 py-1 border border-transparent text-xs font-medium rounded-md shadow-sm text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition-colors"
+                            className=" px-2 py-1 border  text-xs font-medium rounded-md shadow-sm text-white bg-green-600 hover:bg-green-70 transition-colors"
                           >
-                            <FiInfo className="mr-1" /> Details
+                            Details
                           </button>
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-center text-sm font-semibold text-gray-900">
@@ -166,7 +166,7 @@ const CourseTable = () => {
                 </tbody>
               </table>
             </div>
-            
+
             {/* Pagination controls */}
             {courses?.length > itemsPerPage && (
               <div className="px-6 py-4 flex items-center justify-between border-t border-gray-200">
