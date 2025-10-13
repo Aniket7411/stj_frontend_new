@@ -179,7 +179,7 @@ const Login = () => {
     setErrors(newErrors);
     if (Object.keys(newErrors).length === 0) {
       //alert("Login successful!");
-      console.log(formData);
+      // console.log(formData);
       // Perform login logic here
     }
     formLogin(formData);
