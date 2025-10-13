@@ -365,7 +365,7 @@ function Header() {
             isOpen={isOpen}
             onRequestClose={toggleModal}
             contentLabel="Notifications Modal"
-            className="modal-content bg-white rounded-lg shadow-2xl w-96 max-h-[80vh] overflow-y-auto absolute top-16 right-4 transform transition-all duration-200 ease-out"
+            className="modal-content bg-white rounded-lg shadow-2xl w-[calc(100vw-2rem)] sm:w-96 max-h-[80vh] overflow-y-auto absolute top-16 left-4 right-4 sm:left-auto sm:right-4 transform transition-all duration-200 ease-out"
             overlayClassName="fixed inset-0 bg-black bg-opacity-50 z-[1000]"
             ariaHideApp={false}
             style={{
@@ -377,61 +377,76 @@ function Header() {
               }
             }}
           >
-            <div className="sticky top-0 bg-white z-10 p-4 border-b shadow-sm">
-              <div className="flex justify-between items-center">
-                <div className="flex items-center space-x-2">
-                  <h2 className="text-xl font-bold text-gray-800">
+            <div className="sticky top-0 bg-white z-10 p-3 sm:p-4 border-b shadow-sm">
+              <div className="flex items-center justify-between gap-2">
+                {/* Title & Badge */}
+                <div className="flex items-center gap-2 flex-1 min-w-0">
+                  <h2 className="text-base sm:text-lg md:text-xl font-bold text-gray-800 truncate">
                     Notifications
                   </h2>
                   {unreadCount > 0 && (
-                    <span className="bg-red-500 text-white text-xs font-bold px-2 py-0.5 rounded-full">
-                      {unreadCount} new
+                    <span className="bg-red-500 text-white text-xs font-bold px-2 py-0.5 rounded-full flex-shrink-0">
+                      {unreadCount}
                     </span>
                   )}
                 </div>
-                <div className="flex space-x-2">
+
+                {/* Actions */}
+                <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0">
                   {notifications?.length > 0 && (
                     <button
                       onClick={markAllAsRead}
-                      className="text-xs text-blue-600 hover:text-blue-800 font-medium"
+                      className="text-xs sm:text-sm text-blue-600 hover:text-blue-800 font-medium whitespace-nowrap"
                     >
-                      Mark all read
+                      Mark all
                     </button>
                   )}
                   <button
                     onClick={toggleModal}
-                    className="text-gray-500 hover:text-gray-700 focus:outline-none transition-colors"
+                    className="text-gray-500 hover:text-gray-700 focus:outline-none transition-colors p-1"
                   >
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="h-5 w-5 sm:h-6 sm:w-6"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M6 18L18 6M6 6l12 12"
+                      />
                     </svg>
                   </button>
                 </div>
               </div>
             </div>
 
+
             <div className="divide-y divide-gray-100">
               {notifications?.length > 0 ? (
                 notifications.map((notification) => (
                   <div
                     key={notification._id}
-                    className={`p-4 transition-colors duration-150 ${!notification.isRead ? "bg-blue-50/50" : "hover:bg-gray-50"}`}
+                    className={`p-3 sm:p-4 transition-colors duration-150 cursor-pointer ${!notification.isRead ? "bg-blue-50/50" : "hover:bg-gray-50"}`}
                     onClick={() => handleNotificationClick(notification._id)}
                   >
-                    <div className="flex gap-3">
+                    <div className="flex gap-2 sm:gap-3">
                       {!notification.isRead && (
                         <div className="mt-1 flex-shrink-0 w-2 h-2 bg-blue-500 rounded-full animate-pulse"></div>
                       )}
                       <div className="flex-1 min-w-0">
-                        <div className="flex justify-between items-start gap-2">
-                          <h3 className={`font-medium truncate ${!notification.isRead ? "text-gray-900" : "text-gray-700"}`}>
+                        <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-1 sm:gap-2 mb-1">
+                          <h3 className={`font-medium text-sm sm:text-base line-clamp-1 ${!notification.isRead ? "text-gray-900" : "text-gray-700"}`}>
                             {notification.title.charAt(0).toUpperCase() + notification.title.slice(1)}
                           </h3>
-                          <span className="text-xs text-gray-500 whitespace-nowrap">
+                          <span className="text-xs text-gray-500 whitespace-nowrap flex-shrink-0">
                             {formatTimeAgo(notification.sentAt)}
                           </span>
                         </div>
-                        <p className="text-sm text-gray-600 mt-1 line-clamp-2">
+                        <p className="text-xs sm:text-sm text-gray-600 mt-1 line-clamp-2 break-words">
                           {notification?.body
                             ? notification?.body.charAt(0).toUpperCase() + notification?.body.slice(1)
                             : "No content available."}
@@ -439,7 +454,7 @@ function Header() {
                         {notification?.link && (
                           <a
                             href={notification.link}
-                            className="text-blue-500 hover:underline"
+                            className="text-blue-500 hover:underline text-xs sm:text-sm inline-block mt-1"
                             target="_blank"
                             rel="noopener noreferrer"
                             aria-label="Open notification link"
@@ -448,17 +463,15 @@ function Header() {
                           </a>
                         )}
 
-
-                        <div className="mt-2 flex justify-between items-center">
-                          <span className={`text-xs font-medium px-2 py-1 rounded-full ${notification.isRead
+                        <div className="mt-2 flex justify-between items-center gap-2">
+                          <span className={`text-xs font-medium px-2 py-1 rounded-full truncate ${notification.isRead
                             ? "bg-green-100 text-green-800"
                             : "bg-red-100 text-red-800"
                             }`}>
                             {notification.type.charAt(0).toUpperCase() + notification.type.slice(1)}
-
                           </span>
                           {!notification.isRead && (
-                            <span className="text-xs font-medium text-blue-600 animate-pulse">NEW</span>
+                            <span className="text-xs font-medium text-blue-600 animate-pulse flex-shrink-0">NEW</span>
                           )}
                         </div>
                       </div>
@@ -466,14 +479,14 @@ function Header() {
                   </div>
                 ))
               ) : (
-                <div className="p-8 text-center">
-                  <div className="mx-auto w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mb-3">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <div className="p-6 sm:p-8 text-center">
+                  <div className="mx-auto w-12 h-12 sm:w-16 sm:h-16 bg-gray-100 rounded-full flex items-center justify-center mb-3">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 sm:h-8 sm:w-8 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
                     </svg>
                   </div>
-                  <h3 className="text-gray-500 font-medium">No notifications yet</h3>
-                  <p className="text-gray-400 text-sm mt-1">We'll notify you when something arrives</p>
+                  <h3 className="text-gray-500 font-medium text-sm sm:text-base">No notifications yet</h3>
+                  <p className="text-gray-400 text-xs sm:text-sm mt-1">We'll notify you when something arrives</p>
                 </div>
               )}
             </div>
@@ -662,12 +675,12 @@ function Header() {
                 Find Jobs
               </li>
             </Link>
-         
+
 
             {JSON.parse(localStorage.getItem("userData"))?.role === "employer" && (
               <Link to="/findcandidate" onClick={toggleMenu}>
                 <li className="transition-all duration-300 font-futura hover:text-red-800 hover:scale-125">
-                Find Candidate
+                  Find Candidate
                 </li>
               </Link>
             )}
