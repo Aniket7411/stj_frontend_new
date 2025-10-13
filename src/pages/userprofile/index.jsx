@@ -703,7 +703,7 @@ const UserPofile = () => {
             </div>
 
             {/* physical detail */}
-            <div className="flex justify-between flex-wrap gap-4 mb-2">
+            <div className="flex justify-between flex-wrap gap-4 py-1 mb-2">
 
 
               {/* Postcode */}
@@ -985,7 +985,7 @@ const UserPofile = () => {
 
             <hr className="mt-2 mb-2" />
 
-            <div className="p-2 mx-auto bg-gray-100 rounded-md ">
+            <div className=" mx-auto bg-gray-100 rounded-md ">
 
               {/* Input Fields for Adding Experience */}
 
