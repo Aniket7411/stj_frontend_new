@@ -7,8 +7,7 @@ import ClipLoader from "react-spinners/ClipLoader";
 
 const CreatedJobs = () => {
   const [jobs, setJobs] = useState([]);
-
-  const { id } = useParams()
+  const { id } = useParams();
   const [jobActiveTab, setJobActiveTab] = useState(id);
   const [isLoading, setIsLoading] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
@@ -57,17 +56,20 @@ const CreatedJobs = () => {
   const activeJobsCount = jobs?.filter(j => new Date(j?.workSchedule?.startDate) > new Date()).length || 0;
   const completedJobsCount = jobs?.filter(j => new Date(j?.workSchedule?.startDate) <= new Date()).length || 0;
 
+  // Check if there are no jobs to display
+  const hasNoJobs = !isLoading && filteredJobs.length === 0;
+
   return (
     <div className="p-6 sm:p-8 md:p-10">
-      <div className="flex justify-between mb-2 mt-3">
+      <div className="flex justify-between mb-2 mt-10">
         <div className="flex items-center">
           <h3 className="ml-2 text-lg font-semibold">Created Jobs</h3>
         </div>
 
-        <div className="flex items-center border border-[#D9D9D9] p-1 rounded-md">
-          <CiSearch />
+        <div className="flex items-center border border-[#D9D9D9] rounded-md p-2">
+          <CiSearch className="text-gray-400" />
           <input
-            className="ml-2 p-1 outline-none"
+            className="ml-2 outline-none w-full"
             placeholder="Search jobs..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
@@ -78,7 +80,7 @@ const CreatedJobs = () => {
       <hr className="mb-2" />
 
       <div>
-        {/* Tab Navigation - UI remains exactly the same */}
+        {/* Tab Navigation */}
         <div className="p-4">
           <div className="flex flex-wrap justify-center sm:justify-start gap-4 font-semibold text-sm sm:text-base">
             <button
@@ -116,7 +118,40 @@ const CreatedJobs = () => {
         <div className="h-screen flex justify-center items-center">
           <ClipLoader size={50} color="#4ade80" />
         </div>
+      ) : hasNoJobs ? (
+        // No jobs state
+        <div className="flex flex-col items-center justify-center py-16 text-center">
+          <div className="text-gray-400 mb-4">
+            <CiSearch size={64} />
+          </div>
+          <h3 className="text-xl font-semibold text-gray-600 mb-2">
+            {searchTerm ? "No jobs found" : "No jobs available"}
+          </h3>
+          <p className="text-gray-500 max-w-md">
+            {searchTerm
+              ? `No jobs match your search for "${searchTerm}". Try adjusting your search terms.`
+              : jobActiveTab === "alljobs"
+                ? "You haven't created any jobs yet. Start by creating your first job posting."
+                : jobActiveTab === "activejobs"
+                  ? "You don't have any active jobs at the moment."
+                  : "You don't have any completed jobs yet."}
+          </p>
+          {!searchTerm && jobActiveTab === "alljobs" && (
+            <button className="mt-4 bg-blue-500 hover:bg-blue-600 text-white font-medium px-4 py-2 rounded-lg transition-colors">
+              Create Your First Job
+            </button>
+          )}
+          {searchTerm && (
+            <button
+              onClick={() => setSearchTerm("")}
+              className="mt-4 bg-gray-500 hover:bg-gray-600 text-white font-medium px-4 py-2 rounded-lg transition-colors"
+            >
+              Clear Search
+            </button>
+          )}
+        </div>
       ) : (
+        // Jobs list
         <>
           {filteredJobs?.map((job) => (
             <div
@@ -138,7 +173,6 @@ const CreatedJobs = () => {
                         month: "2-digit",
                         year: "numeric",
                       })}
-
                     </span>
                   </div>
                   <p className={`px-2 py-1 rounded-lg text-sm ${new Date(job?.workSchedule?.startDate) > new Date()
@@ -150,7 +184,6 @@ const CreatedJobs = () => {
                       month: "2-digit",
                       year: "numeric",
                     })}
-
                   </p>
                 </div>
               </div>
